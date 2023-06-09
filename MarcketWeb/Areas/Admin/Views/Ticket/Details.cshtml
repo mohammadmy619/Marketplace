@@ -1,0 +1,120 @@
+﻿@using MarcketAppliction.Utils
+@using MarcketDataLayer.DTOs.Contacts
+@model MarcketDataLayer.DTOs.Contacts.TicketDetailDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section styles
+{
+
+    <link href="~/css/ChatRoom.css" rel="stylesheet" />
+<style>
+    .ck-content {
+        height: 300px;
+    }
+</style>
+}
+
+@section scripts{
+    <script>
+
+
+        ClassicEditor.create(document.getElementById('Text'),
+            {
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        '|',
+                        'fontSize',
+                        'fontColor',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'undo',
+                        'redo',
+                        'codeBlock'
+                    ]
+                },
+                language: 'fa',
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                licenseKey: '',
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/Uploader/UploadImage'
+
+
+
+
+
+                }
+
+            });
+
+    </script>
+}
+@{
+    @ViewData["Title"]
+}
+
+
+@*<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    -->*@
+                    <!-- Tab panes -->
+                    <!--<div class="tab-content dashboard_content">
+                            <div class="tab-pane fade active show" id="account-details">
+                                <h3>@ViewData["Title"] </h3>
+
+                                <partial name="_AnswerTicketPartial" model="@(new AnswerTicketDTO{Id = Model.Ticket.Id})" />
+
+                                <hr />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+                    <partial name="_AnswerTicketPartial" model="@(new AnswerTicketDTO{Id = Model.Ticket.Id})" />
+                    <ul class="messages" id="messages">
+                        @if (Model.TicketMessages != null && Model.TicketMessages.Any())
+                        {
+                            @foreach (var message in Model.TicketMessages)
+                            {
+                                <li class="message @(message.SenderId != Model.Ticket.OwnerId ? "right" : "left") appeared">
+                                    <div class="avatar">
+                                        <img src="/img/defaults/avatar.jpg" alt="Alternate Text">
+                                    </div>
+                                    <div class="text_wrapper">
+                                        <div class="time">
+
+                                            @message.CreateDate.ToStringShamsiDate() ساعت @message.CreateDate.ToString("HH:mm")*
+                                        </div>
+                                        <div class="text" style="font-size: 16px">
+                                            @Html.Raw(message.Text)
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>

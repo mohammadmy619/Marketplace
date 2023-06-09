@@ -1,0 +1,107 @@
+﻿@using MarcketAppliction.Utils
+
+@model MarcketDataLayer.DTOs.Articles.FilterCommentDTO
+@{
+    ViewData["Title"] = "مدریت کامنت های مقالات";
+}
+
+<h2>مدریت کامنت ها</h2>
+
+
+<br />
+
+<hr />
+
+
+<div class="col-xs-4">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form asp-area="Admin" asp-controller="Articles" asp-action="ManegeComment" method="get" id="filter-form">
+
+            <input type="hidden" asp-for="PageId" />
+
+            <input type="hidden" data-val="true" data-val-required="The PageId field is required." id="PageId" name="PageId" value="1">
+            <div class="form-group">
+                <label>عنوان جستو جو</label>
+                <input class="form-control" type="text" asp-for="search" value="">
+            </div>
+            <hr>
+
+
+
+            <button type="submit" class="btn btn-success btn-block">جستوجو</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<div class="col-xs-12 col-md-8">
+    <div class="well with-header with-footer">
+        <div class="header bg-blueberry">
+
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>مربوط به مقاله </th>
+                    <th>نام کاربر</th>
+                    <th>متن پیام</th>
+                    <th>تاریح ایجاد</th>
+                    <th>دستورات</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ArticlesComment != null && Model.ArticlesComment.Any())
+                {
+                    @foreach (var Comment in Model.ArticlesComment)
+                    {
+                <tr>
+
+                    <td>
+                        @Comment.Articles.name
+                    </td>
+                    <td>
+                        <span class="gold">
+                            @Comment.Name
+                        </span>
+                    </td>
+                    <td>
+                        @Comment.Text
+                    </td>
+                    <td>
+                        @Comment.DateTime.ToShamsi()
+                    </td>
+                    @*asp-area="Admin" asp-controller="UserManege" asp-action="GetEditUserAdmin" asp-route-userId="@user.Id"*@
+                    <td>
+ 
+
+                        <a asp-action="DeleteComment" asp-area="Admin" asp-controller="Articles" asp-route-Commentid="@Comment.Id" class="btn-danger btn btn-block">حذف کامنت </a>
+
+                    </td>
+                </tr>
+
+                    }
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,80 @@
+﻿@using MarcketAppliction.Extensions
+@model MarcketDataLayer.DTOs.Contacts.FilterProductCommetDto
+@{
+    ViewData["Title"] = "مدریت نظرات ";
+}
+
+<h2>مدریت نظرات</h2>
+<form asp-area="Admin" asp-controller="CommentProducts" asp-action="Index" method="get" id="filter-form">
+    <input type="hidden" asp-for="PageId" />
+
+</form>
+<div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+        <div class="header bg-gold">
+            Bordered Table
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>کد</th>
+                    <th>عنوان کالا</th>
+                    <th>نام کاربری</th>
+                    <th> شماره موبایل کاربر</th>
+                    <th> ایمیل کاربر</th>
+                    <th>پیغام </th>
+
+                    <th>دستورات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ProductCommet != null && Model.ProductCommet.Any())
+                {
+                    @foreach (var item in Model.ProductCommet)
+                    {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Product.Title
+                    </td>
+                    <td>
+                        @item.User.FirstName
+                    </td>
+                    <td>
+                        @item.User.Mobile
+                    </td>
+                    <td>
+                        @item.User.Email
+                    </td>
+
+                    <td>
+                        @item.Massege
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="CommentProducts" asp-area="Admin" asp-route-Id="@item.Id" class="btn btn-danger">حذف</a>
+                    </td>
+                </tr>
+
+                    }
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+
+        </table>
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+
+    </div>
+
+</div>
+

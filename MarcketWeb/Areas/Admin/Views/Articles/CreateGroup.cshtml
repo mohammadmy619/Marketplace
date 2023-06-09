@@ -1,0 +1,45 @@
+﻿@model MarcketDataLayer.DTOs.Articles.AddorEditArticleGroupDTO
+
+@{
+    ViewData["Title"] = "ایجاد گروه";
+}
+
+<h1>ایجاد گروه</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="CreateGroup" enctype="multipart/form-data" asp-controller="Articles" asp-area="Admin" > 
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="GroupTitle" class="control-label"></label>
+                <input asp-for="GroupTitle" class="form-control" />
+                <span asp-validation-for="GroupTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupDescriptison" class="control-label"></label>
+                <input asp-for="GroupDescriptison" class="form-control" />
+                <span asp-validation-for="GroupDescriptison" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+              
+                <input name="img" required type="file"  class="form-control" />
+                
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="FilterGroups" >Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,109 @@
+﻿@using MarcketAppliction.Utils
+
+@model IEnumerable<MarcketDataLayer.Entities.Products.ProductCommet>
+@*<style>
+        .tab-content > .tab-pane {
+            display: block !important;
+        }
+         style="display:block!important;"
+    </style>*@
+@*active show*@
+@*<div id="commentmy">*@
+<div class="tab-pane fade " id="reviews" role="tabpanel">
+
+    <div class="reviews_wrapper" >
+        <h2> نقد و بررسی برای این محصول</h2>
+        <div class="reviews_comment_box">
+            <div class="comment_thmb">
+
+            </div>
+
+            <div class="comment_text">
+                <div class="reviews_meta">
+                    <div class="star_rating">
+                        <ul>
+                            <li><span><i class="ion-ios-star"></i></span></li>
+                            <li><span><i class="ion-ios-star"></i></span></li>
+                            <li><span><i class="ion-ios-star"></i></span></li>
+                            <li><span><i class="ion-ios-star"></i></span></li>
+                            <li><span><i class="ion-ios-star"></i></span></li>
+                        </ul>
+                    </div>
+                    <p><strong>مدیر </strong>@DateTime.Now.ToShamsi()</p>
+                </div>
+                <p>لطفا برای بهتر شدن کیفیت مطالب نظر دهید</p>
+            </div>
+
+
+        </div>
+
+        @foreach (var item in Model)
+        {
+
+            <div class="reviews_comment_box">
+                <div class="comment_thmb">
+
+                </div>
+
+                <div class="comment_text">
+                    <div class="reviews_meta">
+                        <div class="star_rating">
+                            <ul>
+                                <li><span><i class="ion-ios-star"></i></span></li>
+                                <li><span><i class="ion-ios-star"></i></span></li>
+                                <li><span><i class="ion-ios-star"></i></span></li>
+                                <li><span><i class="ion-ios-star"></i></span></li>
+                                <li><span><i class="ion-ios-star"></i></span></li>
+                            </ul>
+                        </div>
+                        <p><strong>خریدار کالا </strong>@item.CreateDate.ToShamsi()</p>
+                    </div>
+                    <p>@item.Massege</p>
+                </div>
+
+
+            </div>
+        }
+        <div class="comment_title">
+            <h2>یک نقد و بررسی بنویسید </h2>
+            <p>ایمیل شما منتشر نخواهد شد. فیلد های الزامی مشخص شده اند </p>
+        </div>
+        <div class="product_ratting mb-10">
+            <h3>امتیاز شما</h3>
+            <ul>
+                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                <li><a href="#"><i class="fa fa-star"></i></a></li>
+            </ul>
+        </div>
+        <div class="product_review_form">
+            <form asp-area="" asp-controller="Product" asp-action="CreateComment" asp-antiforgery="true" data-ajax="true" data-method="post" ata-ajax-update="#reviews" data-ajax-success="OnSuccessComment">
+                <input type="hidden" name="ProductID" value="@ViewBag.ProductID" />
+                <div class="row">
+                    <div class="col-12">
+                        <label for="review_comment">نقد و بررسی شما </label>
+                        <textarea name="Massege" id="Massege" placeholder=""></textarea>
+                    </div>
+
+                    @*<div class="col-lg-6 col-md-6">
+                            <label for="author">نام</label>
+                            <input id="author" placeholder="" type="text">
+
+                        </div>*@
+                    @*<div class="col-lg-6 col-md-6">
+                            <label for="email">ایمیل </label>
+                            <input id="email" type="email" dir="ltr" >
+                        </div>*@
+                </div>
+                <button type="submit" id="btnc">ثبت</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+<div id="commentmy">
+</div>
+

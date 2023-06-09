@@ -1,0 +1,16 @@
+﻿<!-- Nav tabs -->
+<div class="dashboard_tab_button">
+    <ul role="tablist" class="nav flex-column dashboard-list">
+        <li><a asp-area="Seller" asp-controller="Home" asp-action="Index" class="nav-link active show">داشبورد</a></li>
+        <li><a asp-area="User" asp-controller="Ticket" asp-action="AddTicket" class="nav-link">ثبت تیکت جدید</a></li>
+        <li><a asp-area="User" asp-controller="Ticket" asp-action="Index" class="nav-link">لیست تیکت ها</a></li>
+        <li><a asp-area="Seller" asp-controller="Product" asp-action="Index" class="nav-link">مدیریت محصولات</a></li>
+        <li><a asp-area="Seller" asp-controller="SellerWallet" asp-action="Index" class="nav-link"> تراکنش ها</a></li>
+        <li><a asp-area="Seller" asp-controller="ProductDiscount" asp-action="FilterDiscounts" class="nav-link"> مدریت تخفیف ها</a></li>
+        <li><a asp-area="Seller" asp-controller="Posts" asp-action="Index" class="nav-link">  تعهدات ارسال</a></li>
+
+
+       
+        <li><a asp-controller="Account" asp-action="LogOut" class="nav-link">خروج</a></li>
+    </ul>
+</div>

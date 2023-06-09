@@ -1,0 +1,30 @@
+﻿@using MarcketAppliction.EntitiesExtensions
+@model List<MarcketDataLayer.Entities.Slider.Slider>
+
+@if (Model != null && Model.Any())
+{
+    <!--slider area start-->
+    <section class="slider_section mb-70">
+        <div class="slider_area owl-carousel">
+            @foreach (var slider in Model)
+            {
+                <div class="single_slider d-flex align-items-center" data-bgimg="@slider.GetSliderImageAddress()">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="slider_content">
+                                    <h1> @slider.MainHeader</h1>
+                                    <h2>@slider.SecondHeader</h2>
+                                    <p> @slider.Description  </p>
+                                    <a class="button" href="@slider.Link" target="blank">جزییات</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </section>
+    <!--slider area end-->
+}

@@ -1,0 +1,75 @@
+﻿@model MarcketDataLayer.DTOs.UserManege.FilterRolesDTO
+@{
+    ViewData["Title"] = "FilterRoles";
+}
+<div class="col-xs-4">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form asp-area="Admin" asp-controller="UserManege" asp-action="FilterRoles" method="get" id="filter-form">
+            <input type="hidden" asp-for="PageId" />
+            <div class="form-group">
+                <label>نام نقش</label>
+                <input class="form-control" asp-for="RoleName">
+            </div>
+            <hr />
+            <input type="submit" class="btn btn-success" />
+        </form>
+    </div>
+
+</div>
+
+
+
+<div class="col-xs-8">
+    <a class="btn btn-palegreen" asp-area="Admin" asp-controller="UserManege" asp-action="CreateRole">افزودن نقش</a>
+     <br />
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+        @if (Model.Roles != null && Model.Roles.Any())
+        {
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col">نام نقش</th>
+
+                        <th scope="col">دستورات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <tr>
+
+                            <td>
+                                @role.RoleTitle
+                            </td>
+
+                            <td>
+                                <a asp-area="Admin" asp-controller="UserManege" asp-action="EditRole" asp-route-roleId="@role.Id" class="btn btn-warning">ویرایش</a>
+                                <a asp-area="Admin" asp-controller="UserManege" asp-action="DeleteRole" asp-route-roleId="@role.Id" class="btn btn-danger">حذف</a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <p>
+                    هیچ اطلاعاتی یافت نشد
+                </p>
+            </div>
+        }
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+    </div>
+</div>

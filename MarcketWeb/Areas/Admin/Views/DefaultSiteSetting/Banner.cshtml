@@ -1,0 +1,207 @@
+﻿@using MarcketAppliction.EntitiesExtensions
+@using MarcketDataLayer.Entities.Site
+@model IEnumerable<MarcketDataLayer.Entities.Site.SiteBanner>
+@{
+    ViewData["Title"] = "Banner";
+   
+}
+
+<h2>مدریت بتر ها</h2>
+<hr />
+<br />
+<div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+        <div class="header bg-gold">
+            Bordered Table
+        </div>
+        <a asp-area="Admin"  asp-controller="DefaultSiteSetting"  asp-action="CreateBanner"   asp-route-BPID="0" class="btn btn-success">ایجاد بنر</a>
+        <hr />
+        <br />
+        <h1 class="text info">
+          تعداد بنر های قابل نمایش 4 عدد
+        </h1>
+        <br />
+        <hr />
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>تصاویر</th>
+                    <th>آدرس ها</th>
+                    <th>دستورات</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any(s => s.BannerPlacement == BannerPlacement.Home_1))
+                {
+
+
+                    @foreach (var banner in Model.Where(s => s.BannerPlacement == BannerPlacement.Home_1).Take(4))
+                    {
+
+
+
+
+                        <tr>
+
+                            <td>
+                                <img style="width:100px; height:100px;" src="@banner.GetBannerMainImageAddress()" />
+                            </td>
+                            <td>
+
+                                @banner.Url
+
+                            </td>
+
+                            <td>
+                                <a asp-action="DeleteBanner" asp-controller="DefaultSiteSetting" asp-area="Admin" asp-route-id="@banner.Id" class="btn btn-warning "> حذف</a>
+                            </td>
+                        </tr>
+                    }
+
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>
+
+
+<br />
+
+<div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+        <div class="header bg-sky">
+            Bordered Table
+        </div>
+        <a  asp-area="Admin"  asp-controller="DefaultSiteSetting"  asp-action="CreateBanner"   asp-route-BPID="1"  class="btn btn-success" >ایجاد بنر</a>
+        <hr />
+        <br />
+        <h1 class="text gold">
+            تعداد بنر های قابل نمایش 2 عدد
+        </h1>
+        <br />
+        <hr />
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>تصاویر</th>
+                    <th>آدرس ها</th>
+
+                    <th>دستورات</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any(s => s.BannerPlacement == BannerPlacement.Home_2))
+                {
+                    @foreach (var banner in Model.Where(s => s.BannerPlacement == BannerPlacement.Home_2).Take(2))
+                    {
+                        <tr>
+
+                            <td>
+                                <img style="width:100px; height:100px;" src="@banner.GetBannerMainImageAddress()" />
+                            </td>
+                            <td>
+
+                                @banner.Url
+
+                            </td>
+
+                            <td>
+                                <a asp-action="DeleteBanner" asp-controller="DefaultSiteSetting" asp-area="Admin" asp-route-id="@banner.Id" class="btn btn-warning "> حذف</a>
+                            </td>
+                        </tr>
+
+                    }
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>
+
+
+<br />
+
+<div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+        <div class="header bg-green">
+            Bordered Table
+        </div>
+        <a  asp-area="Admin"  asp-controller="DefaultSiteSetting"  asp-action="CreateBanner"   asp-route-BPID="2" class="btn btn-success">ایجاد بنر</a>
+        <hr />
+        <br />
+        <h1 class="text green">
+            تعداد بنر های قابل نمایش 3 عدد
+        </h1>
+        <br />
+        <hr />
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>تصاویر</th>
+                    <th>آدرس ها</th>
+
+                    <th>دستورات</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any(s => s.BannerPlacement == BannerPlacement.Home_3))
+                {
+                    @foreach (var banner in Model.Where(s => s.BannerPlacement == BannerPlacement.Home_3).Take(3))
+                    {
+                        <tr>
+
+                            <td>
+                                <img style="width:100px; height:100px;" src="@banner.GetBannerMainImageAddress()" />
+                            </td>
+                            <td>
+
+                                @banner.Url
+
+                            </td>
+
+                            <td>
+                                <a asp-action="DeleteBanner" asp-controller="DefaultSiteSetting" asp-area="Admin" asp-route-id="@banner.Id" class="btn btn-warning "> حذف</a>
+                            </td>
+                        </tr>
+
+                    }
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,53 @@
+﻿@using MarcketAppliction.Utils
+
+@model MarcketDataLayer.DTOs.Articles.AddorEditArticleGroupDTO
+
+@{
+    ViewData["Title"] = "ویرایش گروه";
+}
+
+<h2>ویرایش گروه</h2>
+
+<h4>تصویر فعلی</h4>
+<img style="width:200px;" src="@(PathExtension.ArticlesGroupsOrigin + Model.imgname )"/>
+<hr />
+<div class="row">
+    <div class="col-md-9">
+        <form asp-action="getGroup" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <input asp-for="ArticleGroupID" type="hidden" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupTitle" class="control-label"></label>
+                <input asp-for="GroupTitle" class="form-control" />
+                <span asp-validation-for="GroupTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupDescriptison" class="control-label"></label>
+                <input asp-for="GroupDescriptison" class="form-control" />
+                <span asp-validation-for="GroupDescriptison" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>ویرایش تصویر</label>
+                <input name="img" type="file" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-outline-warning " />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+
+    
+    <a asp-action="FilterGroups">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

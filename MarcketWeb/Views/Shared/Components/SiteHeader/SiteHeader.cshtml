@@ -1,0 +1,353 @@
+﻿@using MarcketAppliction.EntitiesExtensions
+@using MarketPlace.DataLayer.Entities.Accuont.User
+@using MarcketDataLayer.Entities.Products
+
+@using MarcketDataLayer.Entities.Site
+@using MarcketAppliction.Utils
+@{
+    var siteSetting = ViewBag.siteSetting as SiteSetting;
+    var user = ViewBag.user as User;
+    var categories = ViewBag.ProductCategories as List<ProductCategory>;
+    var Favorite = ViewBag.GetUserFavorits ;
+}
+
+
+
+
+
+
+
+
+<div class="off_canvars_overlay">
+
+</div>
+<div class="Offcanvas_menu">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="canvas_open">
+                    <a href="javascript:void(0)"><i class="ion-navicon"></i></a>
+                </div>
+                <div class="Offcanvas_menu_wrapper">
+                    <div class="canvas_close">
+                        <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
+                    </div>
+                    <div class="support_info">
+                        <p>تلفن تماس: <a class="ltr-text" href="tel:+@siteSetting.Mobile">@siteSetting.Mobile</a></p>
+                    </div>
+                    <div class="top_right text-right">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <ul>
+                                <li><a asp-controller="Account" asp-action="Register"> ثبت نام </a></li>
+                                <li><a asp-controller="Account" asp-action="Login"> ورود </a></li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul>
+                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید </a></li>
+                                <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
+                            </ul>
+                        }
+                        @*<li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>*@
+
+                    </div>
+                    <div class="search_container">
+                        <form asp-area="" asp-controller="Product" asp-action="FilterProducts" method="get">
+                            <div class="hover_category">
+                                @if (categories != null && categories.Any())
+                                {
+                                    <select class="select_option" name="Category" id="categori1">
+                                        <option selected value="">همه دسته ها</option>
+                                        @foreach (var category in categories.Where(s => s.ParentId == null))
+                                        {
+
+
+                                            <option name="Category" value="@category.UrlName">@category.Title</option>
+                                        }
+                                    </select>
+                                }
+                            </div>
+                            <div class="search_box">
+                                <input name="Serach" placeholder="جستجوی محصول ..." type="text">
+                                <button type="submit">جستجو</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    @await Component.InvokeAsync("UserOrder")
+
+                    <div id="menu" class="text-left ">
+                        <ul class="offcanvas_main_menu">
+                            <li class="menu-item-has-children active">
+                                <a href="/">خانه</a>
+                                @*<ul class="sub-menu">
+                        <li><a href="index.html">خانه 1</a></li>
+                        <li><a href="index-2.html">خانه 2</a></li>
+                        <li><a href="index-3.html">خانه 3</a></li>
+                        <li><a href="index-4.html">خانه 4</a></li>
+                        <li><a href="index-5.html">خانه 5</a></li>
+                    </ul>*@
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Product" asp-action="FilterProducts">فروشگاه</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Articles" asp-action="ArticlesPage">مقالات/آرشیوها</a>
+                            </li>
+
+                            <li class="menu-item-has-children">
+                                <a href="/user">حساب کاربری</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="about-us">درباره ما</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    @*@*<div class="Offcanvas_footer">
+                        <span><a href="#"><i class="fa fa-envelope-o"></i> @siteSetting.Email</a></span>
+                        <ul>
+                            <li><a class="facebook" href="@siteSetting.FaceBook" title="" style="color: gold;" data-original-title="فیسبوک"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="twitter" href="@siteSetting.twitter" title="" style="color: gold;" data-original-title="توییتر"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="instagram" href="@siteSetting.Instgram" title="" style="color: gold;" data-original-title="اینستاگرام"><i class="fa fa-instagram"></i></a></li>
+                            <li><a class="telegram" href="@siteSetting.Telegram" style="color:gold;" title="" data-original-title="تلگرام"><i class="fa fa-telegram"></i></a></li>
+                            <li><a class="rss" href="#" title="" data-original-title="RSS"><i class="fa fa-rss"></i></a></li>
+                        </ul>
+                    </div>*@*
+             
+                    <div class="Offcanvas_footer">
+                        <span><a href="#" style="color: gold;"><i class="fa fa-envelope-o"></i> @siteSetting.Email</a></span>
+                        <ul>
+                            <li class="facebook"><a href="@siteSetting.FaceBook" style="color: white;"><i class="fa fa-facebook"></i></a></li>
+                            <li class="twitter"><a href="@siteSetting.twitter" style="color: white;"><i class="fa fa-twitter"></i></a></li>
+
+                            <li class="instagram"><a href="@siteSetting.Instgram" style="color: white;"><i class="fa fa-instagram"></i></a></li>
+
+                            <li class="telegram"><a href="@siteSetting.Telegram" style="color: white;"><i class="fa fa-telegram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Offcanvas menu area end*@
+<header>
+    <div class="main_header">
+        @*header top start*@
+        <div class="header_top">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="support_info">
+                            <p>تلفن تماس: <a class="ltr-text" href="tel:+989123456789">@siteSetting.Mobile</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="top_right text-right">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <ul>
+                                    <li><a asp-controller="Account" asp-action="Register"> ثبت نام </a></li>
+                                    <li><a asp-controller="Account" asp-action="Login"> ورود </a></li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید </a></li>
+                                    <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
+                                </ul>
+                            }
+                            @*<li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*header top start
+        header middel start*@
+        <div class="header_middle">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="logo">
+                            <a href="/"><img src="@(PathExtension.Logo+siteSetting.Sitelogo)" alt="@siteSetting.Sitelogo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-6">
+                        <div class="middel_right">
+                            <div class="search_container">
+                                <form asp-area="" asp-controller="Product" asp-action="FilterProducts" method="get">
+                                    <div class="hover_category">
+                                        @if (categories != null && categories.Any())
+                                        {
+                                            <select class="select_option" name="Category" id="categori1">
+                                                <option selected value="">همه دسته ها</option>
+                                                @foreach (var category in categories.Where(s => s.ParentId == null))
+                                                {
+
+
+                                                    <option name="Category" value="@category.UrlName">@category.Title</option>
+                                                }
+                                            </select>
+                                        }
+                                    </div>
+                                    <div class="search_box">
+                                        <input name="Serach" placeholder="جستجوی محصول ..." type="text">
+                                        <button type="submit">جستجو</button>
+                                    </div>
+                                </form>
+                            </div>
+                            @await Component.InvokeAsync("UserOrder")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*header middel end
+        header bottom satrt*@
+        <div class="main_menu_area">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-12">
+                        <div class="categories_menu">
+                            <div class="categories_title">
+                                <h2 class="categori_toggle">دسته ‌بندی ها</h2>
+                            </div>
+                            <div class="categories_menu_toggle">
+                                <ul>
+                                    @if (categories != null && categories.Any())
+                                    {
+                                        @foreach (var category in categories.Where(s => s.ParentId == null))
+                                        {
+                                            if (categories.Any(s => s.ParentId == category.Id))
+                                            {
+                                                <li class="menu_item_children">
+                                                    <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.UrlName">@category.Title <i class="fa fa-angle-left"></i></a>
+                                                    <ul class="categories_mega_menu">
+                                                        @foreach (var subCategory in categories.Where(s => s.ParentId == category.Id))
+                                                        {
+                                                            <li class="menu_item_children">
+                                                                <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@subCategory.UrlName">@subCategory.Title</a>
+                                                                @if (categories.Any(s => s.ParentId == subCategory.Id))
+                                                                {
+                                                                    <ul class="categorie_sub_menu">
+                                                                        @foreach (var secondSubCategory in categories.Where(s => s.ParentId == subCategory.Id))
+                                                                        {
+                                                                            <li><a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@secondSubCategory.UrlName">@secondSubCategory.Title</a></li>
+                                                                        }
+                                                                    </ul>
+                                                                }
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            }
+                                        }
+                                    }
+                                    @*<li id="cat_toggle" class="has-sub">
+                                        <a href="#"> دسته های بیشتر</a>
+                                        <ul class="categorie_sub">
+                                            <li><a href="#">دسته پنهان</a></li>
+                                        </ul>
+
+                                    </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="main_menu menu_position">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a class="active" href="/">خانه<i class="fa fa-angle-down"></i></a>
+                                    </li>
+                                    <li class="mega_items">
+                                        <a asp-area="" asp-controller="Product" asp-action="FilterProducts">محصولات</a>
+
+                                    </li>
+            
+                                    <li>
+                                        <a asp-area="" asp-controller="Articles" asp-action="ArticlesPage">مقالات/آرشیوها</a>
+                                    </li>
+                                    <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
+                                    <li><a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a></li>
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*header bottom end*@
+    </div>
+</header>
+@*header area end
+sticky header area start*@
+<div class="sticky_header_area sticky-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-3">
+                <div class="logo">
+                    <a href="/"><img src="@(PathExtension.Logo+siteSetting.Sitelogo)" alt="@siteSetting.Sitetitle"></a>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="sticky_header_right menu_position">
+                    <div class="main_menu">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a class="active" href="/">خانه</a>
+                                </li>
+                                <li class="mega_items">
+                                    <a asp-area="" asp-controller="Product" asp-action="FilterProducts">فروشگاه</a>
+                                </li>
+                                @*<li>
+            <a href="blog.html">بلاگ<i class="fa fa-angle-down"></i></a>
+            <ul class="sub_menu pages">
+                <li><a href="blog-details.html">جزئیات مطلب بلاگ</a></li>
+                <li><a href="blog-fullwidth.html">بلاگ تمام عرض</a></li>
+                <li><a href="blog-sidebar.html">بلاگ نوار کناری راست</a></li>
+                <li><a href="blog-no-sidebar.html">بلاگ بدون نوار کناری</a></li>
+            </ul>
+                                    <
+        </li>*@
+                            <li>
+                                <a asp-area="" asp-controller="Articles" asp-action="ArticlesPage">مقالات/آرشیوها</a>
+                            </li>
+                                @*<li>
+                                    <a href="#">صفحات <i class="fa fa-angle-down"></i></a>
+                                    <ul class="sub_menu pages">
+                                        <li><a class="facebook" href="@siteSetting.FaceBook" title="" style="color:white;" data-original-title="فیسبوک"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a class="twitter" href="@siteSetting.twitter" title="" style="color:white;" data-original-title="توییتر"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a class="instagram" href="@siteSetting.Instgram" title="" style="color:white;" data-original-title="اینستاگرام"><i class="fa fa-instagram"></i></a></li>
+                                        <li><a class="telegram" href="@siteSetting.Telegram" style="color:white;" title="" data-original-title="تلگرام"><i class="fa fa-telegram"></i></a></li>
+                                        <li><a class="rss" href="#" title="" data-original-title="RSS"><i class="fa fa-rss"></i></a></li>
+                                    </ul>
+                                </li>*@
+
+                                <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
+                                <li><a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a></li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    @await Component.InvokeAsync("UserOrder")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*sticky header area end*@
+@*<li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>*@

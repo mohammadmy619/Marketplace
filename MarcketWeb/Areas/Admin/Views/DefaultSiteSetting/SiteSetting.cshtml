@@ -1,0 +1,156 @@
+﻿@model MarcketDataLayer.Entities.Site.SiteSetting
+@using MarcketAppliction.Utils
+@{
+    ViewData["Title"] = "مشخصات سایت";
+}
+<style>
+    .ck-content {
+        height: 300px;
+    }
+</style>
+<h2>مشخصات سایت</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="SiteSetting" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" />
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FooterText" class="control-label"></label>
+                <textarea asp-for="FooterText" class="form-control"></textarea>
+                <span asp-validation-for="FooterText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CopyRight" class="control-label"></label>
+                <input asp-for="CopyRight" class="form-control" />
+                <span asp-validation-for="CopyRight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MapScript" class="control-label"></label>
+                <input asp-for="MapScript" class="form-control" />
+                <span asp-validation-for="MapScript" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AboutUs" class="control-label"></label>
+                <textarea asp-for="AboutUs" class="form-control"></textarea>
+                <span asp-validation-for="AboutUs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <textarea asp-for="Address" class="form-control"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FaceBook" class="control-label"></label>
+                <textarea asp-for="FaceBook" class="form-control"></textarea>
+                <span asp-validation-for="FaceBook" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="twitter" class="control-label"></label>
+                <textarea asp-for="twitter" class="form-control"></textarea>
+                <span asp-validation-for="twitter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Instgram" class="control-label"></label>
+                <textarea asp-for="Instgram" class="form-control"></textarea>
+                <span asp-validation-for="Instgram" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="Telegram" class="control-label"></label>
+                    <textarea asp-for="Telegram" class="form-control"></textarea>
+                    <span asp-validation-for="Telegram" class="text-danger"></span>
+                </div>
+            </div>
+
+            <label>تصویر فعلی</label>
+            <img src="@(PathExtension.Logo + Model.Sitelogo)" width="200" />
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="file" name="Logo" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Sitetitle" class="control-label"></label>
+                <textarea asp-for="Sitetitle" class="form-control"></textarea>
+                <span asp-validation-for="Sitetitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <partial name="_JqueryValidators" />
+    <script src="~/js/ckeditor.js"></script>
+    <script>
+
+
+        ClassicEditor.create(document.getElementById('AboutUs'),
+            {
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        '|',
+                        'fontSize',
+                        'fontColor',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'undo',
+                        'redo',
+                        'codeBlock'
+                    ]
+                },
+                language: 'fa',
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                licenseKey: '',
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/Uploader/UploadImage'
+
+
+
+
+
+                }
+
+        });
+
+    </script>
+}

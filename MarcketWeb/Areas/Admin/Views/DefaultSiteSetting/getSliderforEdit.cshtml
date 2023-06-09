@@ -1,0 +1,86 @@
+﻿@model MarcketDataLayer.DTOs.Slider.EditSliderDto
+@using MarcketAppliction.Utils
+@{
+    ViewData["Title"] = "ویرایش اسلایدر";
+}
+
+<h2>ویرایش اسلایدر</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-9" >
+        <form asp-action="GetSliderforEdit" asp-area="Admin" asp-controller="DefaultSiteSetting" enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+
+                <input asp-for="Editsliderid" type="hidden" class="form-control" />
+
+            </div>
+
+            <label class="control-label">تصویر فعلی</label>
+
+            <img src="@(PathExtension.SliderOrigin+Model.ImageName)" width="300"  />
+
+
+            <div class="form-group">
+
+                <input name="img" type="file" class="form-control" />
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MainHeader" class="control-label"></label>
+                <input asp-for="MainHeader" class="form-control" />
+                <span asp-validation-for="MainHeader" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondHeader" class="control-label"></label>
+                <input asp-for="SecondHeader" class="form-control" />
+                <span asp-validation-for="SecondHeader" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+
+            <div class="col-lg-4 col-sm-4 col-xs-4">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="colored-success" asp-for="IsActive" checked="checked">
+                        <span class="text">@Html.DisplayNameFor(model => model.IsActive)</span>
+                    </label>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>
+            </div>*@
+            <br />
+            <div class="form-group">
+                <input type="submit" value="ویرایش" class="btn btn-warning" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="GetAllSliders">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

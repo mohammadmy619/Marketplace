@@ -1,0 +1,84 @@
+﻿@using MarcketAppliction.Extensions
+@model MarcketDataLayer.DTOs.Seller.FilterSellerDTO
+@{
+    ViewData["Title"] = "لیست درخواست ها";
+}
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+               
+                    <div class="col-sm-12 col-md-9 col-lg-9">
+                        <form asp-area="User" asp-controller="Seller" asp-action="SellerRequests" id="filter-form" method="get">
+                            <input type="hidden" asp-for="PageId" />
+                            <input type="hidden" asp-for="Mobile" />
+                            <input type="hidden" asp-for="Address" />
+                            <input type="hidden" asp-for="Phone" />
+                        </form>
+                        <!-- Tab panes -->
+                        <div class="tab-content dashboard_content">
+                            <h3>درخواست ها</h3>
+                            <div class="table-responsive">
+                                @if (Model.Sellers != null && Model.Sellers.Any())
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>شناسه</th>
+                                                <th>نام فروشگاه</th>
+                                                <th>تلفن تماس</th>
+                                                <th>وضعیت فعلی</th>
+                                                <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var seller in Model.Sellers)
+                                            {
+                                                <tr>
+                                                    <td>@seller.Id</td>
+                                                    <td>@seller.StoreName</td>
+                                                    <td>@seller.Phone</td>
+                                                    <td>@seller.StoreAcceptanceState.GetEnumName()</td>
+                                                    <td><a class="view" asp-area="User" asp-controller="Seller" asp-action="EditRequestSeller" asp-route-id="@seller.Id">ویرایش</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+@*<script>
+
+    function FillPageId(pageId) {
+        $('#PageId').val(pageId);
+        $('#filter-form').submit();
+    }
+
+</script>*@

@@ -1,0 +1,125 @@
+﻿@using MarcketAppliction.Utils
+@using MarcketAppliction.EntitiesExtensions
+
+@model MarcketDataLayer.DTOs.Orders.UserOpenOrderDTO
+@{
+    ViewData["Title"] = "سبد خرید";
+}
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>سبد خرید</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shopping_cart_area mt-60" id="user-open-order-wrapper">
+    <div class="container">
+        <form action="#">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table_desc">
+                        <div class="cart_page table-responsive">
+                            @if (Model.Details != null && Model.Details.Any())
+                            {
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product_remove">حذف</th>
+                                            <th class="product_thumb">تصویر</th>
+                                            <th class="product_name">محصول</th>
+                                            <th class="product-price">قیمت</th>
+                                            <th class="product_quantity">تعداد</th>
+                                            <th class="product-price">تخفیف</th>
+                                            <th class="product_total">جمع کل</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detail in Model.Details)
+                                        {
+                                            <tr>
+                                                <td class="product_remove"><a onclick="removeProductFromOrder(@detail.DetailId)"><i class="fa fa-trash-o"></i></a></td>
+                                                <td class="product_thumb">
+                                                    <a href="#"><img src="@(PathExtension.ProductThumbnailImage + detail.ProductImageName)" alt=""></a>
+                                                </td>
+                                                <td class="product_name"><a href="#">@detail.ProductTitle  @detail.ColorName</a></td>
+                                                <td class="product-price">@((detail.ProductPrice + detail.ProductColorPrice).ToString("#,0")) تومان</td>
+
+                                                <td class="product_quantity">
+                                                    <label>تعداد</label>
+                                                    <input order-detail-count="@detail.DetailId" value="@detail.Count" type="number">
+                                                </td>
+                                                <td class="product-price">
+                                                    @detail.GetOrderDetailWithDiscountPrice()
+                                                </td>
+                                                <td class="product_total">@detail.GetTotalAmountByDiscount().ToString("#,0") تومان</td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                        <div class="cart_submit">
+                            <button type="submit">به روز رسانی سبد</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--coupon code area start-->
+            <div class="coupon_area">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="coupon_code left">
+                            <h3>اطلاعات </h3>
+                            <div class="coupon_inner">
+                                <h4>با تشکر از انتخاب شما </h4>
+                                <p>
+                                    فعلا امکان پرداخت اینترنتی فراهم نمی باشد لطفا خرید خود را ثبت کنید در اصرع وقت با شما تماس گرفته خواهد شد
+                                    سپاس
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="coupon_code right">
+                            <h3>مجموع سبد</h3>
+                            <div class="coupon_inner">
+                                <div class="cart_subtotal">
+                                    <p>جمع اجزا</p>
+                                    <p class="cart_amount">@Model.GetTotalPrice().ToString("#,0") تومان</p>
+                                </div>
+                                <div class="cart_subtotal ">
+                                    <p>تخفیف</p>
+                                    <p class="cart_amount">@Model.GetTotalDiscounts().ToString("#,0") تومان</p>
+                                </div>
+                                <a href="#">محاسبه هزینه</a>
+
+                                <div class="cart_subtotal has-border">
+                                    <p>جمع کل</p>
+                                    <p class="cart_amount">@((Model.GetTotalPrice() - Model.GetTotalDiscounts()).ToString("#,0")) تومان</p>
+                                </div>
+                                <div class="checkout_btn">
+                                    @*<a asp-area="User" asp-controller="Order" asp-action="PayUserOrderPrice">پرداخت</a>*@
+
+                                    <a asp-area="User" asp-controller="Order" asp-action="Finalpurchase">نهایی کردن خرید</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--coupon code area end-->
+        </form>
+    </div>
+</div>

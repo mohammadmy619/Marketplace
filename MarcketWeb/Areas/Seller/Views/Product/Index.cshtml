@@ -1,0 +1,99 @@
+﻿@using MarcketAppliction.Extensions
+@using MarcketAppliction.Utils
+@using MarcketDataLayer.Entities.Products
+@model MarcketDataLayer.DTOs.Products.FilterProductDTO
+@{
+    ViewData["Title"] = "لیست محصولات";
+}
+
+
+<form asp-area="Seller" asp-controller="Product" asp-action="Index" method="get" id="filter-form">
+    <input type="hidden" asp-for="PageId" />
+
+</form>
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                    <a asp-area="Seller" asp-controller="Product" asp-action="CreateProduct" class="btn btn-success">ایجاد کالا</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="table-responsive">
+                                @if (Model.Products != null && Model.Products.Any())
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>تصویر</th>
+                                                <th>عنوان محصول</th>
+                                                <th>وضعیت</th>
+                                                <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var product in Model.Products)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <img src="@(PathExtension.ProductThumbnailImage + product.ImageName)" width="75" />
+                                                    </td>
+                                                    <td>@product.Title</td>
+                                                    <td>
+                                                        <span class="danger">
+                                                            @product.ProductAcceptanceState.GetEnumName() / @(product.IsActive ? "فعال": "غیرفعال")
+                                                            @if (product.ProductAcceptanceState == ProductAcceptanceState.Rejected)
+                                                            {
+                                                                <hr />
+                                                                <div class="text-danger">
+                                                                    @Html.Raw(product.ProductAcceptOrRejectDescription)
+                                                                </div>
+                                                            }
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a asp-area="Seller" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.Id" class="btn btn-warning">ویرایش محصول</a>
+                                                        <a asp-area="Seller" asp-controller="Product" asp-action="GetProductGalleries" asp-route-id="@product.Id" class="btn btn-info">گالری تصاویر</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                                }
+                                else
+                                {
+                                    <partial name="_NoItemFound" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

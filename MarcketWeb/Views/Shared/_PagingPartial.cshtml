@@ -1,0 +1,20 @@
+﻿@model MarcketDataLayer.DTOs.Paging.BasePaging
+
+<div class="shop_toolbar t_bottom">
+    <div class="pagination">
+        <ul>
+            @if (Model.StartPage < Model.PageId)
+            {
+                <li class="previous"><a style="cursor: pointer;"  onclick="FillPageId(@(Model.PageId - 1))">قبلی</a></li>
+            }
+            @for (int i = Model.StartPage; i <= Model.EndPage; i++)
+            {
+                <li style="cursor: pointer;" class="@(Model.PageId == i ? "current" : "")" onclick="FillPageId(@i)">@i</li>
+            }
+            @if (Model.EndPage > Model.PageId)
+            {
+                <li class="next"><a style="cursor: pointer;" onclick="FillPageId(@(Model.PageId + 1))">بعدی</a></li>
+            }
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@model MarcketDataLayer.DTOs.Account.EditUserProfileDTO
+@{
+    ViewData["Title"] = "ویرایش اطلاعات";
+}
+
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    <div class="account_login_form">
+                                        <form asp-area="User" asp-controller="Account" asp-action="EditProfile" enctype="multipart/form-data">
+                                            <label>نام</label>
+                                            <input type="text" asp-for="FirstName">
+                                            <span class="text-danger" asp-validation-for="FirstName"></span>
+                                            <br />
+                                            <label>نام خانوادگی</label>
+                                            <input type="text" asp-for="LastName">
+                                            <span class="text-danger" asp-validation-for="LastName"></span>
+                                            <br />
+                                            <div class="col-md-9">
+                                                <input type="file" name="avatarImage" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <img style="border-radius:50%; width:150px" src="@(!string.IsNullOrEmpty(Model.Avatar) ? MarcketAppliction.Utils.PathExtension.UserAvatarOrigin + Model.Avatar : MarcketAppliction.Utils.PathExtension.DefaultAvatar)" alt="Alternate Text" />
+                                            </div>
+
+                                            <div class="save_button primary_btn default_button">
+                                                <button type="submit">ویرایش</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

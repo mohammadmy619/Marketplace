@@ -1,0 +1,417 @@
+﻿@model List<MarcketDataLayer.Entities.Products.ProductCategory>
+@{
+    ViewData["Title"] = "Index";
+}
+@section scripts{
+
+    <partial name="_JqueryValidators" />
+
+    <script src="~/admin/js/modal.js"></script>
+    <script>
+
+        function Create(ParentId) {
+
+            console.log(ParentId);
+            $.get("/Admin/Categores/Create/" + ParentId,
+                function (result) {
+
+                    $("#myModal2").modal();
+                    $("#myLargeModalLabel").html("افزودن  گروه جدید");
+                    $("#modal-body").html(result);
+                })
+
+
+
+        }
+
+        function Edit(id) {
+
+            console.log(id);
+            $.get("/Admin/Categores/Edit/" + id,
+                function (result) {
+
+                    $("#myModal2").modal();
+                    $("#myLargeModalLabel").html("افزودن  گروه جدید");
+                    $("#modal-body").html(result);
+                })
+
+
+
+        }
+
+        function Delete(id) {
+            //if (confirm("آیا از حذف مطمئن هستید ؟"))
+            $.get("/Admin/Categores/DeleteGroupById/" + id,
+                function (result) {
+                        $("#myModal2").modal();
+                        $("#myLargeModalLabel").html("حذف گروه");
+                        $("#modal-body").html(result);
+                    })
+        }
+
+        /* /Admin/Categores / Edit*/
+        //$("#btnCreate").click(function (ParentId) {
+
+        //    $.get("/Admin/Categores/Create/" + ParentId , function (result) {
+
+        //        $("#myModal").modal();
+        //        $("#myModalLabel").html("افزودن  گروه جدید");
+        //        $("#myModalBody").html(result);
+        //    });
+
+        //});
+
+      
+    </script>
+
+}
+<div class="page-content">
+</div>
+
+
+
+<!-- /Page Header -->
+<!-- Page Body -->
+
+@*<a class="btn btn-success " onclick="javascript: Notify('Im a Palegreen notification', 'top-right', '5000', 'palegreen', 'fa-home', true); return false;">ان گروه</a>*@
+
+
+<a class="btn btn-success " onclick="Create()">افزودن گروه</a>
+<div class="page-body">
+    <input type="radio" class="colored-blue form-control" checked="checked">
+
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+
+            @foreach (var category in Model.Where(s => s.ParentId == null))
+            {
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <h5 class="row-title"><i class="typcn typcn-lightbulb"></i>گروه ها </h5>
+                    <div class="dd shadowed">
+                        <ol class="dd-list">
+                            <li class="dd-item bordered-inverse">
+                                <div class="dd-handle">
+                                    عنوان نمایشی سرگروه
+                                    @category.UrlName
+                                    نام سرگروه
+                                    @category.Title
+
+                                    @*<a  onclick="Create()"> <i class="glyphicon glyphicon-plus"></i> افزودن</a>*@
+
+                                    <a onclick="Edit(@category.Id)"> <i class="glyphicon glyphicon-edit"></i> ویرایش</a>
+
+                                    <a onclick="Delete(@category.Id)"> <i class="glyphicon glyphicon-trash"></i> حذف </a>
+
+                                    <a onclick="Create(@category.Id)"> <i class="glyphicon glyphicon-plus"></i> افزودن زیر گروه</a>
+
+                                </div>
+                            </li>
+                            @if (Model.Any(s => s.ParentId == category.Id))
+                            {
+
+                                @foreach (var subCategory in Model.Where(s => s.ParentId == category.Id))
+                                {
+                                    <li class="dd-item bordered-red" data-id="2">
+
+
+                                        <div class="dd-handle">
+                                            عنوان نمایشی زیر گروه
+                                            @subCategory.UrlName
+                                            نام سرگروه
+                                            @subCategory.Title
+
+
+                                            <a onclick="Create(@category.Id)"> <i class="glyphicon glyphicon-plus"></i> افزودن</a>
+
+                                            <a onclick="Edit(@subCategory.Id)"> <i class="glyphicon glyphicon-edit"></i> ویرایش</a>
+
+                                            <a onclick="Delete(@subCategory.Id)" href="#"> <i class="glyphicon glyphicon-trash"></i> حذف </a>
+                                        </div>
+
+
+                                        <ol class="dd-list" style="">
+                                            <li class="dd-item  bordered-gold" data-id="3">
+                                                <div class="dd-handle">
+                                                    مرحله سوم
+
+                                                    <a onclick="Create(@subCategory.Id)"> <i class="glyphicon glyphicon-plus"></i> افزودن</a>
+
+
+
+                                                </div>
+                                                @if (Model.Any(s => s.ParentId == subCategory.Id))
+                                                {
+                                                    <ol class="dd-list">
+                                                        @foreach (var secondSubCategory in Model.Where(s => s.ParentId == subCategory.Id))
+                                                        {
+                                                            <li class="dd-item bordered-blue" data-id="6">
+                                                                <div class="dd-handle">
+
+                                                                    عنوان نمایشی
+                                                                    @secondSubCategory.UrlName
+                                                                    نام
+                                                                    @secondSubCategory.Title
+
+                                                                    <a onclick="Edit(@secondSubCategory.Id)"> <i class="glyphicon glyphicon-edit"></i> ویرایش</a>
+
+                                                                    <a onclick="Delete(@secondSubCategory.Id)"> <i class="glyphicon glyphicon-trash"></i> حذف </a>
+                                                                </div>
+                                                            </li>
+                                                        }
+
+
+
+
+                                                    </ol>
+                                                }
+                                            </li>
+                                        </ol>
+                                    </li>
+                                }
+                            }
+                        </ol>
+
+                    </div>
+                </div>
+            }
+        }
+
+
+    </div>
+    <div class="horizontal-space space-xl"></div>
+    <div class="row">
+        @*<div class="col-lg-6 col-sm-6 col-xs-12">
+                <h5 class="row-title"><i class="typcn typcn-arrow-minimise"></i>Drag-Handled List</h5>
+                <div class="dd dd-draghandle">
+                    <ol class="dd-list">
+                        <li class="dd-item dd2-item" data-id="13">
+                            <div class="dd-handle dd2-handle">
+                                <i class="normal-icon fa fa-android"></i>
+
+                                <i class="drag-icon fa fa-arrows-alt "></i>
+                            </div>
+                            <div class="dd2-content">First Level</div>
+                        </li>
+
+                        <li class="dd-item dd2-item" data-id="14">
+                            <div class="dd-handle dd2-handle">
+                                <i class="normal-icon fa fa-facebook "></i>
+
+                                <i class="drag-icon fa fa-arrows-alt "></i>
+                            </div>
+                            <div class="dd2-content">Second Level</div>
+                        </li>
+
+                        <li class="dd-item dd2-item" data-id="15">
+                            <div class="dd-handle dd2-handle">
+                                <i class="normal-icon fa fa-twitter "></i>
+
+                                <i class="drag-icon fa fa-arrows-alt "></i>
+                            </div>
+                            <div class="dd2-content">Third Level</div>
+
+                            <ol class="dd-list" style="">
+                                <li class="dd-item dd2-item" data-id="16">
+                                    <div class="dd-handle dd2-handle">
+                                        <i class="normal-icon fa fa-google-plus "></i>
+
+                                        <i class="drag-icon fa fa-arrows-alt "></i>
+                                    </div>
+                                    <div class="dd2-content">Sub Item 1</div>
+                                </li>
+
+                                <li class="dd-item dd2-item dd-colored" data-id="17">
+                                    <div class="dd-handle dd2-handle bg-darkorange">
+                                        <i class="normal-icon fa fa-instagram"></i>
+
+                                        <i class="drag-icon fa fa-arrows-alt "></i>
+                                    </div>
+                                    <div class="dd2-content bg-warning no-hover">Sub Item 2</div>
+                                </li>
+                                <li class="dd-item dd2-item" data-id="18">
+                                    <div class="dd-handle dd2-handle">
+                                        <i class="normal-icon fa fa-taxi"></i>
+                                        <i class="drag-icon fa fa-arrows-alt"></i>
+                                    </div>
+                                    <div class="dd2-content">Sub Item 3</div>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>*@
+        @*<div class="col-lg-6 col-sm-6 col-xs-12">
+                <h5 class="row-title"><i class="typcn typcn-tabs-outline"></i>Bordered List</h5>
+                <div class="well">
+                    <div class="dd dd-draghandle bordered">
+                        <ol class="dd-list">
+                            <li class="dd-item dd2-item" data-id="13">
+                                <div class="dd-handle dd2-handle">
+                                    <i class="normal-icon fa fa-android"></i>
+
+                                    <i class="drag-icon fa fa-arrows-alt "></i>
+                                </div>
+                                <div class="dd2-content">First Level</div>
+                            </li>
+
+                            <li class="dd-item dd2-item" data-id="14">
+                                <div class="dd-handle dd2-handle">
+                                    <i class="normal-icon fa fa-facebook "></i>
+
+                                    <i class="drag-icon fa fa-arrows-alt "></i>
+                                </div>
+                                <div class="dd2-content">Second Level</div>
+                            </li>
+
+                            <li class="dd-item dd2-item" data-id="15">
+                                <div class="dd-handle dd2-handle">
+                                    <i class="normal-icon fa fa-twitter "></i>
+
+                                    <i class="drag-icon fa fa-arrows-alt "></i>
+                                </div>
+                                <div class="dd2-content">Third Level</div>
+
+                                <ol class="dd-list" style="">
+                                    <li class="dd-item dd2-item" data-id="16">
+                                        <div class="dd-handle dd2-handle">
+                                            <i class="normal-icon fa fa-google-plus "></i>
+
+                                            <i class="drag-icon fa fa-arrows-alt "></i>
+                                        </div>
+                                        <div class="dd2-content">Sub Item 1</div>
+                                    </li>
+
+                                    <li class="dd-item dd2-item dd-colored" data-id="17">
+                                        <div class="dd-handle dd2-handle">
+                                            <i class="normal-icon fa fa-instagram"></i>
+
+                                            <i class="drag-icon fa fa-arrows-alt "></i>
+                                        </div>
+                                        <div class="dd2-content no-hover">Sub Item 2</div>
+                                    </li>
+                                    <li class="dd-item dd2-item" data-id="18">
+                                        <div class="dd-handle dd2-handle">
+                                            <i class="normal-icon fa fa-taxi"></i>
+                                            <i class="drag-icon fa fa-arrows-alt"></i>
+                                        </div>
+                                        <div class="dd2-content">Sub Item 3</div>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+    <div class="row">
+        @*<div class="col-lg-6 col-sm-6 col-xs-12">
+                <h5 class="row-title"><i class="typcn typcn-star"></i>Darker List in Widget</h5>
+                <div class="widget">
+                    <div class="widget-header">
+                        <span class="widget-caption">Management List</span>
+
+                        <div class="widget-buttons">
+                            <a href="#" data-toggle="collapse">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                            <a href="#" data-toggle="dispose">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="dd dd-draghandle darker">
+                            <ol class="dd-list">
+                                <li class="dd-item dd2-item" data-id="13">
+                                    <div class="dd-handle dd2-handle">
+                                        <i class="normal-icon fa fa-android"></i>
+
+                                        <i class="drag-icon fa fa-arrows-alt "></i>
+                                    </div>
+                                    <div class="dd2-content">First Level</div>
+                                </li>
+
+                                <li class="dd-item dd2-item" data-id="14">
+                                    <div class="dd-handle dd2-handle">
+                                        <i class="normal-icon fa fa-facebook "></i>
+
+                                        <i class="drag-icon fa fa-arrows-alt "></i>
+                                    </div>
+                                    <div class="dd2-content">Second Level</div>
+                                </li>
+
+                                <li class="dd-item dd2-item" data-id="15">
+                                    <div class="dd-handle dd2-handle">
+                                        <i class="normal-icon fa fa-twitter "></i>
+
+                                        <i class="drag-icon fa fa-arrows-alt "></i>
+                                    </div>
+                                    <div class="dd2-content">Third Level</div>
+
+                                    <ol class="dd-list" style="">
+                                        <li class="dd-item dd2-item" data-id="16">
+                                            <div class="dd-handle dd2-handle">
+                                                <i class="normal-icon fa fa-google-plus "></i>
+
+                                                <i class="drag-icon fa fa-arrows-alt "></i>
+                                            </div>
+                                            <div class="dd2-content">Sub Item 1</div>
+                                        </li>
+
+                                        <li class="dd-item dd2-item dd-colored" data-id="17">
+                                            <div class="dd-handle dd2-handle bg-info">
+                                                <i class="normal-icon fa fa-instagram"></i>
+
+                                                <i class="drag-icon fa fa-arrows-alt "></i>
+                                            </div>
+                                            <div class="dd2-content bg-azure no-hover">Sub Item 2</div>
+                                        </li>
+                                        <li class="dd-item dd2-item" data-id="18">
+                                            <div class="dd-handle dd2-handle">
+                                                <i class="normal-icon fa fa-taxi"></i>
+                                                <i class="drag-icon fa fa-arrows-alt"></i>
+                                            </div>
+                                            <div class="dd2-content">Sub Item 3</div>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade reject-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="myModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel">رد کردن اطلاعات</h4>
+            </div>
+            <div id="modal-body" class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>

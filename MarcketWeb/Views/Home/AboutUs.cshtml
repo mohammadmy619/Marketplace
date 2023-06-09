@@ -1,0 +1,83 @@
+﻿@model MarcketDataLayer.Entities.Site.SiteSetting
+@{
+    ViewData["Title"] = "درباره ما";
+    }
+ 
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li>درباره ما</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="about_section mt-60">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <figure>
+                
+                    <figcaption class="about_content">
+                        <h1>همه چیز درباره ما</h1>
+                        <p>
+                       @Html.Raw(Model.AboutUs)
+
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="choseus_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="single_chose">
+                    <div class="chose_icone">
+                        <img src="/img/about/About_icon1.png" alt="">
+                    </div>
+                    <div class="chose_content">
+                        <h3>تضمین بازگشت وجه</h3>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="single_chose">
+                    <div class="chose_icone">
+                        <img src="/img/about/About_icon2.png" alt="">
+                    </div>
+                    <div class="chose_content">
+                        <h3>طراحی خلاقانه</h3>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="single_chose">
+                    <div class="chose_icone">
+                        <img src="/img/about/About_icon3.png" alt="">
+                    </div>
+                    <div class="chose_content">
+                        <h3>کیفیت بالا</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

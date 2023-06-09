@@ -1,0 +1,48 @@
+﻿@model MarcketDataLayer.Entities.Products.ProductCategory
+
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+<h3 class="text-danger">آیا از حذف این گروه مطمین هستید  @Model.Title</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UrlName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UrlName)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>*@
+        @*<dt>
+                @Html.DisplayNameFor(model => model.IsDelete)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsDelete)
+            </dd>*@
+
+    </dl>
+
+    <form asp-action="DeleteGroupById">
+        <input type="hidden" name="GroupID" value="@Model.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

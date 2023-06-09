@@ -1,0 +1,111 @@
+﻿@model MarcketDataLayer.Entities.Products.Product
+@using MarcketAppliction.Utils
+@using MarcketDataLayer.DTOs.Products
+@using MarcketDataLayer.Entities.Products
+
+<div class="col-md-4 col-sm-6 col-lg-4">
+    <article class="single_product">
+        <figure>
+            <div class="product_thumb">
+                <a class="primary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.Id" asp-route-title="@Model.Title">
+                    <img src="@(PathExtension.ProductThumbnailImage + Model.ImageName)" alt="">
+                </a>
+                @if (Model.ProductGalleries.Any(s => s.ProductId == Model.Id))
+                {
+                    <a class="secondary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.Id" asp-route-title="@Model.Title"><img src="@(PathExtension.ProductGalleryImage + Model.ProductGalleries.Where(x=>x.DisplayPriority==1&&x.ProductId==Model.Id).Select(x=>x.ImageName).FirstOrDefault())" alt="@Model.Title"></a>
+
+                }
+                @if (Model.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                {
+
+                    <div class="label_product" style="background-color:gold;">
+                        <span style="background-color:gold" ; class="label_sale">حراج</span>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="label_product">
+                        <span class="label_sale">فروش</span>
+                    </div>
+                }
+
+                @*<div class="action_links">
+                <ul>
+                <li class="wishlist"><a href="wishlist.html" title="" data-original-title="افزودن به علاقه‌مندی‌ها"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                <li class="compare"><a href="#" title="" data-original-title="مقایسه"><span class="ion-levels"></span></a></li>
+                <li class="quick_button">
+                <a href="#" data-toggle="modal" data-target="#modal_box" title="" data-original-title="مشاهده سریع"> <span class="ion-ios-search-strong"></span></a>
+                </li>
+                </ul>
+                </div>*@
+                <div class="add_to_cart">
+                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.Id" asp-route-title="@Model.Title" title="" data-original-title="مشاهده">مشاهده</a>
+                </div>
+            </div>
+            <div class="product_content grid_content">
+                <div class="price_box">
+                    @*<span class="old_price">@product.Price.ToString("#,0") تومان</span>
+                    <span class="current_price">@product.Price.ToString("#,0") تومان</span>*@
+
+
+                    @if (Model.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                    {
+                        <span class="current_price">@((Model.Price * (100 - Model.ProductDiscounts.Where(c => c.ProductId == Model.Id).Select(v => v.Percentage).FirstOrDefault()) / 100).ToString("#,0"))  تومان  </span>
+                        <span class="old_price">@Model.Price.ToString("#,0") تومان</span>
+                    }
+                    else
+                    {
+
+                        <span class="current_price">@Model.Price.ToString("#,0")  تومان  </span>
+                    }
+                </div>
+                <div class="product_ratings">
+                    <ul>
+                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                    </ul>
+                </div>
+                <h3 class="product_name grid_name"><a href="product-details.html">@Model.Title</a></h3>
+            </div>
+            <div class="product_content list_content">
+                <div class="left_caption">
+                    <div class="price_box">
+                        @* <span class="old_price">86,000 تومان</span> *@
+                        <span class="current_price">@Model.Price.ToString("#,0") تومان</span>
+                    </div>
+                    <h3 class="product_name"><a href="product-details.html">@Model.Title</a></h3>
+                    <div class="product_ratings">
+                        <ul>
+                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="product_desc">
+                        <p>@Model.ShortDescription</p>
+                    </div>
+                </div>
+                <div class="right_caption">
+                    <div class="add_to_cart">
+                        <a href="cart.html" title="" data-original-title="افزودن به سبد">افزودن به سبد</a>
+                    </div>
+                    <div class="action_links">
+                        <ul>
+                            <li class="wishlist"><a href="wishlist.html" title="" data-original-title="افزودن به علاقه‌مندی‌ها"><i class="fa fa-heart-o" aria-hidden="true"></i> افزودن به علاقه‌مندی‌ها</a></li>
+                            <li class="compare"><a href="#" title="" data-original-title="مقایسه"><span class="ion-levels"></span> مقایسه</a></li>
+                            <li class="quick_button">
+                                <a href="#" data-toggle="modal" data-target="#modal_box" title="" data-original-title="مشاهده سریع"> <span class="ion-ios-search-strong"></span> نمایش سریع</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </figure>
+    </article>
+</div>

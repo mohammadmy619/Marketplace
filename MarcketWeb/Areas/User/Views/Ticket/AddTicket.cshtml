@@ -1,0 +1,124 @@
+﻿@using MarcketDataLayer.Entities.ContactUs
+
+@model MarcketDataLayer.DTOs.Contacts.AddTicketViewModel
+@{
+    ViewData["Title"] = "ثبت تیکت جدید";
+}
+
+
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+    <script src="~/js/ckeditor.js"></script>
+    <script>
+
+
+        ClassicEditor.create(document.getElementById('Text'),
+            {
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        '|',
+                        'fontSize',
+                        'fontColor',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'undo',
+                        'redo',
+                        'codeBlock'
+                    ]
+                },
+                language: 'fa',
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                licenseKey: '',
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/Uploader/UploadImage'
+
+
+
+
+
+                }
+            
+        });
+
+    </script>
+
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    <div class="account_login_form">
+                                        <form asp-area="User" asp-controller="Ticket" asp-action="AddTicket">
+                                            <label>عنوان</label>
+                                            <input type="text" asp-for="Title">
+                                            <span class="text-danger" asp-validation-for="Title"></span>
+                                            <br />
+                                            <label>بخش مورد نظر</label>
+                                            <select class="form-control" asp-for="TicketSection" asp-items="@(Html.GetEnumSelectList<TicketSection>())"></select>
+                                            <span class="text-danger" asp-validation-for="TicketSection"></span>
+                                            <br />
+                                            <label>اولویت</label>
+                                            <select class="form-control" asp-for="TicketSection" asp-items="@(Html.GetEnumSelectList<TicketPriority>())"></select>
+                                            <span class="text-danger" asp-validation-for="TicketPriority"></span>
+                                            <br />
+                                            <label>متن پیام</label>
+                                            <textarea class="form-control" asp-for="Text" rows="10" ckeditor="2"></textarea>
+                                            <span class="text-danger" asp-validation-for="Text"></span>
+                                            <br />
+                                            <div class="save_button primary_btn default_button">
+                                                <button type="submit">ثبت</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

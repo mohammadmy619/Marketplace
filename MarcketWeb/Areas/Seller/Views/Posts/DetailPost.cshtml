@@ -1,0 +1,147 @@
+﻿@using MarcketAppliction.Utils
+@using MarcketAppliction.EntitiesExtensions
+@using MarcketAppliction.Extensions
+@using MarcketDataLayer.Entities.ProductOrder
+@model MarcketDataLayer.DTOs.Post.DetailPostDTO
+
+
+@{
+    ViewData["Title"] = "DetailPost";
+}
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>سبد خرید</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shopping_cart_area mt-60" id="user-open-order-wrapper">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="table_desc">
+                    <div class="cart_page table-responsive">
+
+                        <table>
+                            <thead>
+                                <tr>
+
+                                    <th class="product_thumb">تصویر</th>
+                                    <th class="product_name">محصول</th>
+                                    <th class="product_name">رنگ محصول</th>
+                                    <th class="product-price">قیمت</th>
+                                    <th class="product_quantity">تعداد</th>
+                                    <th class="product-price">تخفیف</th>
+                                    <th class="product_total">جمع کل</th>
+                                    <th class="product_name">وضیعت ارسال</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+
+                                    <td class="product_thumb">
+                                        <a href="#"><img src="@(PathExtension.ProductThumbnailImage + Model.ProductImageName)" alt=""></a>
+                                    </td>
+                                    <td class="product_name"><a href="#">@Model.ProductTitle</a></td>
+                                    <td class="product_name"><a href="#">@Model.ColorName</a></td>
+                                    <td class="product-price">@((Model.ProductPrice + Model.ProductColorPrice).ToString("#,0")) تومان</td>
+
+                                    <td class="product_quantity">
+                                        <label>تعداد</label>
+                                        @Model.Count
+                                    </td>
+                                    <td class="product-price">
+                                        @Model.GetOrderDetailWithDiscountPrice()
+                                    </td>
+                                    <td class="product_total">@Model.GetTotalAmountByDiscount().ToString("#,0") تومان</td>
+                                    <td class="product_total">@Model.Poststatus.GetEnumName()</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--coupon code area start-->
+        <div class="coupon_area">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="coupon_code left">
+                        <h3 style="background-color:#00ff90;">مشخصات خریدار </h3>
+                        <div class="coupon_inner">
+                            <label>نام کاربری</label>
+                            <p>@Model.FirstName </p>
+                            <label>نام خانوادگی</label>
+                            <p>@Model.LastName </p>
+                            <label>شماره موبایل</label>
+                            <p>@Model.Mobile </p>
+                            <label>ایمیل </label>
+                            <p>@Model.Email </p>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="coupon_code right">
+                        <h3 style="background-color:#ff6a00;">تعین وضیعت ارسال</h3>
+                        <label>وضیعت فعلی</label>
+
+                        <label>@Model.Poststatus.GetEnumName()</label>
+                        <div class="coupon_inner">
+
+                            <form asp-action="DetailPost" asp-controller="Posts" asp-area="Seller">
+                                <input type="hidden" name="PostId" value="@Model.Id" />
+
+
+                                <select class="select_option" name="poststatus" asp-items="@Html.GetEnumSelectList<Poststatus>()">
+                                </select>
+
+
+
+                                <input type="submit" value="ویرایش وضیعت" class="btn btn-success " style="margin-right:135px;background-color:forestgreen;" />
+
+                            </form>
+                            <br />
+                            <br />
+                            <br />
+                            <div class="checkout_btn">
+                                <a asp-area="Seller" asp-controller="Posts" asp-action="Index">بازگشت به لیست</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <!--coupon code area end-->
+
+    </div>
+</div>
+@*<select class="form-control" name="selectGroup" id="select1">
+        @foreach (var item in group)
+        {
+            <option value="@item.GroupID">@item.GroupTitle</option>
+
+        }
+
+
+    </select>*@

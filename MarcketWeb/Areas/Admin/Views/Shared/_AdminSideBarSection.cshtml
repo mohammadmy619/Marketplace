@@ -1,0 +1,190 @@
+﻿<!-- Page Sidebar -->
+<div class="page-sidebar" id="sidebar">
+    <!-- Page Sidebar Header-->
+    <div class="sidebar-header-wrapper">
+        <input type="text" class="searchinput" />
+        <i class="searchicon fa fa-search"></i>
+        <div class="searchhelper">به جستجوی صفحات، گزارشات، پیام ها و ایمیل خود بپردازید</div>
+    </div>
+    <!-- /Page Sidebar Header -->
+    <!-- Sidebar Menu -->
+    <ul class="nav sidebar-menu">
+        <!--Dashboard-->
+        <li>
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                <i class="menu-icon glyphicon glyphicon-home"></i>
+                <span class="menu-text"> داشبورد </span>
+            </a>
+        </li>
+
+        <!--UI Elements-->
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-desktop"></i>
+                <span class="menu-text"> مدیریت فروشندگان </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Seller" asp-action="SellerRequests">
+                        <span class="menu-text">درخواست های فروشندگی</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-bookmark"></i>
+                <span class="menu-text"> مدیریت محصولات </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Index">
+                        <span class="menu-text">لیست محصولات</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Categores" asp-action="Index">
+                        <span class="menu-text">مدریت گروه ها</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-edit"></i>
+                <span class="menu-text"> مدیریت نظرات وتماس با ما  </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="CommentProducts" asp-action="Index">
+                        <span class="menu-text">مدیریت نظرات محصولات </span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="ContactUs" asp-action="Index">
+                        <span class="menu-text">تماس با ما پیغام ها</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Ticket" asp-action="Index">
+                        <span class="menu-text">مدریت تیکت ها</span>
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-magnet"></i>
+                <span class="menu-text"> مدیریت سایت  </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="DefaultSiteSetting" asp-action="SiteSetting">
+                        <span class="menu-text">مدیریت نشانی ها </span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="DefaultSiteSetting" asp-action="GetAllSliders">
+                        <span class="menu-text">مدریت اسلایدر </span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="DefaultSiteSetting" asp-action="Banner">
+                        <span class="menu-text">مدریت بنر ها </span>
+                    </a>
+                </li>
+            </ul>
+
+
+
+        </li>
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-user"></i>
+                <span class="menu-text"> مدریت کاربران و دسترسی ها </span>
+
+                <i class="menu-expand"></i>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="UserManege" asp-action="FilterUser">
+                        <span class="menu-text">کاربران  </span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="UserManege" asp-action="FilterRoles">
+                        <span class="menu-text">مدریت نقش ها  </span>
+                    </a>
+                </li>
+            </ul>
+
+
+        </li>
+
+
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-archive"></i>
+                <span class="menu-text">مدریت گروه ومقالات</span>
+
+                <i class="menu-expand"></i>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Articles" asp-action="FilterGroups">
+                        <span class="menu-text">مدریت گروه ها  </span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Articles" asp-action="FilterArticles">
+
+                        <span class="menu-text">مدریت مقالات  </span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="submenu">
+                <li>
+                    <a asp-area="Admin" asp-controller="Articles" asp-action="ManegeComment">
+
+                        <span class="menu-text">مدریت کامنت ها  </span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!-- /Sidebar Menu -->
+</div>
+<!-- /Page Sidebar -->

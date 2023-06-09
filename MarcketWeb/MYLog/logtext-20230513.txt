@@ -1,0 +1,460 @@
+2023-05-13T22:54:12.4833618+03:30  [INF] User profile is available. Using '"C:\Users\Mohammad\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2023-05-13T22:54:13.2394191+03:30  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2023-05-13T22:54:13.2499406+03:30  [INF] Hosting environment: "Development" (bc5a1a4e)
+2023-05-13T22:54:13.2551227+03:30  [INF] Content root path: "C:\Users\Mohammad\source\repos\MarcketplaseV2\MarcketWeb" (cc26f24e)
+2023-05-13T22:54:13.3421668+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/ - - (ca22a1cb)
+2023-05-13T22:54:14.1288072+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] No cached response available for this request. (4ce42171)
+2023-05-13T22:54:14.1395363+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executing endpoint '"MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)"' (500cc934)
+2023-05-13T22:54:14.3303639+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.Threading.CancellationToken)" on controller "MarketPlaceWeb.Controllers.HomeController" ("MarcketWeb"). (122b2fdf)
+2023-05-13T22:54:19.3714530+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executing action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)" - Validation state: Valid (dad538d7)
+2023-05-13T22:54:22.4519220+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("133"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[BannerPlacement], [s].[CreateDate], [s].[ImageName], [s].[IsDelete], [s].[LastUpdateDate], [s].[Url]
+FROM [SiteBanners] AS [s]
+WHERE [s].[BannerPlacement] IN (0, 1, 2) AND [s].[IsDelete] = CAST(0 AS bit)" (0723d8ff)
+2023-05-13T22:54:23.4895667+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("142"ms) [Parameters=["@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[DiscountNumber], [t].[ExpireDate], [t].[IsDelete], [t].[LastUpdateDate], [t].[Percentage], [t].[ProductId], [t].[Id0], [t].[CreateDate0], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete0], [t].[LastUpdateDate0], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT [p].[Id], [p].[CreateDate], [p].[DiscountNumber], [p].[ExpireDate], [p].[IsDelete], [p].[LastUpdateDate], [p].[Percentage], [p].[ProductId], [p0].[Id] AS [Id0], [p0].[CreateDate] AS [CreateDate0], [p0].[Description], [p0].[ImageName], [p0].[IsActive], [p0].[IsDelete] AS [IsDelete0], [p0].[LastUpdateDate] AS [LastUpdateDate0], [p0].[Price], [p0].[ProductAcceptOrRejectDescription], [p0].[ProductAcceptanceState], [p0].[Salescount], [p0].[SellerId], [p0].[ShortDescription], [p0].[SiteProfit], [p0].[Title], [p0].[Visit]
+    FROM [ProductDiscounts] AS [p]
+    INNER JOIN [Products] AS [p0] ON [p].[ProductId] = [p0].[Id]
+    WHERE [p].[ExpireDate] > GETDATE() AND [p].[DiscountNumber] > 0 AND [p].[IsDelete] = CAST(0 AS bit) AND [p0].[IsDelete] = CAST(0 AS bit) AND [p0].[ProductAcceptanceState] = 1 AND [p0].[IsActive] = CAST(1 AS bit)
+    ORDER BY [p].[ExpireDate] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id0] = [p1].[ProductId]
+ORDER BY [t].[ExpireDate] DESC, [t].[Id], [t].[Id0]" (0723d8ff)
+2023-05-13T22:54:23.6772649+03:30 80000002-0000-fe00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T22:54:23.7314009+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("21"ms) [Parameters=["@__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t0].[Id], [t0].[CreateDate], [t0].[Description], [t0].[ImageName], [t0].[IsActive], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[Price], [t0].[ProductAcceptOrRejectDescription], [t0].[ProductAcceptanceState], [t0].[Salescount], [t0].[SellerId], [t0].[ShortDescription], [t0].[SiteProfit], [t0].[Title], [t0].[Visit], [p0].[Id], [p0].[CreateDate], [p0].[DiscountNumber], [p0].[ExpireDate], [p0].[IsDelete], [p0].[LastUpdateDate], [p0].[Percentage], [p0].[ProductId], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT TOP(@__p_0) [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit]
+    FROM (
+        SELECT DISTINCT [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+        FROM [Products] AS [p]
+        WHERE [p].[ProductAcceptanceState] = 1 AND [p].[IsActive] = CAST(1 AS bit) AND [p].[IsDelete] = CAST(0 AS bit)
+    ) AS [t]
+    ORDER BY [t].[Salescount] DESC
+) AS [t0]
+LEFT JOIN [ProductDiscounts] AS [p0] ON [t0].[Id] = [p0].[ProductId]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t0].[Id] = [p1].[ProductId]
+ORDER BY [t0].[Salescount] DESC, [t0].[Id], [p0].[Id]" (0723d8ff)
+2023-05-13T22:54:54.9504090+03:30 80000002-0000-fe00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T22:54:54.9740234+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("10"ms) [Parameters=["@__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t0].[Id], [t0].[CreateDate], [t0].[Description], [t0].[ImageName], [t0].[IsActive], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[Price], [t0].[ProductAcceptOrRejectDescription], [t0].[ProductAcceptanceState], [t0].[Salescount], [t0].[SellerId], [t0].[ShortDescription], [t0].[SiteProfit], [t0].[Title], [t0].[Visit], [p0].[Id], [p0].[CreateDate], [p0].[DisplayPriority], [p0].[ImageName], [p0].[IsDelete], [p0].[LastUpdateDate], [p0].[ProductId], [p1].[Id], [p1].[CreateDate], [p1].[DiscountNumber], [p1].[ExpireDate], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[Percentage], [p1].[ProductId]
+FROM (
+    SELECT DISTINCT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit]
+    FROM (
+        SELECT TOP(@__p_0) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+        FROM [Products] AS [p]
+        WHERE [p].[ProductAcceptanceState] = 1 AND [p].[IsActive] = CAST(1 AS bit) AND [p].[IsDelete] = CAST(0 AS bit)
+        ORDER BY [p].[Visit]
+    ) AS [t]
+) AS [t0]
+LEFT JOIN [ProductGalleries] AS [p0] ON [t0].[Id] = [p0].[ProductId]
+LEFT JOIN [ProductDiscounts] AS [p1] ON [t0].[Id] = [p1].[ProductId]
+ORDER BY [t0].[Id], [p0].[Id]" (0723d8ff)
+2023-05-13T22:54:55.0058514+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[CreateDate], [a].[GroupDescriptison], [a].[GroupTitle], [a].[ImageName], [a].[IsDelete], [a].[LastUpdateDate]
+FROM [ArticlesGroups] AS [a]" (0723d8ff)
+2023-05-13T22:54:55.0292163+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 35648.0471ms. (50a9e262)
+2023-05-13T22:54:55.0943722+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2023-05-13T22:54:55.3351716+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CreateDate], [s].[Description], [s].[ImageName], [s].[IsActive], [s].[IsDelete], [s].[LastUpdateDate], [s].[Link], [s].[MainHeader], [s].[SecondHeader]
+FROM [Slider] AS [s]
+WHERE [s].[IsDelete] = CAST(0 AS bit) AND [s].[IsActive] = CAST(1 AS bit)" (0723d8ff)
+2023-05-13T22:54:55.5829676+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("10"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[CreateDate], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[ParentId], [p].[Title], [p].[UrlName]
+FROM [ProductCategories] AS [p]
+WHERE ([p].[ParentId] IS NULL) AND [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit)
+ORDER BY NEWID()" (0723d8ff)
+2023-05-13T22:54:55.9908028+03:30 80000002-0000-fe00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T22:54:56.0739978+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("59"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__category_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId], [p2].[Id], [p2].[CreateDate], [p2].[DiscountNumber], [p2].[ExpireDate], [p2].[IsDelete], [p2].[LastUpdateDate], [p2].[Percentage], [p2].[ProductId], [t0].[Id], [t0].[CreateDate], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[ProductCategoryId], [t0].[ProductId], [t0].[Id0], [t0].[CreateDate0], [t0].[IsActive], [t0].[IsDelete0], [t0].[LastUpdateDate0], [t0].[ParentId], [t0].[Title], [t0].[UrlName]
+FROM (
+    SELECT TOP(@__p_1) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit) AND [p].[ProductAcceptanceState] = 1 AND EXISTS (
+        SELECT 1
+        FROM [ProductSelectedCategories] AS [p0]
+        WHERE [p].[Id] = [p0].[ProductId] AND [p0].[ProductCategoryId] = @__category_Id_0)
+    ORDER BY [p].[CreateDate] DESC
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+LEFT JOIN [ProductDiscounts] AS [p2] ON [t].[Id] = [p2].[ProductId]
+LEFT JOIN (
+    SELECT [p3].[Id], [p3].[CreateDate], [p3].[IsDelete], [p3].[LastUpdateDate], [p3].[ProductCategoryId], [p3].[ProductId], [p4].[Id] AS [Id0], [p4].[CreateDate] AS [CreateDate0], [p4].[IsActive], [p4].[IsDelete] AS [IsDelete0], [p4].[LastUpdateDate] AS [LastUpdateDate0], [p4].[ParentId], [p4].[Title], [p4].[UrlName]
+    FROM [ProductSelectedCategories] AS [p3]
+    INNER JOIN [ProductCategories] AS [p4] ON [p3].[ProductCategoryId] = [p4].[Id]
+    WHERE ([p4].[ParentId] IS NULL) AND [p3].[IsDelete] = CAST(0 AS bit) AND [p3].[ProductCategoryId] = @__category_Id_0
+) AS [t0] ON [t].[Id] = [t0].[ProductId]
+ORDER BY [t].[CreateDate] DESC, [t].[Id], [p1].[Id], [p2].[Id], [t0].[Id]" (0723d8ff)
+2023-05-13T22:54:56.2466044+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [s].[Id], [s].[AboutUs], [s].[Address], [s].[CopyRight], [s].[CreateDate], [s].[Email], [s].[FaceBook], [s].[FooterText], [s].[Instgram], [s].[IsDefault], [s].[IsDelete], [s].[LastUpdateDate], [s].[MapScript], [s].[Mobile], [s].[Phone], [s].[Sitelogo], [s].[Sitetitle], [s].[Telegram], [s].[twitter]
+FROM [SiteSettings] AS [s]
+WHERE [s].[IsDefault] = CAST(1 AS bit) AND [s].[IsDelete] = CAST(0 AS bit)" (0723d8ff)
+2023-05-13T22:54:56.2732887+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [u].[Id], [u].[Avatar], [u].[CreateDate], [u].[Email], [u].[EmailActiveCode], [u].[FirstName], [u].[IsBlocked], [u].[IsDelete], [u].[IsEmailActive], [u].[IsMobileActive], [u].[LastName], [u].[LastUpdateDate], [u].[Mobile], [u].[MobileActiveCode], [u].[Password]
+FROM [User] AS [u]
+WHERE 0 = 1" (0723d8ff)
+2023-05-13T22:54:56.2901559+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[CreateDate], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[ParentId], [p].[Title], [p].[UrlName]
+FROM [ProductCategories] AS [p]
+WHERE [p].[IsActive] = CAST(1 AS bit) AND [p].[IsDelete] = CAST(0 AS bit)" (0723d8ff)
+2023-05-13T22:54:56.4661601+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("6"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Orders] AS [o]
+        WHERE [o].[UserId] = @__userId_0 AND [o].[IsPaid] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END" (0723d8ff)
+2023-05-13T22:54:56.5541647+03:30 80000002-0000-fe00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T22:54:56.6553508+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("60"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[IsDelete], [t].[IsPaid], [t].[LastUpdateDate], [t].[PaymentDate], [t].[TracingCode], [t].[UserId], [t0].[Id], [t0].[Count], [t0].[CreateDate], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[OrderId], [t0].[ProductColorId], [t0].[ProductColorPrice], [t0].[ProductId], [t0].[ProductPrice], [t0].[Id0], [t0].[ColorCode], [t0].[ColorName], [t0].[CreateDate0], [t0].[IsDelete0], [t0].[LastUpdateDate0], [t0].[Price], [t0].[ProductId0], [t0].[Id1], [t0].[CreateDate1], [t0].[Description], [t0].[ImageName], [t0].[IsActive], [t0].[IsDelete1], [t0].[LastUpdateDate1], [t0].[Price0], [t0].[ProductAcceptOrRejectDescription], [t0].[ProductAcceptanceState], [t0].[Salescount], [t0].[SellerId], [t0].[ShortDescription], [t0].[SiteProfit], [t0].[Title], [t0].[Visit], [t0].[Id2], [t0].[CreateDate2], [t0].[DiscountNumber], [t0].[ExpireDate], [t0].[IsDelete2], [t0].[LastUpdateDate2], [t0].[Percentage], [t0].[ProductId1]
+FROM (
+    SELECT TOP(2) [o].[Id], [o].[CreateDate], [o].[Description], [o].[IsDelete], [o].[IsPaid], [o].[LastUpdateDate], [o].[PaymentDate], [o].[TracingCode], [o].[UserId]
+    FROM [Orders] AS [o]
+    WHERE [o].[UserId] = @__userId_0 AND [o].[IsPaid] = CAST(0 AS bit)
+) AS [t]
+LEFT JOIN (
+    SELECT [o0].[Id], [o0].[Count], [o0].[CreateDate], [o0].[IsDelete], [o0].[LastUpdateDate], [o0].[OrderId], [o0].[ProductColorId], [o0].[ProductColorPrice], [o0].[ProductId], [o0].[ProductPrice], [p].[Id] AS [Id0], [p].[ColorCode], [p].[ColorName], [p].[CreateDate] AS [CreateDate0], [p].[IsDelete] AS [IsDelete0], [p].[LastUpdateDate] AS [LastUpdateDate0], [p].[Price], [p].[ProductId] AS [ProductId0], [p0].[Id] AS [Id1], [p0].[CreateDate] AS [CreateDate1], [p0].[Description], [p0].[ImageName], [p0].[IsActive], [p0].[IsDelete] AS [IsDelete1], [p0].[LastUpdateDate] AS [LastUpdateDate1], [p0].[Price] AS [Price0], [p0].[ProductAcceptOrRejectDescription], [p0].[ProductAcceptanceState], [p0].[Salescount], [p0].[SellerId], [p0].[ShortDescription], [p0].[SiteProfit], [p0].[Title], [p0].[Visit], [t1].[Id] AS [Id2], [t1].[CreateDate] AS [CreateDate2], [t1].[DiscountNumber], [t1].[ExpireDate], [t1].[IsDelete] AS [IsDelete2], [t1].[LastUpdateDate] AS [LastUpdateDate2], [t1].[Percentage], [t1].[ProductId] AS [ProductId1]
+    FROM [OrderDetails] AS [o0]
+    LEFT JOIN [ProductColor] AS [p] ON [o0].[ProductColorId] = [p].[Id]
+    INNER JOIN [Products] AS [p0] ON [o0].[ProductId] = [p0].[Id]
+    LEFT JOIN (
+        SELECT [p1].[Id], [p1].[CreateDate], [p1].[DiscountNumber], [p1].[ExpireDate], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[Percentage], [p1].[ProductId]
+        FROM [ProductDiscounts] AS [p1]
+        WHERE [p1].[ExpireDate] > GETDATE() AND [p1].[DiscountNumber] > 0
+    ) AS [t1] ON [p0].[Id] = [t1].[ProductId]
+    WHERE [o0].[IsDelete] = CAST(0 AS bit)
+) AS [t0] ON [t].[Id] = [t0].[OrderId]
+ORDER BY [t].[Id], [t0].[Id], [t0].[Id0], [t0].[Id1], [t0].[CreateDate2]" (0723d8ff)
+2023-05-13T22:54:56.7084361+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Orders] AS [o]
+        WHERE [o].[UserId] = @__userId_0 AND [o].[IsPaid] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END" (0723d8ff)
+2023-05-13T22:54:56.7129687+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[IsDelete], [t].[IsPaid], [t].[LastUpdateDate], [t].[PaymentDate], [t].[TracingCode], [t].[UserId], [t0].[Id], [t0].[Count], [t0].[CreateDate], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[OrderId], [t0].[ProductColorId], [t0].[ProductColorPrice], [t0].[ProductId], [t0].[ProductPrice], [t0].[Id0], [t0].[ColorCode], [t0].[ColorName], [t0].[CreateDate0], [t0].[IsDelete0], [t0].[LastUpdateDate0], [t0].[Price], [t0].[ProductId0], [t0].[Id1], [t0].[CreateDate1], [t0].[Description], [t0].[ImageName], [t0].[IsActive], [t0].[IsDelete1], [t0].[LastUpdateDate1], [t0].[Price0], [t0].[ProductAcceptOrRejectDescription], [t0].[ProductAcceptanceState], [t0].[Salescount], [t0].[SellerId], [t0].[ShortDescription], [t0].[SiteProfit], [t0].[Title], [t0].[Visit], [t0].[Id2], [t0].[CreateDate2], [t0].[DiscountNumber], [t0].[ExpireDate], [t0].[IsDelete2], [t0].[LastUpdateDate2], [t0].[Percentage], [t0].[ProductId1]
+FROM (
+    SELECT TOP(2) [o].[Id], [o].[CreateDate], [o].[Description], [o].[IsDelete], [o].[IsPaid], [o].[LastUpdateDate], [o].[PaymentDate], [o].[TracingCode], [o].[UserId]
+    FROM [Orders] AS [o]
+    WHERE [o].[UserId] = @__userId_0 AND [o].[IsPaid] = CAST(0 AS bit)
+) AS [t]
+LEFT JOIN (
+    SELECT [o0].[Id], [o0].[Count], [o0].[CreateDate], [o0].[IsDelete], [o0].[LastUpdateDate], [o0].[OrderId], [o0].[ProductColorId], [o0].[ProductColorPrice], [o0].[ProductId], [o0].[ProductPrice], [p].[Id] AS [Id0], [p].[ColorCode], [p].[ColorName], [p].[CreateDate] AS [CreateDate0], [p].[IsDelete] AS [IsDelete0], [p].[LastUpdateDate] AS [LastUpdateDate0], [p].[Price], [p].[ProductId] AS [ProductId0], [p0].[Id] AS [Id1], [p0].[CreateDate] AS [CreateDate1], [p0].[Description], [p0].[ImageName], [p0].[IsActive], [p0].[IsDelete] AS [IsDelete1], [p0].[LastUpdateDate] AS [LastUpdateDate1], [p0].[Price] AS [Price0], [p0].[ProductAcceptOrRejectDescription], [p0].[ProductAcceptanceState], [p0].[Salescount], [p0].[SellerId], [p0].[ShortDescription], [p0].[SiteProfit], [p0].[Title], [p0].[Visit], [t1].[Id] AS [Id2], [t1].[CreateDate] AS [CreateDate2], [t1].[DiscountNumber], [t1].[ExpireDate], [t1].[IsDelete] AS [IsDelete2], [t1].[LastUpdateDate] AS [LastUpdateDate2], [t1].[Percentage], [t1].[ProductId] AS [ProductId1]
+    FROM [OrderDetails] AS [o0]
+    LEFT JOIN [ProductColor] AS [p] ON [o0].[ProductColorId] = [p].[Id]
+    INNER JOIN [Products] AS [p0] ON [o0].[ProductId] = [p0].[Id]
+    LEFT JOIN (
+        SELECT [p1].[Id], [p1].[CreateDate], [p1].[DiscountNumber], [p1].[ExpireDate], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[Percentage], [p1].[ProductId]
+        FROM [ProductDiscounts] AS [p1]
+        WHERE [p1].[ExpireDate] > GETDATE() AND [p1].[DiscountNumber] > 0
+    ) AS [t1] ON [p0].[Id] = [t1].[ProductId]
+    WHERE [o0].[IsDelete] = CAST(0 AS bit)
+) AS [t0] ON [t].[Id] = [t0].[OrderId]
+ORDER BY [t].[Id], [t0].[Id], [t0].[Id0], [t0].[Id1], [t0].[CreateDate2]" (0723d8ff)
+2023-05-13T22:54:56.7515226+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("11"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Orders] AS [o]
+        WHERE [o].[UserId] = @__userId_0 AND [o].[IsPaid] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END" (0723d8ff)
+2023-05-13T22:54:56.7647821+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("9"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[IsDelete], [t].[IsPaid], [t].[LastUpdateDate], [t].[PaymentDate], [t].[TracingCode], [t].[UserId], [t0].[Id], [t0].[Count], [t0].[CreateDate], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[OrderId], [t0].[ProductColorId], [t0].[ProductColorPrice], [t0].[ProductId], [t0].[ProductPrice], [t0].[Id0], [t0].[ColorCode], [t0].[ColorName], [t0].[CreateDate0], [t0].[IsDelete0], [t0].[LastUpdateDate0], [t0].[Price], [t0].[ProductId0], [t0].[Id1], [t0].[CreateDate1], [t0].[Description], [t0].[ImageName], [t0].[IsActive], [t0].[IsDelete1], [t0].[LastUpdateDate1], [t0].[Price0], [t0].[ProductAcceptOrRejectDescription], [t0].[ProductAcceptanceState], [t0].[Salescount], [t0].[SellerId], [t0].[ShortDescription], [t0].[SiteProfit], [t0].[Title], [t0].[Visit], [t0].[Id2], [t0].[CreateDate2], [t0].[DiscountNumber], [t0].[ExpireDate], [t0].[IsDelete2], [t0].[LastUpdateDate2], [t0].[Percentage], [t0].[ProductId1]
+FROM (
+    SELECT TOP(2) [o].[Id], [o].[CreateDate], [o].[Description], [o].[IsDelete], [o].[IsPaid], [o].[LastUpdateDate], [o].[PaymentDate], [o].[TracingCode], [o].[UserId]
+    FROM [Orders] AS [o]
+    WHERE [o].[UserId] = @__userId_0 AND [o].[IsPaid] = CAST(0 AS bit)
+) AS [t]
+LEFT JOIN (
+    SELECT [o0].[Id], [o0].[Count], [o0].[CreateDate], [o0].[IsDelete], [o0].[LastUpdateDate], [o0].[OrderId], [o0].[ProductColorId], [o0].[ProductColorPrice], [o0].[ProductId], [o0].[ProductPrice], [p].[Id] AS [Id0], [p].[ColorCode], [p].[ColorName], [p].[CreateDate] AS [CreateDate0], [p].[IsDelete] AS [IsDelete0], [p].[LastUpdateDate] AS [LastUpdateDate0], [p].[Price], [p].[ProductId] AS [ProductId0], [p0].[Id] AS [Id1], [p0].[CreateDate] AS [CreateDate1], [p0].[Description], [p0].[ImageName], [p0].[IsActive], [p0].[IsDelete] AS [IsDelete1], [p0].[LastUpdateDate] AS [LastUpdateDate1], [p0].[Price] AS [Price0], [p0].[ProductAcceptOrRejectDescription], [p0].[ProductAcceptanceState], [p0].[Salescount], [p0].[SellerId], [p0].[ShortDescription], [p0].[SiteProfit], [p0].[Title], [p0].[Visit], [t1].[Id] AS [Id2], [t1].[CreateDate] AS [CreateDate2], [t1].[DiscountNumber], [t1].[ExpireDate], [t1].[IsDelete] AS [IsDelete2], [t1].[LastUpdateDate] AS [LastUpdateDate2], [t1].[Percentage], [t1].[ProductId] AS [ProductId1]
+    FROM [OrderDetails] AS [o0]
+    LEFT JOIN [ProductColor] AS [p] ON [o0].[ProductColorId] = [p].[Id]
+    INNER JOIN [Products] AS [p0] ON [o0].[ProductId] = [p0].[Id]
+    LEFT JOIN (
+        SELECT [p1].[Id], [p1].[CreateDate], [p1].[DiscountNumber], [p1].[ExpireDate], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[Percentage], [p1].[ProductId]
+        FROM [ProductDiscounts] AS [p1]
+        WHERE [p1].[ExpireDate] > GETDATE() AND [p1].[DiscountNumber] > 0
+    ) AS [t1] ON [p0].[Id] = [t1].[ProductId]
+    WHERE [o0].[IsDelete] = CAST(0 AS bit)
+) AS [t0] ON [t].[Id] = [t0].[OrderId]
+ORDER BY [t].[Id], [t0].[Id], [t0].[Id0], [t0].[Id1], [t0].[CreateDate2]" (0723d8ff)
+2023-05-13T22:54:56.8695377+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("63"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [s].[Id], [s].[AboutUs], [s].[Address], [s].[CopyRight], [s].[CreateDate], [s].[Email], [s].[FaceBook], [s].[FooterText], [s].[Instgram], [s].[IsDefault], [s].[IsDelete], [s].[LastUpdateDate], [s].[MapScript], [s].[Mobile], [s].[Phone], [s].[Sitelogo], [s].[Sitetitle], [s].[Telegram], [s].[twitter]
+FROM [SiteSettings] AS [s]
+WHERE [s].[IsDefault] = CAST(1 AS bit) AND [s].[IsDelete] = CAST(0 AS bit)" (0723d8ff)
+2023-05-13T22:54:57.3807507+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed ViewResult - view "Index" executed in 2309.4963ms. (f66409e9)
+2023-05-13T22:54:57.3949858+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed action "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)" in 43061.2428ms (afa2e885)
+2023-05-13T22:54:57.3974568+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Executed endpoint '"MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)"' (99874f2b)
+2023-05-13T22:54:57.4006031+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] The response could not be cached for this request. (64f94e2e)
+2023-05-13T22:54:57.8696578+03:30 80000002-0002-fb00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/3a04c6bc371a4db9a3784d9d1d10fa39.jpg - - (ca22a1cb)
+2023-05-13T22:54:57.9071323+03:30 80000002-0002-fc00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/img/bg/d40ee26a61294dc5a16cd666802c376c.jpg - - (ca22a1cb)
+2023-05-13T22:54:57.9074687+03:30 80000002-0002-fa00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/ed5f89e7466b41e3b312f96152525ae6.jpg - - (ca22a1cb)
+2023-05-13T22:54:57.9197855+03:30 80000002-0002-fd00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/8b19a8afd41c4241bf35c9fea6e3a9cc.jpg - - (ca22a1cb)
+2023-05-13T22:54:57.9578420+03:30 80000002-0002-fc00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/img/bg/d40ee26a61294dc5a16cd666802c376c.jpg - - - 404 - - 48.9733ms (791a596a)
+2023-05-13T22:54:57.9578412+03:30 80000002-0002-fd00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/8b19a8afd41c4241bf35c9fea6e3a9cc.jpg - - - 404 - - 36.6506ms (791a596a)
+2023-05-13T22:54:57.9578525+03:30 80000002-0002-fa00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/ed5f89e7466b41e3b312f96152525ae6.jpg - - - 404 - - 48.7978ms (791a596a)
+2023-05-13T22:54:57.9579863+03:30 80000002-0002-fb00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/3a04c6bc371a4db9a3784d9d1d10fa39.jpg - - - 404 - - 86.6181ms (791a596a)
+2023-05-13T22:54:57.9626010+03:30 80000002-0001-f900-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/f8b9a705e67d48259c01736ebb1cdeda.jpg - - (ca22a1cb)
+2023-05-13T22:54:57.9707971+03:30 80000002-0002-fe00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/593dcd56e7f7443684b9e30e389dd46b.png - - (ca22a1cb)
+2023-05-13T22:54:57.9708965+03:30 80000002-0001-f900-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/f8b9a705e67d48259c01736ebb1cdeda.jpg - - - 404 - - 8.1435ms (791a596a)
+2023-05-13T22:54:57.9716725+03:30 80000002-0001-fa00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/img/bg/90a36e78de2b4632bf9081f92f4526a0.jpg - - (ca22a1cb)
+2023-05-13T22:54:57.9840882+03:30 80000002-0001-fa00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/img/bg/90a36e78de2b4632bf9081f92f4526a0.jpg - - - 404 - - 12.3978ms (791a596a)
+2023-05-13T22:54:57.9999764+03:30 80000002-0002-fe00-b63f-84710c7967bb [INF] The file "/content/images/product/thumb/593dcd56e7f7443684b9e30e389dd46b.png" was not modified (f1f8d725)
+2023-05-13T22:54:58.0015580+03:30 80000002-0002-fe00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/593dcd56e7f7443684b9e30e389dd46b.png - - - 304 - image/png 30.7553ms (791a596a)
+2023-05-13T22:54:58.0129859+03:30 80000002-0000-fe00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/ - - - 200 - text/html;+charset=utf-8 44679.3960ms (791a596a)
+2023-05-13T22:54:58.1628649+03:30 80000002-0003-fe00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/_framework/aspnetcore-browser-refresh.js - - (ca22a1cb)
+2023-05-13T22:54:58.1660353+03:30 80000002-0003-ff00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/_vs/browserLink - - (ca22a1cb)
+2023-05-13T22:54:58.1864529+03:30 80000002-0003-fe00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/_framework/aspnetcore-browser-refresh.js - - - 200 11990 application/javascript;+charset=utf-8 24.2216ms (791a596a)
+2023-05-13T22:54:58.4576587+03:30 80000002-0003-ff00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 291.5458ms (791a596a)
+2023-05-13T22:54:59.3903541+03:30 80000004-0002-fd00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/3a04c6bc371a4db9a3784d9d1d10fa39.jpg - - (ca22a1cb)
+2023-05-13T22:54:59.3957415+03:30 80000004-0002-fc00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/8b19a8afd41c4241bf35c9fea6e3a9cc.jpg - - (ca22a1cb)
+2023-05-13T22:54:59.3966299+03:30 80000004-0002-fb00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/ed5f89e7466b41e3b312f96152525ae6.jpg - - (ca22a1cb)
+2023-05-13T22:54:59.3981367+03:30 80000004-0002-fa00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/content/images/product/thumb/f8b9a705e67d48259c01736ebb1cdeda.jpg - - (ca22a1cb)
+2023-05-13T22:54:59.4221530+03:30 80000004-0002-fb00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/ed5f89e7466b41e3b312f96152525ae6.jpg - - - 404 - - 25.3246ms (791a596a)
+2023-05-13T22:54:59.4222716+03:30 80000004-0002-fc00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/8b19a8afd41c4241bf35c9fea6e3a9cc.jpg - - - 404 - - 26.4967ms (791a596a)
+2023-05-13T22:54:59.4223054+03:30 80000004-0002-fa00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/f8b9a705e67d48259c01736ebb1cdeda.jpg - - - 404 - - 24.1058ms (791a596a)
+2023-05-13T22:54:59.4644879+03:30 80000004-0002-fd00-b63f-84710c7967bb [INF] Request finished HTTP/2 GET https://localhost:44319/content/images/product/thumb/3a04c6bc371a4db9a3784d9d1d10fa39.jpg - - - 404 - - 74.0603ms (791a596a)
+2023-05-13T23:18:21.0770658+03:30  [INF] User profile is available. Using '"C:\Users\Mohammad\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2023-05-13T23:18:21.5094882+03:30  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2023-05-13T23:18:21.5175692+03:30  [INF] Hosting environment: "Development" (bc5a1a4e)
+2023-05-13T23:18:21.5227959+03:30  [INF] Content root path: "C:\Users\Mohammad\source\repos\MarcketplaseV2\MarcketWeb" (cc26f24e)
+2023-05-13T23:18:21.6050003+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/ - - (ca22a1cb)
+2023-05-13T23:18:21.9896574+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] No cached response available for this request. (4ce42171)
+2023-05-13T23:18:22.0048250+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executing endpoint '"MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)"' (500cc934)
+2023-05-13T23:18:22.1595278+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.Threading.CancellationToken)" on controller "MarketPlaceWeb.Controllers.HomeController" ("MarcketWeb"). (122b2fdf)
+2023-05-13T23:18:27.1476337+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executing action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)" - Validation state: Valid (dad538d7)
+2023-05-13T23:18:28.3471232+03:30 80000004-0000-fe00-b63f-84710c7967bb [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased. (5b3e5b60)
+2023-05-13T23:18:29.2655870+03:30 80000004-0000-fe00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T23:18:31.7239158+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("358"ms) [Parameters=["@__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p0].[Id], [p0].[CreateDate], [p0].[DiscountNumber], [p0].[ExpireDate], [p0].[IsDelete], [p0].[LastUpdateDate], [p0].[Percentage], [p0].[ProductId], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT DISTINCT TOP(@__p_0) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[ProductAcceptanceState] = 1 AND [p].[IsActive] = CAST(1 AS bit) AND [p].[IsDelete] = CAST(0 AS bit)
+) AS [t]
+LEFT JOIN [ProductDiscounts] AS [p0] ON [t].[Id] = [p0].[ProductId]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+ORDER BY [t].[Id], [p0].[Id]" (0723d8ff)
+2023-05-13T23:18:32.4751406+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("157"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[BannerPlacement], [s].[CreateDate], [s].[ImageName], [s].[IsDelete], [s].[LastUpdateDate], [s].[Url]
+FROM [SiteBanners] AS [s]
+WHERE [s].[BannerPlacement] IN (0, 1, 2) AND [s].[IsDelete] = CAST(0 AS bit)" (0723d8ff)
+2023-05-13T23:18:33.5886184+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("104"ms) [Parameters=["@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[DiscountNumber], [t].[ExpireDate], [t].[IsDelete], [t].[LastUpdateDate], [t].[Percentage], [t].[ProductId], [t].[Id0], [t].[CreateDate0], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete0], [t].[LastUpdateDate0], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT [p].[Id], [p].[CreateDate], [p].[DiscountNumber], [p].[ExpireDate], [p].[IsDelete], [p].[LastUpdateDate], [p].[Percentage], [p].[ProductId], [p0].[Id] AS [Id0], [p0].[CreateDate] AS [CreateDate0], [p0].[Description], [p0].[ImageName], [p0].[IsActive], [p0].[IsDelete] AS [IsDelete0], [p0].[LastUpdateDate] AS [LastUpdateDate0], [p0].[Price], [p0].[ProductAcceptOrRejectDescription], [p0].[ProductAcceptanceState], [p0].[Salescount], [p0].[SellerId], [p0].[ShortDescription], [p0].[SiteProfit], [p0].[Title], [p0].[Visit]
+    FROM [ProductDiscounts] AS [p]
+    INNER JOIN [Products] AS [p0] ON [p].[ProductId] = [p0].[Id]
+    WHERE [p].[ExpireDate] > GETDATE() AND [p].[DiscountNumber] > 0 AND [p].[IsDelete] = CAST(0 AS bit) AND [p0].[IsDelete] = CAST(0 AS bit) AND [p0].[ProductAcceptanceState] = 1 AND [p0].[IsActive] = CAST(1 AS bit)
+    ORDER BY [p].[ExpireDate] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id0] = [p1].[ProductId]
+ORDER BY [t].[ExpireDate] DESC, [t].[Id], [t].[Id0]" (0723d8ff)
+2023-05-13T23:18:33.6551622+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[CreateDate], [a].[GroupDescriptison], [a].[GroupTitle], [a].[ImageName], [a].[IsDelete], [a].[LastUpdateDate]
+FROM [ArticlesGroups] AS [a]" (0723d8ff)
+2023-05-13T23:18:33.6816183+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 6521.702ms. (50a9e262)
+2023-05-13T23:18:33.7248373+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2023-05-13T23:18:34.0753238+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CreateDate], [s].[Description], [s].[ImageName], [s].[IsActive], [s].[IsDelete], [s].[LastUpdateDate], [s].[Link], [s].[MainHeader], [s].[SecondHeader]
+FROM [Slider] AS [s]
+WHERE [s].[IsDelete] = CAST(0 AS bit) AND [s].[IsActive] = CAST(1 AS bit)" (0723d8ff)
+2023-05-13T23:18:34.5220322+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[CreateDate], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[ParentId], [p].[Title], [p].[UrlName]
+FROM [ProductCategories] AS [p]
+WHERE ([p].[ParentId] IS NULL) AND [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit)
+ORDER BY NEWID()" (0723d8ff)
+2023-05-13T23:18:34.9317765+03:30 80000004-0000-fe00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T23:18:35.0878671+03:30 80000004-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("119"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__category_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId], [p2].[Id], [p2].[CreateDate], [p2].[DiscountNumber], [p2].[ExpireDate], [p2].[IsDelete], [p2].[LastUpdateDate], [p2].[Percentage], [p2].[ProductId], [t0].[Id], [t0].[CreateDate], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[ProductCategoryId], [t0].[ProductId], [t0].[Id0], [t0].[CreateDate0], [t0].[IsActive], [t0].[IsDelete0], [t0].[LastUpdateDate0], [t0].[ParentId], [t0].[Title], [t0].[UrlName]
+FROM (
+    SELECT TOP(@__p_1) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit) AND [p].[ProductAcceptanceState] = 1 AND EXISTS (
+        SELECT 1
+        FROM [ProductSelectedCategories] AS [p0]
+        WHERE [p].[Id] = [p0].[ProductId] AND [p0].[ProductCategoryId] = @__category_Id_0)
+    ORDER BY [p].[CreateDate] DESC
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+LEFT JOIN [ProductDiscounts] AS [p2] ON [t].[Id] = [p2].[ProductId]
+LEFT JOIN (
+    SELECT [p3].[Id], [p3].[CreateDate], [p3].[IsDelete], [p3].[LastUpdateDate], [p3].[ProductCategoryId], [p3].[ProductId], [p4].[Id] AS [Id0], [p4].[CreateDate] AS [CreateDate0], [p4].[IsActive], [p4].[IsDelete] AS [IsDelete0], [p4].[LastUpdateDate] AS [LastUpdateDate0], [p4].[ParentId], [p4].[Title], [p4].[UrlName]
+    FROM [ProductSelectedCategories] AS [p3]
+    INNER JOIN [ProductCategories] AS [p4] ON [p3].[ProductCategoryId] = [p4].[Id]
+    WHERE ([p4].[ParentId] IS NULL) AND [p3].[IsDelete] = CAST(0 AS bit) AND [p3].[ProductCategoryId] = @__category_Id_0
+) AS [t0] ON [t].[Id] = [t0].[ProductId]
+ORDER BY [t].[CreateDate] DESC, [t].[Id], [p1].[Id], [p2].[Id], [t0].[Id]" (0723d8ff)
+2023-05-13T23:20:50.1015107+03:30  [INF] User profile is available. Using '"C:\Users\Mohammad\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2023-05-13T23:20:50.4303449+03:30  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2023-05-13T23:20:50.4359050+03:30  [INF] Hosting environment: "Development" (bc5a1a4e)
+2023-05-13T23:20:50.4412210+03:30  [INF] Content root path: "C:\Users\Mohammad\source\repos\MarcketplaseV2\MarcketWeb" (cc26f24e)
+2023-05-13T23:20:50.5071981+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/ - - (ca22a1cb)
+2023-05-13T23:20:50.8196791+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] No cached response available for this request. (4ce42171)
+2023-05-13T23:20:50.8271740+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executing endpoint '"MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)"' (500cc934)
+2023-05-13T23:20:50.9685526+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.Threading.CancellationToken)" on controller "MarketPlaceWeb.Controllers.HomeController" ("MarcketWeb"). (122b2fdf)
+2023-05-13T23:20:54.6450920+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executing action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)" - Validation state: Valid (dad538d7)
+2023-05-13T23:21:01.6649007+03:30 80000004-0000-fd00-b63f-84710c7967bb [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased. (5b3e5b60)
+2023-05-13T23:21:02.1170372+03:30 80000004-0000-fd00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T23:21:03.0354852+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("109"ms) [Parameters=["@__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p0].[Id], [p0].[CreateDate], [p0].[DiscountNumber], [p0].[ExpireDate], [p0].[IsDelete], [p0].[LastUpdateDate], [p0].[Percentage], [p0].[ProductId], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT DISTINCT TOP(@__p_0) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[ProductAcceptanceState] = 1 AND [p].[IsActive] = CAST(1 AS bit) AND [p].[IsDelete] = CAST(0 AS bit)
+) AS [t]
+LEFT JOIN [ProductDiscounts] AS [p0] ON [t].[Id] = [p0].[ProductId]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+ORDER BY [t].[Id], [p0].[Id]" (0723d8ff)
+2023-05-13T23:21:07.0931605+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("39"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[BannerPlacement], [s].[CreateDate], [s].[ImageName], [s].[IsDelete], [s].[LastUpdateDate], [s].[Url]
+FROM [SiteBanners] AS [s]
+WHERE [s].[BannerPlacement] IN (0, 1, 2) AND [s].[IsDelete] = CAST(0 AS bit)" (0723d8ff)
+2023-05-13T23:21:09.1772404+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("80"ms) [Parameters=["@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[DiscountNumber], [t].[ExpireDate], [t].[IsDelete], [t].[LastUpdateDate], [t].[Percentage], [t].[ProductId], [t].[Id0], [t].[CreateDate0], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete0], [t].[LastUpdateDate0], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT [p].[Id], [p].[CreateDate], [p].[DiscountNumber], [p].[ExpireDate], [p].[IsDelete], [p].[LastUpdateDate], [p].[Percentage], [p].[ProductId], [p0].[Id] AS [Id0], [p0].[CreateDate] AS [CreateDate0], [p0].[Description], [p0].[ImageName], [p0].[IsActive], [p0].[IsDelete] AS [IsDelete0], [p0].[LastUpdateDate] AS [LastUpdateDate0], [p0].[Price], [p0].[ProductAcceptOrRejectDescription], [p0].[ProductAcceptanceState], [p0].[Salescount], [p0].[SellerId], [p0].[ShortDescription], [p0].[SiteProfit], [p0].[Title], [p0].[Visit]
+    FROM [ProductDiscounts] AS [p]
+    INNER JOIN [Products] AS [p0] ON [p].[ProductId] = [p0].[Id]
+    WHERE [p].[ExpireDate] > GETDATE() AND [p].[DiscountNumber] > 0 AND [p].[IsDelete] = CAST(0 AS bit) AND [p0].[IsDelete] = CAST(0 AS bit) AND [p0].[ProductAcceptanceState] = 1 AND [p0].[IsActive] = CAST(1 AS bit)
+    ORDER BY [p].[ExpireDate] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id0] = [p1].[ProductId]
+ORDER BY [t].[ExpireDate] DESC, [t].[Id], [t].[Id0]" (0723d8ff)
+2023-05-13T23:21:13.4164353+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[CreateDate], [a].[GroupDescriptison], [a].[GroupTitle], [a].[ImageName], [a].[IsDelete], [a].[LastUpdateDate]
+FROM [ArticlesGroups] AS [a]" (0723d8ff)
+2023-05-13T23:21:15.5538867+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 20901.0492ms. (50a9e262)
+2023-05-13T23:21:15.5834591+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2023-05-13T23:21:15.7724748+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CreateDate], [s].[Description], [s].[ImageName], [s].[IsActive], [s].[IsDelete], [s].[LastUpdateDate], [s].[Link], [s].[MainHeader], [s].[SecondHeader]
+FROM [Slider] AS [s]
+WHERE [s].[IsDelete] = CAST(0 AS bit) AND [s].[IsActive] = CAST(1 AS bit)" (0723d8ff)
+2023-05-13T23:21:16.1151283+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("46"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[CreateDate], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[ParentId], [p].[Title], [p].[UrlName]
+FROM [ProductCategories] AS [p]
+WHERE ([p].[ParentId] IS NULL) AND [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit)
+ORDER BY NEWID()" (0723d8ff)
+2023-05-13T23:21:16.4218328+03:30 80000004-0000-fd00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T23:21:16.4932784+03:30 80000004-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("58"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__category_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId], [p2].[Id], [p2].[CreateDate], [p2].[DiscountNumber], [p2].[ExpireDate], [p2].[IsDelete], [p2].[LastUpdateDate], [p2].[Percentage], [p2].[ProductId], [t0].[Id], [t0].[CreateDate], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[ProductCategoryId], [t0].[ProductId], [t0].[Id0], [t0].[CreateDate0], [t0].[IsActive], [t0].[IsDelete0], [t0].[LastUpdateDate0], [t0].[ParentId], [t0].[Title], [t0].[UrlName]
+FROM (
+    SELECT TOP(@__p_1) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit) AND [p].[ProductAcceptanceState] = 1 AND EXISTS (
+        SELECT 1
+        FROM [ProductSelectedCategories] AS [p0]
+        WHERE [p].[Id] = [p0].[ProductId] AND [p0].[ProductCategoryId] = @__category_Id_0)
+    ORDER BY [p].[CreateDate] DESC
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+LEFT JOIN [ProductDiscounts] AS [p2] ON [t].[Id] = [p2].[ProductId]
+LEFT JOIN (
+    SELECT [p3].[Id], [p3].[CreateDate], [p3].[IsDelete], [p3].[LastUpdateDate], [p3].[ProductCategoryId], [p3].[ProductId], [p4].[Id] AS [Id0], [p4].[CreateDate] AS [CreateDate0], [p4].[IsActive], [p4].[IsDelete] AS [IsDelete0], [p4].[LastUpdateDate] AS [LastUpdateDate0], [p4].[ParentId], [p4].[Title], [p4].[UrlName]
+    FROM [ProductSelectedCategories] AS [p3]
+    INNER JOIN [ProductCategories] AS [p4] ON [p3].[ProductCategoryId] = [p4].[Id]
+    WHERE ([p4].[ParentId] IS NULL) AND [p3].[IsDelete] = CAST(0 AS bit) AND [p3].[ProductCategoryId] = @__category_Id_0
+) AS [t0] ON [t].[Id] = [t0].[ProductId]
+ORDER BY [t].[CreateDate] DESC, [t].[Id], [p1].[Id], [p2].[Id], [t0].[Id]" (0723d8ff)
+2023-05-13T23:22:35.1854446+03:30  [INF] User profile is available. Using '"C:\Users\Mohammad\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2023-05-13T23:22:36.2460784+03:30  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2023-05-13T23:22:36.2586295+03:30  [INF] Hosting environment: "Development" (bc5a1a4e)
+2023-05-13T23:22:36.2687119+03:30  [INF] Content root path: "C:\Users\Mohammad\source\repos\MarcketplaseV2\MarcketWeb" (cc26f24e)
+2023-05-13T23:22:36.4562948+03:30 80000007-0000-fe00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/ - - (ca22a1cb)
+2023-05-13T23:22:36.9944824+03:30 80000007-0000-fe00-b63f-84710c7967bb [INF] No cached response available for this request. (4ce42171)
+2023-05-13T23:22:37.0093747+03:30 80000007-0000-fe00-b63f-84710c7967bb [INF] Executing endpoint '"MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)"' (500cc934)
+2023-05-13T23:22:37.5694340+03:30 80000007-0000-fe00-b63f-84710c7967bb [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.Threading.CancellationToken)" on controller "MarketPlaceWeb.Controllers.HomeController" ("MarcketWeb"). (122b2fdf)
+2023-05-13T23:22:44.9181852+03:30 80000007-0000-fe00-b63f-84710c7967bb [INF] Executing action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)" - Validation state: Valid (dad538d7)
+2023-05-13T23:23:00.2683291+03:30 80000007-0000-fe00-b63f-84710c7967bb [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased. (5b3e5b60)
+2023-05-13T23:23:01.3279727+03:30 80000007-0000-fe00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T23:23:03.5327662+03:30 80000007-0000-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("308"ms) [Parameters=["@__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p0].[Id], [p0].[CreateDate], [p0].[DiscountNumber], [p0].[ExpireDate], [p0].[IsDelete], [p0].[LastUpdateDate], [p0].[Percentage], [p0].[ProductId], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT DISTINCT TOP(@__p_0) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[ProductAcceptanceState] = 1 AND [p].[IsActive] = CAST(1 AS bit) AND [p].[IsDelete] = CAST(0 AS bit)
+) AS [t]
+LEFT JOIN [ProductDiscounts] AS [p0] ON [t].[Id] = [p0].[ProductId]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+ORDER BY [t].[Id], [p0].[Id]" (0723d8ff)
+2023-05-13T23:24:14.3979187+03:30  [INF] User profile is available. Using '"C:\Users\Mohammad\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2023-05-13T23:24:14.9033598+03:30  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2023-05-13T23:24:14.9147581+03:30  [INF] Hosting environment: "Development" (bc5a1a4e)
+2023-05-13T23:24:14.9224615+03:30  [INF] Content root path: "C:\Users\Mohammad\source\repos\MarcketplaseV2\MarcketWeb" (cc26f24e)
+2023-05-13T23:24:15.0045701+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Request starting HTTP/2 GET https://localhost:44319/ - - (ca22a1cb)
+2023-05-13T23:24:15.4101027+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] No cached response available for this request. (4ce42171)
+2023-05-13T23:24:15.4267374+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executing endpoint '"MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)"' (500cc934)
+2023-05-13T23:24:15.6074658+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.Threading.CancellationToken)" on controller "MarketPlaceWeb.Controllers.HomeController" ("MarcketWeb"). (122b2fdf)
+2023-05-13T23:24:19.4420934+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executing action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)" - Validation state: Valid (dad538d7)
+2023-05-13T23:24:32.2788353+03:30 80000003-0001-fd00-b63f-84710c7967bb [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased. (5b3e5b60)
+2023-05-13T23:24:32.9292418+03:30 80000003-0001-fd00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T23:24:34.3819860+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("244"ms) [Parameters=["@__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p0].[Id], [p0].[CreateDate], [p0].[DiscountNumber], [p0].[ExpireDate], [p0].[IsDelete], [p0].[LastUpdateDate], [p0].[Percentage], [p0].[ProductId], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT DISTINCT TOP(@__p_0) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[ProductAcceptanceState] = 1 AND [p].[IsActive] = CAST(1 AS bit) AND [p].[IsDelete] = CAST(0 AS bit)
+) AS [t]
+LEFT JOIN [ProductDiscounts] AS [p0] ON [t].[Id] = [p0].[ProductId]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+ORDER BY [t].[Id], [p0].[Id]" (0723d8ff)
+2023-05-13T23:24:49.3190569+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("44"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[BannerPlacement], [s].[CreateDate], [s].[ImageName], [s].[IsDelete], [s].[LastUpdateDate], [s].[Url]
+FROM [SiteBanners] AS [s]
+WHERE [s].[BannerPlacement] IN (0, 1, 2) AND [s].[IsDelete] = CAST(0 AS bit)" (0723d8ff)
+2023-05-13T23:24:55.8181514+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("78"ms) [Parameters=["@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[DiscountNumber], [t].[ExpireDate], [t].[IsDelete], [t].[LastUpdateDate], [t].[Percentage], [t].[ProductId], [t].[Id0], [t].[CreateDate0], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete0], [t].[LastUpdateDate0], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId]
+FROM (
+    SELECT [p].[Id], [p].[CreateDate], [p].[DiscountNumber], [p].[ExpireDate], [p].[IsDelete], [p].[LastUpdateDate], [p].[Percentage], [p].[ProductId], [p0].[Id] AS [Id0], [p0].[CreateDate] AS [CreateDate0], [p0].[Description], [p0].[ImageName], [p0].[IsActive], [p0].[IsDelete] AS [IsDelete0], [p0].[LastUpdateDate] AS [LastUpdateDate0], [p0].[Price], [p0].[ProductAcceptOrRejectDescription], [p0].[ProductAcceptanceState], [p0].[Salescount], [p0].[SellerId], [p0].[ShortDescription], [p0].[SiteProfit], [p0].[Title], [p0].[Visit]
+    FROM [ProductDiscounts] AS [p]
+    INNER JOIN [Products] AS [p0] ON [p].[ProductId] = [p0].[Id]
+    WHERE [p].[ExpireDate] > GETDATE() AND [p].[DiscountNumber] > 0 AND [p].[IsDelete] = CAST(0 AS bit) AND [p0].[IsDelete] = CAST(0 AS bit) AND [p0].[ProductAcceptanceState] = 1 AND [p0].[IsActive] = CAST(1 AS bit)
+    ORDER BY [p].[ExpireDate] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id0] = [p1].[ProductId]
+ORDER BY [t].[ExpireDate] DESC, [t].[Id], [t].[Id0]" (0723d8ff)
+2023-05-13T23:25:12.0181234+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[CreateDate], [a].[GroupDescriptison], [a].[GroupTitle], [a].[ImageName], [a].[IsDelete], [a].[LastUpdateDate]
+FROM [ArticlesGroups] AS [a]" (0723d8ff)
+2023-05-13T23:25:14.4681182+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed action method "MarketPlaceWeb.Controllers.HomeController.Index (MarcketWeb)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 55010.4817ms. (50a9e262)
+2023-05-13T23:25:14.8603446+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2023-05-13T23:25:16.1479118+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CreateDate], [s].[Description], [s].[ImageName], [s].[IsActive], [s].[IsDelete], [s].[LastUpdateDate], [s].[Link], [s].[MainHeader], [s].[SecondHeader]
+FROM [Slider] AS [s]
+WHERE [s].[IsDelete] = CAST(0 AS bit) AND [s].[IsActive] = CAST(1 AS bit)" (0723d8ff)
+2023-05-13T23:25:16.5848955+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("18"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[CreateDate], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[ParentId], [p].[Title], [p].[UrlName]
+FROM [ProductCategories] AS [p]
+WHERE ([p].[ParentId] IS NULL) AND [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit)
+ORDER BY NEWID()" (0723d8ff)
+2023-05-13T23:25:16.7917603+03:30 80000003-0001-fd00-b63f-84710c7967bb [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'. (4c53259e)
+2023-05-13T23:25:16.8745217+03:30 80000003-0001-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("68"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__category_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CreateDate], [t].[Description], [t].[ImageName], [t].[IsActive], [t].[IsDelete], [t].[LastUpdateDate], [t].[Price], [t].[ProductAcceptOrRejectDescription], [t].[ProductAcceptanceState], [t].[Salescount], [t].[SellerId], [t].[ShortDescription], [t].[SiteProfit], [t].[Title], [t].[Visit], [p1].[Id], [p1].[CreateDate], [p1].[DisplayPriority], [p1].[ImageName], [p1].[IsDelete], [p1].[LastUpdateDate], [p1].[ProductId], [p2].[Id], [p2].[CreateDate], [p2].[DiscountNumber], [p2].[ExpireDate], [p2].[IsDelete], [p2].[LastUpdateDate], [p2].[Percentage], [p2].[ProductId], [t0].[Id], [t0].[CreateDate], [t0].[IsDelete], [t0].[LastUpdateDate], [t0].[ProductCategoryId], [t0].[ProductId], [t0].[Id0], [t0].[CreateDate0], [t0].[IsActive], [t0].[IsDelete0], [t0].[LastUpdateDate0], [t0].[ParentId], [t0].[Title], [t0].[UrlName]
+FROM (
+    SELECT TOP(@__p_1) [p].[Id], [p].[CreateDate], [p].[Description], [p].[ImageName], [p].[IsActive], [p].[IsDelete], [p].[LastUpdateDate], [p].[Price], [p].[ProductAcceptOrRejectDescription], [p].[ProductAcceptanceState], [p].[Salescount], [p].[SellerId], [p].[ShortDescription], [p].[SiteProfit], [p].[Title], [p].[Visit]
+    FROM [Products] AS [p]
+    WHERE [p].[IsDelete] = CAST(0 AS bit) AND [p].[IsActive] = CAST(1 AS bit) AND [p].[ProductAcceptanceState] = 1 AND EXISTS (
+        SELECT 1
+        FROM [ProductSelectedCategories] AS [p0]
+        WHERE [p].[Id] = [p0].[ProductId] AND [p0].[ProductCategoryId] = @__category_Id_0)
+    ORDER BY [p].[CreateDate] DESC
+) AS [t]
+LEFT JOIN [ProductGalleries] AS [p1] ON [t].[Id] = [p1].[ProductId]
+LEFT JOIN [ProductDiscounts] AS [p2] ON [t].[Id] = [p2].[ProductId]
+LEFT JOIN (
+    SELECT [p3].[Id], [p3].[CreateDate], [p3].[IsDelete], [p3].[LastUpdateDate], [p3].[ProductCategoryId], [p3].[ProductId], [p4].[Id] AS [Id0], [p4].[CreateDate] AS [CreateDate0], [p4].[IsActive], [p4].[IsDelete] AS [IsDelete0], [p4].[LastUpdateDate] AS [LastUpdateDate0], [p4].[ParentId], [p4].[Title], [p4].[UrlName]
+    FROM [ProductSelectedCategories] AS [p3]
+    INNER JOIN [ProductCategories] AS [p4] ON [p3].[ProductCategoryId] = [p4].[Id]
+    WHERE ([p4].[ParentId] IS NULL) AND [p3].[IsDelete] = CAST(0 AS bit) AND [p3].[ProductCategoryId] = @__category_Id_0
+) AS [t0] ON [t].[Id] = [t0].[ProductId]
+ORDER BY [t].[CreateDate] DESC, [t].[Id], [p1].[Id], [p2].[Id], [t0].[Id]" (0723d8ff)

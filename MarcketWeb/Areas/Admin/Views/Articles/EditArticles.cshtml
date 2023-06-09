@@ -1,0 +1,177 @@
+﻿@model MarcketDataLayer.DTOs.Articles.AddOrEditeArticlesDTO
+@using MarcketAppliction.Utils
+@{
+    ViewData["Title"] = "ویرایش مقاله";
+}
+
+<h2>ویرایش مقاله</h2>
+
+
+
+<style>
+    .ck {
+        height: 400px;
+    }
+</style>
+<img style="width:200px;" src="@(PathExtension.ArticlesOrigin + Model.ImageName )" />
+<hr />
+<div class="row">
+    <div class="col-md-9">
+        <form asp-action="EditArticles" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+            
+            <input asp-for="ArticleId" type="hidden" class="form-control" />
+           
+        </div>
+            @*<div class="form-group">
+            <label asp-for="ArticlesGroupsId" class="control-label"></label>
+            <input asp-for="ArticlesGroupsId" class="form-control" />
+            <span asp-validation-for="ArticlesGroupsId" class="text-danger"></span>
+        </div>*@
+            @{
+                List<MarcketDataLayer.Entities.Articles.ArticlesGroups> group = ViewBag.groupArticle;
+
+                <select class="form-control" name="selectedGroups" id="select1">
+                    @foreach (var item in group)
+                    {
+                        <option value="@item.Id">@item.GroupTitle</option>
+
+                    }
+
+
+                </select>
+            }
+
+            <div class="form-group">
+                <label asp-for="ImageAlt" class="control-label"></label>
+                <input asp-for="ImageAlt" class="form-control" />
+                <span asp-validation-for="ImageAlt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea asp-for="Text" class="form-control"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label"></label>
+                <input asp-for="Tags" class="form-control"  placeholder="کلمات کلیدی را با , جدا کنید" />
+                <span asp-validation-for="Tags" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label>تصویر</label>
+                <input name="img" type="file" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                @if (Model.Mp3name != null)
+                {
+
+                    <label>موزیک فعلی</label>
+
+                    <audio controls="controls">
+                        <source src="@(PathExtension.Articlesmp3Origin + Model.Mp3name)" type="audio/mpeg" />
+                    </audio>
+                }
+                <br />
+
+                <label>موزیک</label>
+
+                <input name="mp3" type="file" class="form-control" accept="MP3,WAV,Ogg" />
+
+            </div>
+            <div class="form-group">
+
+                @if (Model.Videoname != null)
+                {
+
+                    <label>ویدیو  فعلی</label>
+                    <video controls="controls" style="width:300px;">
+                        <source src="~/video/Articles/@Model.Videoname" type="video/mp4" />
+                    </video>
+                    @*<video controls="controls">
+                    <source src="~/video/Articles/2f9a6abf7a6d44149f556667de9595da.webm" type="video/webm" />
+                </video>*@
+
+                }
+                <br />
+                <label>ویدیو</label>
+
+                <input name="video" type="file" class="form-control" accept="MP4,WebM,Ogg" />
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ویرایش" class="btn btn-yellow" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="FilterArticles">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+
+        ClassicEditor.create(document.getElementById('Text'),
+            {
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        '|',
+                        'fontSize',
+                        'fontColor',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'undo',
+                        'redo',
+                        'codeBlock'
+                    ]
+                },
+                language: 'fa',
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                licenseKey: '',
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/Uploader/UploadImage'
+
+
+
+
+
+                }
+
+            });
+
+    </script>
+
+
+}

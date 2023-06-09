@@ -1,0 +1,157 @@
+﻿@model MarcketDataLayer.DTOs.Discount.CreateProductDiscountDto
+@{
+    ViewData["Title"] = "ثبت تخفیف جدید";
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/lib/EasyAutocomplete/easy-autocomplete.min.css" />
+    <link rel="stylesheet" href="/lib/EasyAutocomplete/easy-autocomplete.themes.min.css" />
+    @* <link rel="stylesheet" href="/lib/date-picker/kamadatepicker.min.css" /> *@
+}
+
+
+@section scripts
+{
+    @* <script src="/lib/date-picker/kamadatepicker.min.js"></script> *@
+    <partial name="_JqueryValidators" />
+    @* <script src="/lib/date-picker/kamadatepicker.holidays.js"></script> *@
+    <script src="/lib/EasyAutocomplete/jquery.easy-autocomplete.min.js"></script>
+    <script>
+        /*var customOptions = {
+            placeholder: "روز / ماه / سال"
+            , twodigit: false
+            , closeAfterSelect: false
+            , nextButtonIcon: "fa fa-arrow-circle-right"
+            , previousButtonIcon: "fa fa-arrow-circle-left"
+            , buttonsColor: "blue"
+            , forceFarsiDigits: true
+            , markToday: true
+            , markHolidays: true
+            , highlightSelectedDay: true
+            , sync: true
+            , gotoToday: true
+        }
+        kamaDatepicker('ExpireDate', customOptions);*/
+
+        var options = {
+            url: function (phrase) {
+                return "/seller/products-autocomplete?productName=" + phrase;
+            },
+            getValue: function (element) {
+                return element.title;
+            },
+            list: {
+                match: {
+                    enabled: true
+                },
+                onSelectItemEvent: function () {
+                    var value = $("#ProductName").getSelectedItemData().id;
+
+                    $("#ProductId").val(value).trigger("change");
+                }
+            },
+            theme: "square"
+        };
+
+        $("#ProductName").easyAutocomplete(options);
+
+        $("#ExpireDate").persianDatepicker({
+            months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+            dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
+            shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+            showGregorianDate: !1,
+            persianNumbers: !0,
+            formatDate: "YYYY/MM/DD",
+            selectedBefore: !1,
+            selectedDate: null,
+            startDate: null,
+            endDate: null,
+            prevArrow: '\u25c4',
+            nextArrow: '\u25ba',
+            theme: 'default',
+            alwaysShow: !1,
+            selectableYears: null,
+            selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            cellWidth: 25, // by px
+            cellHeight: 20, // by px
+            fontSize: 13, // by px
+            isRTL: !1,
+            calendarPosition: {
+                x: 0,
+                y: 0,
+            },
+            onShow: function () { },
+            onHide: function () { },
+            onSelect: function () { },
+            onRender: function () { }
+        });
+    </script>
+
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    <div class="account_login_form">
+                                        <form asp-area="Seller" asp-controller="ProductDiscount" asp-action="CreateDiscount">
+                                            <input type="hidden" asp-for="ProductId" />
+                                            <label>محصول مورد نظر</label>
+                                            <input type="text" id="ProductName">
+                                            <br />
+
+                                            <label>تاریخ انقضا</label>
+                                            <input asp-for="ExpireDate" style="width: 100%">
+                                            <span class="text-danger" asp-validation-for="ExpireDate"></span>
+                                            <br />
+
+                                            <label>تعداد تخفیف</label>
+                                            <input asp-for="DiscountNumber">
+                                            <span class="text-danger" asp-validation-for="DiscountNumber"></span>
+                                            <br />
+
+                                            <label>درصد تخفیف</label>
+                                            <input asp-for="Percentage">
+                                            <span class="text-danger" asp-validation-for="Percentage"></span>
+                                            <br />
+
+                                            <div class="save_button primary_btn default_button">
+                                                <button type="submit">ذخیره</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "نتیجه ی پرداخت";
+}
+
+
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="customer_login mt-60">
+    <div class="container">
+        <div class="row">
+            <!--register area start-->
+            <div class="col-lg-6 col-md-6 offset-lg-3 offset-md-3">
+                <div class="account_form register">
+                    <h2>@ViewData["Title"] :</h2>
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <p>خرید شما با موفقیت انجام شد</p>
+                        </div>
+                        <a class="text text-info" href="/user/Final">
+                            مشاهده پرداختی ها 
+                        </a>
+                    }
+
+                    @if (TempData["WarningMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <p>در عملیات پرداخت خطایی رخ داد</p>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!--register area end-->
+        </div>
+    </div>
+</div>
+

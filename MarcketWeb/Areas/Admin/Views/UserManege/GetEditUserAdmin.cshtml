@@ -1,0 +1,137 @@
+﻿@model MarcketDataLayer.DTOs.UserManege.GetEditUser
+@using MarcketAppliction.Utils
+@using MarcketAppliction.Extensions
+@using MarcketDataLayer.Entities.Accuont.RolePermission
+
+@{
+    ViewData["Title"] = $" ویرایش کاربر {Model.FirstName} ";
+    var roles = ViewData["Roles"] as List<Role>;
+}
+}
+
+<h2> ویرایش کاربر @Model.FirstName </h2>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="GetEditUserAdmin" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <input asp-for="UserID" type="hidden" class="form-control" />
+
+
+
+            <label>تصویر کاربر</label>
+            <img src="@(PathExtension.UserAvatarOrigin + Model.Avatar)" width="100" />
+            <br />
+
+            <input type="file" name="img" class="form-control" />
+
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="colored-blue" asp-for="IsEmailActive">
+                                <span class="text">@Html.DisplayNameFor(model => model.IsEmailActive)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="colored-blue" asp-for="IsMobileActive">
+                                <span class="text">@Html.DisplayNameFor(model => model.IsMobileActive)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+
+
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="colored-silver" asp-for="IsBlocked">
+                                <span class="text">@Html.DisplayNameFor(model => model.IsBlocked)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label">رمز عبور</label>
+                <input type="password" asp-for="password" class="form-control" />
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="ویرایش" class="btn btn-warning " />
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">نقش ها</p>
+                        @if (roles != null && roles.Any())
+                        {
+                            @foreach (var role in roles)
+                            {
+                                var isPermissionSelected = Model.RoleIds.Any(s => s == role.Id);
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" @(isPermissionSelected ? "checked" : "") name="@nameof(Model.RoleIds)" value="@role.Id" />
+                                        <span class="text">@role.RoleTitle</span>
+                                    </label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="FilterUser">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

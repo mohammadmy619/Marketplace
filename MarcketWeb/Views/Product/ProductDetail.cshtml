@@ -1,0 +1,684 @@
+﻿@using MarcketAppliction.Utils
+@using MarcketDataLayer.DTOs.Orders
+@using MarcketDataLayer.Entities.Products
+
+@model MarcketDataLayer.DTOs.Products.ProductDetailDTO
+@{
+    ViewData["Title"] = Model.Title;
+    var GetAllbestSells = ViewBag.GetAllbestSells as List<Product>;
+}
+
+@section scripts{
+
+    <partial name="_JqueryValidators" />
+
+
+    @if (Model.ProductColors != null && Model.ProductColors.Any())
+    {
+        var firstColor = Model.ProductColors.FirstOrDefault();
+
+        <script>
+
+
+         
+
+                $('#add_product_to_order_ProductColorId').val(@firstColor.Id)
+
+
+            
+
+        </script>
+    }
+
+
+    <script>
+
+
+      
+        function ToRial(str) {
+
+            str = str.replace(/\,/g, '');
+            var objRegex = new RegExp('(-?[0-9]+)([0-9]{3})');
+
+            while (objRegex.test(str)) {
+                str = str.replace(objRegex, '$1,$2');
+            }
+
+            return str;
+        }
+
+
+
+        //function changeProductPriceBasedOnColor(priceOfColor, colorName) {
+        //    var basePrice = parseInt($('#ProductBasePrice').val(), 0);
+        //    $('.current_price').html((basePrice + priceOfColor) + ' تومان' + ' ( ' + colorName + ' )');
+        /*100 - Model.ProductDiscount.Where(c => c.ProductId == Model.ProductId).Select(v => v.Percentage).FirstOrDefault()) / 100*/
+        //}
+        //var x = $("#Massege").attr("placeholder ", value"پیام خود وارد کنید");
+
+        var x = $("#Massege").attr("placeholder", "پیام خود وارد کنید");
+
+
+
+        function changeProductPriceBasedOnColor(colorId, priceOfColor, colorName) {
+            console.log(colorId, priceOfColor, colorName);
+            var basePrice = parseInt($('#ProductBasePrice').val(), 0);
+            var pricePb = (basePrice + priceOfColor);
+            var m = pricePb.toString();
+            $('.current_price').html((ToRial(m)) + ' تومان' + ' ( ' + colorName + ' )');
+            $('#add_product_to_order_ProductColorId').val(colorId);
+        }
+
+
+        function changeProductPriceBasedOnColorWithDisCuont(colorId, priceOfColor, colorName) {
+
+
+            console.log(colorId, priceOfColor, colorName);
+
+            var basePrice = parseInt($('#ProductBasePrice').val(), 0);
+
+            var NDisCount = parseInt($('#ProductDisCount').val(), 0);
+
+            var DisCount2 = ((100 - NDisCount) / 100);
+            var pricePb = (basePrice + priceOfColor);
+            var Result = pricePb * DisCount2;
+            var m = Result.toString();
+            $('.current_price').html((ToRial(m)) + ' تومان' + ' ( ' + colorName + ' )');
+
+
+
+            var m = Result.toString();
+
+
+
+            console.log(ToRial(m));
+
+            console.log(DisCount2);
+
+            $('#add_product_to_order_ProductColorId').val(colorId);
+        }
+
+
+
+
+
+        $('#number_of_products_in_basket').on('change', function (e) {
+            var numberOfProducts = parseInt(e.target.value, 0);
+            $('#add_product_to_order_Count').val(numberOfProducts);
+        });
+
+        function onSuccessAddProductToOrder(res) {
+            if (res.status === 'Success') {
+                ShowMessage('اعلان', res.message);
+            }
+            else {
+                ShowMessage('اعلان', res.message, 'warning');
+            }
+
+            setTimeout(function () {
+                close_waiting();
+            }, 3000);
+            location.reload();
+        }
+
+
+        $('#submitOrderForm').on('click', function () {
+            $('#addProductToOrderForm').submit();
+            open_waiting();
+        });
+
+
+
+        function OnSuccessComment(res) {
+            open_waiting();
+            if (res.status === "Warning") {
+                setTimeout(function () {
+                    close_waiting();
+                }, 3000);
+
+                ShowMessage('اخطار', res.message, "warning");
+                console.log("mohammad");
+                var d = $("#Massege").val('');
+                var x = $("#Massege").attr("placeholder", "پیام خود وارد کنید");
+                $("#reviews").addClass("show");
+
+                var reviews = document.getElementById("reviews").addClass("  active show");
+                $("#reviews").addClass("active");
+                $("#commentmy").show();
+
+            }
+            if (res.status === "Danger") {
+                setTimeout(function () {
+                    close_waiting();
+                }, 3000);
+                ShowMessage('اخطار', res.message, "error");
+                console.log("mohammad");
+                var d = $("#Massege").val('');
+                var x = $("#Massege").attr("placeholder", "پیام خود وارد کنید");
+                $("#reviews").addClass("show");
+
+                var reviews = document.getElementById("reviews").addClass("  active show");
+                $("#reviews").addClass("active");
+                $("#commentmy").show();
+
+
+            }
+
+            if (res.status != "Error" && res.status != "Danger" && res.status != "error") {
+                console.log("mohammad");
+                var d = $("#Massege").val('');
+                var x = $("#Massege").attr("placeholder", "پیام خود وارد کنید");
+
+                ShowMessage('اعلان موفقیت', "پیام شما  با موفقیت ثبت شد");
+
+
+
+
+                $("#reviews").remove();
+                $("#commentmy").html(res);
+
+                $("#reviews").addClass("active show");
+
+                setTimeout(function () {
+                    close_waiting();
+                }, 3000);
+
+            }
+
+
+
+
+
+        }
+        $("#cccc").on('click',
+            function () {
+                $("#commentmy").hide();
+
+                $("commentmy").css("display", "none")
+                $("#reviews").removeClass("show");
+                $("#reviews").hide();
+
+
+            }
+        );
+
+        $("#ccc2").on('click',
+            function () {
+                $("#commentmy").hide();
+                /*     $("#reviews").remove();*/
+                $("commentmy").css("display", "none")
+                $("#reviews").removeClass("show");
+                $("#reviews").hide();
+
+
+            }
+        );
+
+        $("#xxx2").on('click',
+            function () {
+
+                console.log("zzzzzzzz");
+                $("#commentmy").show();
+                $("#reviews").show();
+                $("#reviews").addClass("active show");
+                $("#info").removeClass("active show");
+                $("#sheet").removeClass("active show");
+
+
+            }
+        );
+    </script>
+
+
+
+}
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li>جزئیات محصول</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--product details start-->
+<div class="product_details mt-60 mb-60">
+    <div class="container">
+        <div class="row">
+            <partial name="_AddProductToCartPartial" model="@(new AddProductToOrderDTO{Count = 1, ProductId = Model.ProductId})" />
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product-details-tab">
+                    <div id="img-1" class="zoomWrapper single-zoom">
+                        <a href="#">
+                            <img id="zoom1" src="@(PathExtension.ProductImage + Model.ImageName)" data-zoom-image="@(PathExtension.ProductImage + Model.ImageName)" alt="big-1">
+                        </a>
+                    </div>
+                    <div class="single-zoom-thumb">
+                        <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+                            <li>
+                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image="@(PathExtension.ProductImage + Model.ImageName)" data-zoom-image="@(PathExtension.ProductImage + Model.ImageName)">
+                                    <img src="@(PathExtension.ProductImage + Model.ImageName)" alt="zo-th-1">
+                                </a>
+
+                            </li>
+                            @if (Model.ProductGalleries != null && Model.ProductGalleries.Any())
+                            {
+                                foreach (var gallery in Model.ProductGalleries)
+                                {
+                                    <li>
+                                        <a href="#" class="elevatezoom-gallery" data-update="" data-image="@(PathExtension.ProductThumbnailImage + gallery.ImageName)" data-zoom-image="@(PathExtension.ProductThumbnailImage + gallery.ImageName)">
+                                            <img src="@(PathExtension.ProductThumbnailImage + gallery.ImageName)" alt="zo-th-1">
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product_d_right">
+
+
+                    <h1>@Model.Title</h1>
+
+                    <div class=" product_ratting">
+                        <ul>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li class="review"><a href="#"> (امتیاز مشتریان) </a></li>
+                        </ul>
+
+                    </div>
+                    <div class="price_box">
+
+
+                        @*&& Model.ProductDiscount.ProductId == Model.ProductId&&Model.ProductDiscount.ExpireDate >DateTime.Now*@
+                        @if (Model.ProductColors != null && Model.ProductColors.Any() && Model.ProductDiscount.Where(z => z.ProductId == Model.ProductId && z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                        {
+                            var firstColor = Model.ProductColors.FirstOrDefault();
+                            var DisCount = Model.ProductDiscount.Where(c => c.ProductId == Model.ProductId).Select(v => v.Percentage).FirstOrDefault();
+                            var resDisCount1 = (100 - DisCount) / 100;
+                            var res = Model.Price + firstColor.Price;
+
+                            <span class="current_price">
+                                @((res * (100 - Model.ProductDiscount.Where(c=>c.ProductId== Model.ProductId).Select(v=>v.Percentage).FirstOrDefault()) / 100).ToString("#,0"))  تومان ( @firstColor.ColorName)
+                            </span>
+
+                            @*<span class="current_price">@(((Model.Price + firstColor.Price) *((100-DisCount) /100 ) ).ToString("#,0 تومان"))  (@firstColor.ColorName) </span>*@
+                        }
+                        else if (Model.ProductColors != null && Model.ProductColors.Any())
+                        {
+
+                            var firstColor = Model.ProductColors.FirstOrDefault();
+                            //var disCount=Model.
+                            <span class="current_price">@((Model.Price + firstColor.Price).ToString("#,0 تومان")) ( @firstColor.ColorName) </span>
+                        }
+                        else
+                        {
+                            <span class="current_price"> @Model.Price.ToString("#,0 تومان") </span>
+                        }
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                    <div class="product_desc">
+                        <p>
+                            @Model.ShortDescription
+                        </p>
+                    </div>
+                    <input type="hidden" name="product_price" value="@Model.Price" id="ProductBasePrice" />
+                    @if (Model.ProductColors != null && Model.ProductColors.Any())
+                    {
+
+                        <div class="product_variant color">
+                            <h3>گزینه های در دسترس</h3>
+                            <label>رنگ</label>
+                            <ul>
+                                @foreach (var color in Model.ProductColors)
+                                {
+
+                                    @if (Model.ProductColors != null && Model.ProductColors.Any() && Model.ProductDiscount.Where(z => z.ProductId == Model.ProductId && z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                    {
+                                        var firstColor = Model.ProductColors.FirstOrDefault();
+
+
+                                        var DisCount = Model.ProductDiscount.Where(c => c.ProductId == Model.ProductId).Select(v => v.Percentage).FirstOrDefault();
+
+                                        <input type="hidden" name="product_price" value="@DisCount" id="ProductDisCount" />
+
+                                        //var disCount=Model.
+                                        @*<span class="current_price">@((Model.Price + firstColor.Price * (100 - Model.ProductDiscount.Where(c => c.ProductId == Model.ProductId).Select(v => v.Percentage).FirstOrDefault()) / 100).ToString("#,0 تومان"))  ( @firstColor.ColorName) </span>*@
+                                        <li style="background: @color.ColorCode">
+
+                                            <a onclick="changeProductPriceBasedOnColorWithDisCuont(@color.Id,@color.Price, '@color.ColorName')"></a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+
+                                        var firstColor = Model.ProductColors.FirstOrDefault();
+                                        //var disCount=Model.
+                                        <li style="background: @color.ColorCode">
+
+                                            <a onclick="changeProductPriceBasedOnColor(@color.Id,@color.Price, '@color.ColorName')"></a>
+                                        </li>
+
+                                    }
+
+
+
+
+                                }
+                            </ul>
+                        </div>
+                    }
+                    <div class="product_variant quantity">
+                        <label>تعداد</label>
+                        <input min="1" max="100" value="1" type="number" id="number_of_products_in_basket">
+                        <button class="button" type="submit" id="submitOrderForm">افزودن به سبد</button>
+
+                    </div>
+                    <div class=" product_d_action">
+                        <ul>
+                            <li><a asp-area="" asp-action="Favorite" asp-route-productid="@Model.ProductId" asp-route-ReturnUrl="@Url.PageLink()" title="افزودن به علاقه‌مندی‌ها">+ افزودن به علاقه‌مندی‌ها</a></li>
+                            <li><a href="#" title="مقایسه">+ مقایسه</a></li>
+                        </ul>
+                    </div>
+                    @*<div class="product_meta">
+                            <span>دسته: <a href="#">پوشاک</a></span>
+                        </div>*@
+
+
+                    <div class="priduct_social">
+                        <ul>
+                            <li><a class="facebook" href="#" title="فیسبوک"><i class="fa fa-facebook"></i> لایک</a></li>
+                            <li><a class="twitter" href="#" title="توییتر"><i class="fa fa-twitter"></i> توییت</a></li>
+                            <li><a class="pinterest" href="#" title="پینترست"><i class="fa fa-pinterest"></i> ذخیره</a></li>
+                            <li><a class="google-plus" href="#" title="گوگل پلاس"><i class="fa fa-google-plus"></i> اشتراک گذاری</a></li>
+                            <li><a class="telegram" href="#" title="تلگرام"><i class="fa fa-telegram"></i> تلگرام</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--product details end-->
+<!--product info start-->
+<div class="product_d_info mb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product_d_inner">
+                    <div class="product_info_button">
+                        <ul class="nav" role="tablist">
+                            <li>
+                                <a id="cccc" class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">توضیحات</a>
+                            </li>
+                            <li>
+                                <a id="ccc2" data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">مشخصات فنی</a>
+                            </li>
+                            <li>
+                                <a id="xxx2" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">نقد برسی </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                            <div class="product_info_content">
+                                @Html.Raw(Model.Description)
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="sheet" role="tabpanel">
+                            <div class="product_d_table">
+                                @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
+                                {
+                                    <div class="product_d_table">
+                                        <table>
+                                            <tbody>
+                                                @foreach (var feature in Model.ProductFeatures)
+                                                {
+                                                    <tr>
+                                                        <td class="first_child">@feature.FeatureTitle</td>
+                                                        <td>@feature.FeatureValue</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                            <div class="product_info_content">
+                                @*<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و</p>*@
+                            </div>
+                        </div>
+
+                        @await Component.InvokeAsync("ShowCommentForProducts", new { ProductID = Model.ProductId })
+
+                        @*<partial name="ShowComment"  model="{new ProductCommet {s }" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--product info end-->
+<!--product area start-->
+<section class="product_area related_products">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2>محصولات مرتبط	</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_carousel product_column5 owl-carousel">
+
+            @foreach (var product in Model.RelatedProducts)
+            {
+                <article class="single_product">
+                    <figure>
+                        <div class="product_thumb">
+                            <a class="primary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title">
+                                <img src="@(PathExtension.ProductImage + product.ImageName)" alt="">
+                            </a>
+                            @if (product.ProductGalleries.Any(s => s.ProductId == product.Id))
+                            {
+                                <a class="secondary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title"><img src="@(PathExtension.ProductThumbnailImage + product.ProductGalleries.Where(x=>x.DisplayPriority==1&&x.ProductId==product.Id).Select(x=>x.ImageName).FirstOrDefault())" alt="@product.Title"></a>
+
+                            }
+
+                            @if (product.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                            {
+
+                                <div class="label_product" style="background-color:gold;">
+                                    <span style="background-color:gold" ; class="label_sale">حراج</span>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="label_product">
+                                    <span class="label_sale">فروش</span>
+                                </div>
+                            }
+
+                            <div class="add_to_cart">
+                                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title" title="" data-original-title="">مشاهده</a>
+                            </div>
+                        </div>
+                        <div class="product_content grid_content">
+                            <div class="price_box">
+                                @* <span class="old_price">86,000 تومان</span> *@
+                                @if (product.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                {
+                                    <span class="current_price2">@((product.Price * (100 - product.ProductDiscounts.Where(c=>c.ProductId== product.Id).Select(v=>v.Percentage).FirstOrDefault()) / 100).ToString("#,0"))  تومان  </span>
+                                    <span class="old_price">@product.Price.ToString("#,0") تومان</span>
+                                }
+                                else
+                                {
+
+                                    <span class="current_price2">@product.Price.ToString("#,0")  تومان  </span>
+                                }
+                            </div>
+                            <div class="product_ratings">
+                                <ul>
+                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                </ul>
+                            </div>
+                            <h3 class="product_name grid_name"><a href="product-details.html">@product.Title</a></h3>
+                        </div>
+                        <div class="product_content list_content">
+                            <div class="left_caption">
+                                <div class="price_box">
+                                    @* <span class="old_price">86,000 تومان</span> *@
+                                    @if (product.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                    {
+                                        <span class="current_price2">@((product.Price * (100 - product.ProductDiscounts.Where(c=>c.ProductId== product.Id).Select(v=>v.Percentage).FirstOrDefault()) / 100).ToString("#,0"))  تومان  </span>
+                                        <span class="old_price">@product.Price.ToString("#,0") تومان</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="current_price2">@product.Price.ToString("#,0")  تومان  </span>
+                                    }
+                                </div>
+                                <h3 class="product_name"><a href="product-details.html">@product.Title</a></h3>
+                                <div class="product_ratings">
+                                    <ul>
+                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product_desc">
+                                    <p>@product.ShortDescription</p>
+                                </div>
+                            </div>
+                            <div class="right_caption">
+                                <div class="add_to_cart">
+                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title" title="" data-original-title="مشاهده">مشاهده</a>
+                                </div>
+                                @*<div class="action_links">
+                                        <ul>
+                                            <li class="wishlist"><a href="wishlist.html" title="" data-original-title="افزودن به علاقه‌مندی‌ها"><i class="fa fa-heart-o" aria-hidden="true"></i> افزودن به علاقه‌مندی‌ها</a></li>
+                                            <li class="compare"><a href="#" title="" data-original-title="مقایسه"><span class="ion-levels"></span> مقایسه</a></li>
+                                            <li class="quick_button">
+                                                <a href="#" data-toggle="modal" data-target="#modal_box" title="" data-original-title="مشاهده سریع"> <span class="ion-ios-search-strong"></span> نمایش سریع</a>
+                                            </li>
+                                        </ul>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </figure>
+                </article>
+            }
+        </div>
+    </div>
+</section>
+<!--product area end-->
+<!--product area start-->
+<section class="product_area upsell_products">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2>محصولات پرفروش	</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_carousel product_column5 owl-carousel">
+            @foreach (var item in GetAllbestSells)
+            {
+
+                <article class="single_product">
+                    <figure>
+                        <div class="product_thumb">
+                            <a class="primary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Id" asp-route-title="@item.Title">
+                                <img src="@(PathExtension.ProductImage + item.ImageName)" alt="">
+                            </a>
+
+                            @if (item.ProductGalleries.Any(s => s.ProductId == item.Id))
+                            {
+                                <a class="secondary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Id" asp-route-title="@item.Title"><img src="@(PathExtension.ProductThumbnailImage + item.ProductGalleries.Where(x=>x.DisplayPriority==1&&x.ProductId==item.Id).Select(x=>x.ImageName).FirstOrDefault())" alt="@item.Title"></a>
+
+                            }
+                            @if (item.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                            {
+
+                                <div class="label_product" style="background-color:gold;">
+                                    <span style="background-color:gold" ; class="label_sale">حراج</span>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="label_product">
+                                    <span class="label_sale">فروش</span>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="add_to_cart">
+                            <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Id" asp-route-title="@item.Title" title="" data-original-title="مشاهده">مشاهده</a>
+                        </div>
+                        <figcaption class="product_content">
+                            <div class="price_box">
+
+
+
+
+
+                                @if (item.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                {
+                                    <span class="current_price2">@((item.Price * (100 - item.ProductDiscounts.Where(c=>c.ProductId==item.Id).Select(v=>v.Percentage).FirstOrDefault()) / 100).ToString("#,0"))  تومان  </span>
+                                    <span class="old_price">@item.Price.ToString("#,0") تومان</span>
+                                }
+                                else
+                                {
+
+                                    <span class="current_price2">@item.Price.ToString("#,0")  تومان  </span>
+                                }
+
+
+                            </div>
+                            <h3 class="product_name"><a href="product-details.html">@item.Title</a></h3>
+                        </figcaption>
+                    </figure>
+                </article>
+
+            }
+
+
+        </div>
+    </div>
+</section>
+<!--product area end-->

@@ -1,0 +1,68 @@
+﻿@model MarcketDataLayer.DTOs.Seller.RequestSellerDTO
+@{
+    ViewData["Title"] = "درخواست پنل فروشندگی";
+}
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    <div class="account_login_form">
+                                        <form asp-area="User" asp-controller="Seller" asp-action="RequestSellerPanel">
+                                            <label>نام فروشگاه</label>
+                                            <input type="text" asp-for="StoreName">
+                                            <span class="text-danger" asp-validation-for="StoreName"></span>
+                                            <br />
+                                            <label>تلفن تماس فروشگاه</label>
+                                            <input type="text" asp-for="Phone">
+                                            <span class="text-danger" asp-validation-for="Phone"></span>
+                                            <br />
+                                            <label>آدرس فروشگاه</label>
+                                            <textarea asp-for="Address" class="form-control" rows="12"></textarea>
+                                            <span class="text-danger" asp-validation-for="Address"></span>
+
+                                            <div class="save_button primary_btn default_button">
+                                                <button type="submit">ثبت اطلاعات</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

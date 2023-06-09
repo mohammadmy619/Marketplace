@@ -1,0 +1,81 @@
+﻿@using MarcketAppliction.Utils
+@using MarcketAppliction.Extensions
+@model MarcketDataLayer.DTOs.Orders.FilterFinalpurchasesDTO
+@{
+    ViewData["Title"] = "پرداختی ها";
+}
+<form asp-area="User" asp-controller="Finalpurchases" asp-action="Index" method="get" id="filter-form">
+    <input type="hidden" asp-for="PageId" />
+
+</form>
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="table-responsive">
+                                @if (Model.Order != null && Model.Order.Any())
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>کد تیکت</th>
+                                                <th>کد پیگیری</th>
+                                                <th>تاریخ</th>
+                                               <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var Order in Model.Order)
+                                            {
+                                            <tr>
+                                                <td>@Order.Id</td>
+                                                <td>@Order.TracingCode</td>
+                                                <td>
+                                                    @Order.PaymentDate?.ToStringShamsiDate()
+                                                </td>
+                                                
+                                                <td><a asp-action="detailFinalpurchases" asp-controller="Finalpurchases" asp-route-id="@Order.Id"  class="view">نمایش جزییات</a></td>
+                                            </tr>
+                                            }
+                                        </tbody>
+
+                                    </table>
+                                    <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+
+                                }
+                                else
+                                {
+                                    <partial name="_NoItemFound" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

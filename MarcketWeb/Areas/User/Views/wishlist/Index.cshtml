@@ -1,0 +1,116 @@
+﻿@model MarcketDataLayer.DTOs.Account.UserFavoritsDTO
+@using MarcketAppliction.Utils
+@{
+    ViewData["Title"] = "لیست علاقه مندی ها";
+}
+<form asp-area="User" asp-controller="wishlist" asp-action="Index" method="get" id="filter-form">
+    <input type="hidden" asp-for="PageId" />
+
+</form>
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>لیست علاقه‌مندی‌ها</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wishlist_area mt-60">
+    <div class="container">
+        <form action="#">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table_desc wishlist">
+                        <div class="cart_page table-responsive">
+                            @if (Model.UserFavorites != null && Model.UserFavorites.Any())
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product_remove">حذف</th>
+                                            <th class="product_thumb">تصویر</th>
+                                            <th class="product_name">محصول</th>
+                                            <th class="product-price">قیمت</th>
+
+                                            <th class="product_total">افزودن به سبد</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var favorite in Model.UserFavorites)
+                                        {
+                                        <tr>
+
+                                            <td class="product_remove"><a asp-action="delete" asp-area="user" asp-controller="wishlist" asp-route-productid="@favorite.ProductId" >×</a></td>
+                                            <td><img style="width:200px;" src="@(PathExtension.ProductThumbnailImage + favorite.Product.ImageName)" /></td>
+
+                                            <td>@favorite.Product.Title</td>
+                                            @if (favorite.Product.ProductDiscounts.Where(z => z.ProductId == favorite.ProductId && z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                            {
+                                        <td>
+
+
+                                            @((favorite.Product.Price * (100 - favorite.Product.ProductDiscounts.Where(c=>c.ProductId== favorite.Product.Id && c.ExpireDate > DateTime.Now).OrderByDescending(x => x.CreateDate).Select(v=>v.Percentage).FirstOrDefault()) / 100).ToString("#,0 تومان"))
+
+                                            @*@favorite.Product.ProductDiscounts.Where(c => c.ProductId == favorite.Product.Id && c.ExpireDate > DateTime.Now).OrderByDescending(x => x.CreateDate).Select(v => v.Percentage).FirstOrDefault()*@
+
+                                            @*@favorite.Product.Price * (100 - favorite.Product.ProductDiscounts.Where(c=>c.ProductId== favorite.Product.Id && c.ExpireDate > DateTime.Now).Select(v=>v.Percentage).FirstOrDefault()) / 100)*@
+                                        </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+
+
+                                                    @favorite.Product.Price.ToString("#,0  تومان")
+                                                </td>
+                                            }
+
+
+
+                                            <td class="product_total"><a asp-controller="Product" asp-action="ProductDetail" asp-area="" asp-route-productId="@favorite.ProductId" asp-route-title="@favorite.Product.Title">مشاهده</a></td>
+                                        </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+                                <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="wishlist_share">
+                                            <h4>اشتراک گذاری در:</h4>
+                                            <ul>
+                                                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-telegram"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <partial name="_NoItemFound" />
+                            }
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>

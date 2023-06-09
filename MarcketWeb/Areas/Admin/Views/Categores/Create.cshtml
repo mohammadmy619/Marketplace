@@ -1,0 +1,75 @@
+﻿@model MarcketDataLayer.DTOs.Catgores.CreateProductCategoryDTO
+
+@{
+    Layout = null;
+}
+<h4>ایجاد گروه</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <input asp-for="ParentId" value="@ViewBag.ParentId" type="hidden" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" required />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlName" class="control-label"></label>
+                <input asp-for="UrlName" class="form-control" required />
+                <span asp-validation-for="UrlName" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="checkbox">
+                        <label>
+                            @*<input asp-for="IsActive" type="checkbox" value="true" class="colored-successc" checked="checked" /> @Html.DisplayNameFor(model => model.IsActive)*@
+
+                            @*<input type="checkbox" checked="checked">
+                        <span class="text">Basic</span>*@
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="checkbox">
+                        <label>
+                            @*<input type="checkbox" class="colored-success" checked="checked" asp-for="IsActive">*@
+                            @Html.DisplayNameFor(model => model.IsActive)
+                            @*<span class="text">Success</span>*@
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="colored-success" checked="checked" name="IsActive" asp-for="IsActive">
+                            <span class="text">Success</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <partial name="_JqueryValidators" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

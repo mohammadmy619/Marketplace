@@ -1,0 +1,104 @@
+﻿@using MarcketAppliction.Utils
+
+@model MarcketDataLayer.DTOs.Articles.FilterArticlesGroupsDto
+@{
+    ViewData["Title"] = "مدریت گروه ها";
+}
+
+<h2>مدریت گروه ها</h2>
+
+<a asp-area="Admin" asp-action="CreateGroup" asp-controller="Articles" class="btn  btn-primary"  >ایجاد گروه</a>
+
+<br />
+
+<hr />
+
+
+<div class="col-xs-4">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form asp-area="Admin" asp-controller="Articles" asp-action="FilterGroups" method="get" id="filter-form">
+
+            <input type="hidden" asp-for="PageId" />
+
+            <input type="hidden" data-val="true" data-val-required="The PageId field is required." id="PageId" name="PageId" value="1">
+            <div class="form-group">
+                <label>عنوان جستو جو</label>
+                <input class="form-control" type="text" asp-for="search" value="">
+            </div>
+            <hr>
+
+
+
+            <button type="submit" class="btn btn-success btn-block">جستوجو</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<div class="col-xs-12 col-md-8">
+    <div class="well with-header with-footer">
+        <div class="header bg-darkpink">
+      
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>تصویر </th>
+                    <th>نام گروه</th>
+                    <th>توضیح گروه</th>
+                    <th>دستتورات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ArticlesGroups != null && Model.ArticlesGroups.Any())
+                {
+                    @foreach (var Groups in Model.ArticlesGroups)
+                    {
+                        <tr>
+
+                            <td>
+                                <img src="@(PathExtension.ArticlesGroupsOrigin + Groups.ImageName)" width="100" />
+                            </td>
+                            <td>
+                                <span class="gold">
+                                    @Groups.GroupTitle
+                                </span>
+                            </td>
+                            <td>
+                                @Groups.GroupDescriptison
+                            </td>
+                       
+                            @*asp-area="Admin" asp-controller="UserManege" asp-action="GetEditUserAdmin" asp-route-userId="@user.Id"*@
+                        <td>
+                            <a asp-action="getGroup" asp-area="Admin" asp-controller="Articles" asp-route-groupid="@Groups.Id" class="btn-warning btn btn-block">ویرایش</a>
+
+                            <a asp-action="DeleteGroup" asp-area="Admin" asp-controller="Articles" asp-route-groupid="@Groups.Id" class="btn-danger btn btn-block">حذف گروه </a>
+
+                        </td>
+                        </tr>
+
+                    }
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,8 @@
+﻿@model MarcketDataLayer.DTOs.Common.RejectItemDTO
+
+<input type="hidden" asp-for="Id" />
+<div class="form-group">
+    <label for="definpu">متن مورد نظر</label>
+    <textarea class="form-control" asp-for="RejectMessage" rows="10"></textarea>
+    <span class="text-danger" asp-validation-for="RejectMessage"></span>
+</div>

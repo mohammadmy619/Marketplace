@@ -1,0 +1,71 @@
+﻿@using MarcketAppliction.Extensions
+@model MarcketDataLayer.DTOs.Contacts.FilterTicketDTO
+@{
+    ViewData["Title"] = "مدریت تیکت ها";
+}
+
+<h2>مدریت تیکت ها</h2>
+<form asp-area="Admin" asp-controller="Ticket" asp-action="Index" method="get" id="filter-form">
+    <input type="hidden" asp-for="PageId" />
+
+</form>
+<div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+        <div class="header bg-info">
+            Bordered Table
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>کد تیکت</th>
+                    <th>عنوان تیکت</th>
+
+                    <th>وضعیت</th>
+                    <th>کاربر</th>
+                    <th>دستورات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Tickets != null && Model.Tickets.Any())
+                {
+                    @foreach (var item in Model.Tickets)
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Title
+                            </td>
+                            <td>
+                                <span class="danger">
+                                    @item.TicketState.GetEnumName()
+                                </span>
+                            </td>
+                            <td>
+                                @item.Owner.FirstName
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="Ticket" asp-area="Admin" asp-route-ticketId="@item.Id" class="view">نمایش جزییات</a>
+                            </td>
+                        </tr>
+
+                    }
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+     
+    </div>
+
+</div>

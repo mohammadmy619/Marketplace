@@ -1,0 +1,12 @@
+﻿@model MarketPlace.DataLayer.Entities.Accuont.User.User
+@using MarcketAppliction.Utils
+@{
+    Layout = null;
+}
+<div style="direction: rtl; padding: 20px">
+    <h2>@Model.FirstName عزیز !</h2>
+    <p>با تشکر از ثبت نام شما ، جهت ادامه کار میبایست حساب کاربری خود را فعال کنید</p>
+    <p>
+        <a href="@PathExtension.DomainAddress/Account/ActiveAccount/@Model.EmailActiveCode">فعالسازی حساب کاربری</a>
+    </p>
+</div>

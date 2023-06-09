@@ -1,0 +1,242 @@
+﻿@using MarcketDataLayer.Entities.Articles
+@using MarcketAppliction.Utils
+
+@model MarcketDataLayer.Entities.Articles.Articles
+
+@{
+    ViewData["Title"] = Model.name;
+
+    var RelatedArticles = ViewBag.RelatedArticles as List<Articles>;
+}
+@section Scripts{ 
+
+<script>
+
+    //$(".Offcanvas_menu_wrapper").hide();
+
+   
+
+    //$(".").click(function () {
+
+    //    $(".Offcanvas_menu_wrapper").hide();
+
+    //});
+    
+    //$(".ion-navicon").click(function () {
+
+    //    $(".Offcanvas_menu_wrapper").toggle();
+
+    //});
+</script>
+
+}
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@Model.name</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="blog_details mt-60">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12">
+                <!--blog grid area start-->
+                <div class="blog_wrapper">
+                    <article class="single_blog">
+                        <figure>
+                            <div class="post_header">
+                                <h3 class="post_title">@Model.Title</h3>
+                                <div class="blog_meta">
+                                    <span class="author">ارسال توسط : <a href="#">مدیر</a> / </span>
+                                    <span class="post_date">در : <a href="#">@Model.CreateDate.ToStringShamsiDate()</a> /</span>
+                                    <span class="post_category">در : <a asp-action="ArticlesPage" asp-controller="Articles" asp-route-GroupName="@Model.ArticlesGroups.GroupTitle">@Model.ArticlesGroups.GroupTitle</a></span>
+                                </div>
+                            </div>
+                            <div class="blog_thumb">
+                                <a href="#"><img src="@(PathExtension.ArticlesOrigin+Model.ImageName)" alt="@Model.ImageAlt"></a>
+                            </div>
+                            @*@if (Model.Videoname != null)
+                            {
+
+                                <label>ویدیو</label>
+                                <video controls="controls" style="width:600px;">
+                                    <source src="~/video/Articles/@Model.Videoname" type="video/mp4" />
+                                </video>
+               
+
+                            }*@
+                            <figcaption class="blog_content">
+                                <div class="post_content">
+                                    <p>
+                                        @Html.Raw(Model.Text)
+                                    </p>
+
+                                    @if (Model.Videoname != null)
+                                    {
+
+                                        <label>ویدیو</label>
+
+                                        <div >
+                                            <video controls="controls" width="360">
+                                                <source src="~/video/Articles/@Model.Videoname" type="video/mp4" />
+                                            </video>
+                                        </div>
+                                        @*<div class="row">
+                                            <div class="col-lg-4 col-md-6">
+                                                <video controls="controls">
+                                                    <source src="~/video/Articles/@Model.Videoname" type="video/mp4" />
+                                                </video>
+                                            </div>
+                                        </div>*@
+
+
+
+                                    }
+                                    <br />
+                                    @if (Model.Mp3name != null)
+                                    {
+
+                                        <label>موزیک </label>
+
+                                        <audio controls="controls">
+                                            <source src="@(PathExtension.Articlesmp3Origin + Model.Mp3name)" type="audio/mpeg" />
+                                        </audio>
+                                    }
+                                </div>
+                                <div class="entry_content">
+                                    <div class="post_meta">
+                                        <span>برچسب ها: </span>
+                                        @foreach (var item in Model.Tags.Split(','))
+                                        {
+
+
+                                            <span><a asp-action="ArticlesPage" asp-controller="Articles" asp-route-search="@item">@item</a></span>
+
+
+                                        }
+                                    </div>
+
+                                    <div class="social_sharing">
+                                        <p>اشتراک گذاری این مطلب:</p>
+                                        <ul>
+                                            <li><a href="#" title="facebook"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#" title="twitter"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#" title="pinterest"><i class="fa fa-pinterest"></i></a></li>
+                                            <li><a href="#" title="google+"><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a href="#" title="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </article>
+                    <div class="related_posts">
+                        <h3>مطالب مرتبط</h3>
+                        <div class="row">
+
+                            @if (RelatedArticles.Any() && RelatedArticles != null)
+                            {
+
+                                foreach (var item in RelatedArticles)
+                                {
+                                    <div class="col-lg-4 col-md-6">
+                                        <article class="single_related">
+                                            <figure>
+                                                <div class="related_thumb">
+                                                    <img src="@(PathExtension.ArticlesOrigin+item.ImageName)" alt="@item.Title">
+                                                </div>
+                                                <figcaption class="related_content">
+                                                    <div class="blog_meta">
+                                                        <span class="author">توسط: <a href="#">مدیر</a> / </span>
+                                                        <span class="post_date"> @item.CreateDate.ToStringShamsiDate()	</span>
+                                                    </div>
+                                                    <h4><a asp-action="DetailArticles" asp-controller="Articles" asp-route-DetailArticles="@item.Id">@item.name</a></h4>
+                                                </figcaption>
+                                            </figure>
+                                        </article>
+                                    </div>
+                                }
+
+
+
+                            }
+
+
+                        </div>
+                    </div>
+                    <div class="comments_box">
+                        <h3>@Model.ArticlesComment.Count() دیدگاه	</h3>
+                        @foreach (var commment in Model.ArticlesComment.Where(s=>s.IsDelete==false).OrderByDescending(s=>s.CreateDate))
+                        {
+                            <div class="comment_list">
+                                <div class="comment_thumb">
+                                    <img src="assets/img/blog/comment3.png.jpg" alt="">
+                                </div>
+                                <div class="comment_content">
+                                    <div class="comment_meta">
+                                        <h5><a href="#">@commment.Name</a></h5>
+                                        <span>@commment.CreateDate.ToShamsi()</span>
+                                    </div>
+                                    <p>@commment.Text</p>
+                                    @*<div class="comment_reply">
+                                        <a href="#">پاسخ</a>
+                                    </div>*@
+                                </div>
+
+                            </div>
+
+                        }
+
+                    </div>
+                    <div class="comments_form">
+                        <h3>یک پاسخ ارسال کنید </h3>
+                        <p>ایمیل شما منتشر نخواهد شد. فیلد های الزامی با * مشخص شده اند</p>
+                        <form asp-action="ADDComment" asp-controller="Articles" asp-area="" asp-route-Articleid="@Model.Id"
+                              asp-route-url="@Url.PageLink()"
+                              method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="review_comment">دیدگاه </label>
+                                    <textarea name="text" ></textarea>
+                                </div>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+
+                                    <div class="col-lg-4 col-md-4">
+                                        <label for="author">نام</label>
+                                        <input name="name" type="text" required>
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <label for="email">ایمیل </label>
+                                        <input name="Email" type="email" dir="ltr" required>
+                                    </div>
+
+
+
+                                }
+
+                            </div>
+                            <input type="submit" value="ثبت" class="button" />
+                        </form>
+                    </div>
+
+                </div>
+                <!--blog grid area start-->
+            </div>
+
+        </div>
+    </div>
+</div>

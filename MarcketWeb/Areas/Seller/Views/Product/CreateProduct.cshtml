@@ -1,0 +1,343 @@
+﻿@using MarcketDataLayer.Entities.Products
+@model MarcketDataLayer.DTOs.Products.CreateProductDTO
+@{
+    ViewData["Title"] = "ثبت محصول";
+    var categories = ViewBag.Categories as List<ProductCategory>;
+}
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    <div class="account_login_form">
+                                        <form asp-area="Seller" asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data" id="create_product_form">
+
+                                            <label>نام محصول</label>
+                                            <input asp-for="Title">
+                                            <span class="text-danger" asp-validation-for="Title"></span>
+                                            <br />
+                                            <label>قیمت محصول</label>
+                                            <input asp-for="Price">
+                                            <span class="text-danger" asp-validation-for="Price"></span>
+                                            <br />
+                                            <label>توضیحات کوتاه محصول</label>
+                                            <br />
+                                            <textarea asp-for="ShortDescription" style="width: 100%" rows="10"></textarea>
+                                            <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                                            <br />
+                                            <label>توضیحات محصول</label>
+                                            <textarea asp-for="Description" ckeditor="1"></textarea>
+                                            <span class="text-danger" asp-validation-for="Description"></span>
+                                            <br />
+                                            <label>
+                                                <input type="checkbox" name="@nameof(Model.IsActive)" value="true" /> فعال / غیر فعال
+                                            </label>
+                                            <br />
+                                            <div class="col-md-9">
+                                                <input type="file" name="productImage" accept=".png,.jpeg" />
+                                            </div>
+                                            <hr />
+                                            @if (categories != null && categories.Any())
+                                            {
+                                                @foreach (var category in categories.Where(s => s.ParentId == null))
+                                                {
+                                                    <ul>
+                                                        <li>
+                                                            <label>
+                                                                <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@category.Id" main_category_checkbox="@category.Id" /> @category.Title
+                                                            </label>
+
+                                                            <div id="sub_categories_@category.Id" style="display: none">
+
+                                                                @foreach (var subCategory in categories.Where(s => s.ParentId == category.Id))
+                                                                {
+                                                                    <label>
+                                                                        <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@subCategory.Id" main_category_checkbox="@subCategory.Id" parent-category-id="@category.Id" /> @subCategory.Title
+                                                                    </label>
+                                                                    <div id="sub_categories_@subCategory.Id" style="display: none">
+
+                                                                        @foreach (var secondSubCategory in categories.Where(s => s.ParentId == subCategory.Id))
+                                                                        {
+                                                                            <label>
+                                                                                <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@secondSubCategory.Id" parent-category-id="@subCategory.Id" /> @secondSubCategory.Title
+                                                                            </label>
+                                                                        }
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+                                                    <hr />
+                                                }
+                                            }
+
+                                            <label>رنگ محصول</label>
+                                            <input type="text" placeholder="رنگ محصول" id="product_color_name_input">
+
+                                            <label>کد رنگ محصول</label>
+                                            <input type="color" id="product_color_code_input">
+
+                                            <label>قیمت مضاف رنگ محصول</label>
+                                            <input type="number" placeholder="قیمت مضاف رنگ محصول" id="product_color_price_input">
+
+                                            <button class="btn btn-success" id="add_color_button">افزودن رنگ</button>
+                                            <br />
+                                            <br />
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>نام رنگ</th>
+                                                            <th>قیمت</th>
+                                                            <th>کد رنگ</th>
+                                                            <th>دستورات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="list_of_product_colors">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr />
+                                            <label>ویژگی محصول</label>
+                                            <input type="text" placeholder="ویژگی محصول" id="product_feature_input">
+                                            <label> مقدار ویژگی محصول</label>
+                                            <input type="text" placeholder="مقدار ویژگی محصول" id="product_feature_value_input">
+                                            <hr />
+                                            <button class="btn btn-outline-info" id="add_feature_button">افزودن ویژگی</button>
+                                            <hr />
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>نام ویژگی</th>
+                                                            <th>مقدار ویژگی</th>
+                                                            <th>دستورات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="list_of_product_features">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+                                            <div class="save_button primary_btn default_button">
+                                                <button type="submit">افزودن</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section scripts {
+    <partial name="_JqueryValidators" />
+    <script>
+
+
+
+
+
+        ClassicEditor.create(document.getElementById('Description'),
+            {
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        '|',
+                        'fontSize',
+                        'fontColor',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'undo',
+                        'redo',
+                        'codeBlock'
+                    ]
+                },
+                language: 'fa',
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                licenseKey: '',
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/Uploader/UploadImage'
+
+
+
+
+
+                }
+
+            });
+
+
+
+        $("[main_category_checkbox]").on('change',
+            function (e) {
+                var isChecked = $(this).is(':checked');
+                var selectedCategoryId = $(this).attr('main_category_checkbox');
+                if (isChecked) {
+                    $('#sub_categories_' + selectedCategoryId).slideDown(300);
+                } else {
+                    $('#sub_categories_' + selectedCategoryId).slideUp(300);
+                    $('[parent-category-id="' + selectedCategoryId + '"]').prop('checked', false);
+                }
+            });
+
+
+
+
+        $('#add_color_button').on('click',
+            function (e) {
+                e.preventDefault();
+                var colorName = $('#product_color_name_input').val();
+                var colorPrice = $('#product_color_price_input').val();
+                var colorCode = $('#product_color_code_input').val();
+                if (colorName !== '' && colorPrice !== '' && colorCode !== '') {
+                    var currentColorsCount = $('#list_of_product_colors tr');
+                    var index = currentColorsCount.length;
+
+                    var isExistsSelectedColor = $('[color-name-hidden-input][value="' + colorName + '"]');
+                    if (isExistsSelectedColor.length === 0) {
+                        var colorNameNode = `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
+                        var colorPriceNode = `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price" color-price-hidden-input="${colorName}-${colorPrice}" >`;
+                        var colorCodeNode = `<input type="hidden" value="${colorCode}"  name="ProductColors[${index}].ColorCode" color-code-hidden-input="${colorName}-${colorPrice}" >`;
+                        $('#create_product_form').append(colorNameNode);
+                        $('#create_product_form').append(colorPriceNode);
+                        $('#create_product_form').append(colorCodeNode);
+
+                        var colorTableNode = `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td>  <td> ${colorPrice} </td> <td> <div style="border-radius: 50%;width: 40px; height: 40px; background-color:${colorCode}"></div> </td>  <td> <a class="btn btn-danger text-white" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td>  </tr>`;
+                        $('#list_of_product_colors').append(colorTableNode);
+
+
+                        $('#product_color_name_input').val('');
+                        $('#product_color_price_input').val('');
+                        $('#product_color_code_input').val('');
+                    } else {
+                        ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
+                        $('#product_color_name_input').val('').focus();
+                    }
+                } else {
+                    ShowMessage('اخطار', 'لطفا نام رنگ و قیمت آن را به درستی وارد نمایید', 'warning');
+                }
+            }
+        );
+
+        function removeProductColor(index) {
+            $('[color-name-hidden-input="' + index + '"]').remove();
+            $('[color-price-hidden-input="' + index + '"]').remove();
+            $('[color-code-hidden-input="' + index + '"]').remove();
+            $('[color-table-item="' + index + '"]').remove();
+            reOrderProductColorHiddenInputs();
+        }
+
+
+        function reOrderProductColorHiddenInputs() {
+            var hiddenColors = $('[color-name-hidden-input]');
+            $.each(hiddenColors, function (index, value) {
+                var hiddenColor = $(value);
+                var colorId = $(value).attr('color-name-hidden-input');
+                var hiddenPrice = $('[color-price-hidden-input="' + colorId + '"]');
+                var hiddenCode = $('[color-code-hidden-input="' + colorId + '"]');
+                $(hiddenColor).attr('name', 'ProductColors[' + index + '].ColorName');
+                $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
+                $(hiddenCode).attr('name', 'ProductColors[' + index + '].ColorCode');
+            });
+        }
+
+        $('#add_feature_button').on('click',
+            function (e) {
+                e.preventDefault();
+                var feature = $('#product_feature_input').val();
+                var featureValue = $('#product_feature_value_input').val();
+                if (feature !== '' && featureValue !== '') {
+                    var currentFeaturesCount = $('#list_of_product_features tr');
+                    var index = currentFeaturesCount.length;
+
+                    var isExistsSelectedColor = $('[feature-hidden-input][value="' + feature + '"]');
+                    if (isExistsSelectedColor.length === 0) {
+                        var featureNode = `<input type="hidden" value="${feature}"  name="ProductFeatures[${index}].Feature" feature-hidden-input="${feature}-${featureValue}">`;
+                        var featureValueNode = `<input type="hidden" value="${featureValue}"  name="ProductFeatures[${index}].FeatureValue" feature-value-hidden-input="${feature}-${featureValue}" >`;
+                        $('#create_product_form').append(featureNode);
+                        $('#create_product_form').append(featureValueNode);
+
+                        var featureTableNode = `<tr feature-table-item="${feature}-${featureValue}"> <td> ${feature} </td>  <td> ${featureValue} </td>  <td> <a class="btn btn-danger text-white" onclick="removeProductFeature('${feature}-${featureValue}')">حذف</a> </td>  </tr>`;
+                        $('#list_of_product_features').append(featureTableNode);
+
+
+                        $('#product_feature_input').val('');
+                        $('#product_feature_value_input').val('');
+                    } else {
+                        ShowMessage('اخطار', 'ویژگی وارد شده تکراری می باشد', 'warning');
+                        $('#product_feature_input').val('').focus();
+                    }
+                } else {
+                    ShowMessage('اخطار', 'لطفا نام ویژگی و مقدار آن را به درستی وارد نمایید', 'warning');
+                }
+            }
+        );
+        function removeProductFeature(index) {
+            console.log(index);
+            $('[feature-hidden-input="' + index + '"]').remove();
+            $('[feature-value-hidden-input="' + index + '"]').remove();
+            $('[feature-table-item="' + index + '"]').remove();
+            reOrderProductFeatureHiddenInputs();
+        }
+
+        function reOrderProductFeatureHiddenInputs() {
+            var hiddenFeatures = $('[feature-hidden-input]');
+            $.each(hiddenFeatures, function (index, value) {
+                var hiddenFeature = $(value);
+                var featureId = $(value).attr('feature-hidden-input');
+                var featureValue = $('[feature-value-hidden-input="' + featureId + '"]');
+                $(hiddenFeature).attr('name', 'ProductFeatures[' + index + '].Feature');
+                $(featureValue).attr('name', 'ProductFeatures[' + index + '].FeatureValue');
+            });
+        }
+      
+
+    </script>
+}

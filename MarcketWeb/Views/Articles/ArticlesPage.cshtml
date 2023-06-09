@@ -1,0 +1,155 @@
+﻿@using MarcketDataLayer.Entities.Articles
+@using MarcketAppliction.Utils
+@model MarcketDataLayer.DTOs.Articles.FilterArticlesDTO
+@{
+    ViewData["Title"] = "ارشیو مقالات";
+  var ArticleGroups = ViewBag.ArticlesGroups as List<ArticlesGroups> ;
+}
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--blog area start-->
+<div class="blog_page_section blog_reverse mt-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="blog_sidebar_widget">
+                    <div class="widget_list widget_search">
+                        <h3>جستجو</h3>
+                        <form asp-area="" asp-action="ArticlesPage" asp-controller="Articles" method="get" id="filter-form">
+                            <input type="hidden" asp-for="PageId" />
+                            <input placeholder="جستجو ..." type="text" asp-for="search">
+                            <input type="submit" value="جستجو" class="btn btn-info " />
+                        </form>
+                    </div>
+
+                    <div class="widget_list widget_post">
+                        <h3>مطالب اخیر</h3>
+                        @foreach (var newa in Model.Articles.OrderByDescending(x => x.DateTime).Take(4))
+                        {
+                            <div class="post_wrapper">
+                                <div class="post_thumb">
+                                    <a asp-action="DetailArticles" asp-controller="Articles" asp-route-DetailArticles="@newa.Id"><img src="@(PathExtension.ArticlesOrigin+newa.ImageName)" alt="@newa.ImageAlt"></a>
+                                </div>
+                                <div class="post_info">
+                                    <h3><a asp-action="DetailArticles" asp-controller="Articles" asp-route-DetailArticles="@newa.Id">@newa.name</a></h3>
+                                    <span>
+                                        @newa.DateTime.ToStringShamsiDate()
+                                    </span>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="widget_list widget_categories">
+                        <h3>بایگانی</h3>
+                        <ul>
+                            <li><a href="#">@DateTime.Now.ToStringShamsiDate()</a></li>
+                        </ul>
+                    </div>
+                    <div class="widget_list widget_categories">
+                        <h3>دسته ها</h3>
+                        <ul>
+                            @foreach (var item in ArticleGroups)
+                            {
+                                <li><a asp-action="ArticlesPage" asp-controller="Articles" asp-route-GroupName="@item.GroupTitle">@item.GroupTitle</a></li>
+                            }
+
+
+                        </ul>
+                    </div>
+                    @*<div class="widget_list widget_tag">
+                        <h3>برچسب های منتخب </h3>
+                        <div class="tag_widget">
+                            <ul>
+                                @foreach (var tags in Model.Articles.Take(6))
+                                {
+                                    <li><a asp-action="ArticlesPage" asp-controller="Articles" asp-route-search="@tags.Tags">@tags.Tags</a></li>
+
+                                }
+
+                            </ul>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="blog_wrapper blog_wrapper_sidebar">
+                    <div class="blog_header">
+                        <h1>بلاگ</h1>
+                    </div>
+                    <div class="row">
+                        @if (Model.Articles.Any() && Model.Articles != null)
+                        {
+
+                            foreach (var Articles in Model.Articles)
+                            {
+                                <div class="col-lg-6 col-md-6">
+                                    <article class="single_blog mb-60">
+                                        <figure>
+                                            <div class="blog_thumb">
+                                                <a asp-action="DetailArticles" asp-controller="Articles" asp-route-DetailArticles="@Articles.Id"><img src="@(PathExtension.ArticlesOrigin+Articles.ImageName)" alt="@Articles.ImageAlt"></a>
+                                            </div>
+                                            <figcaption class="blog_content">
+                                                <h3><a asp-action="DetailArticles" asp-controller="Articles" asp-route-DetailArticles="@Articles.Id">@Articles.name</a></h3>
+                                                <div class="blog_meta">
+                                                    <span class="author">ارسال توسط : <a href="#">مدیر</a> / </span>
+                                                    <span class="post_date">در : <a href="#">@Articles.DateTime.ToStringShamsiDate()</a></span>
+                                                </div>
+                                                <div class="blog_desc">
+                                                    <p>
+                                                        @Articles.Title
+                                                    </p>
+                                                </div>
+                                                <footer class="readmore_button">
+                                                    <a asp-action="DetailArticles" asp-controller="Articles" asp-route-DetailArticles="@Articles.Id">بیشتر بخوانید</a>
+                                                </footer>
+                                            </figcaption>
+                                        </figure>
+                                    </article>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <partial name="_NoItemFound" />
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+  
+    </div>
+</div>
+
+<div class="blog_pagination">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="pagination">
+                    <ul>
+                        <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--blog area end-->

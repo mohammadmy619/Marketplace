@@ -1,0 +1,70 @@
+﻿@using MarcketAppliction.Utils
+
+@model MarcketDataLayer.Entities.ContactUs.ContactUs
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>تماس با ما</h1>
+
+<div>
+  
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserIp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserIp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Mobile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Mobile)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+        <dt>
+            متن پیام
+        </dt>
+        <dd>
+            <p>
+                @Html.DisplayFor(model => model.Text)
+            </p>
+        </dd>
+
+
+        <dt>
+            ناریخ ایجاد
+        </dt>
+        <dd>
+            @Model.CreateDate.ToShamsi()
+        </dd>
+
+    </dl>
+</div>
+<a  asp-action="delete" asp-controller="ContactUs" asp-route-id="@Model.Id" class="btn btn-danger " > حذف</a>
+<div>
+    @*@Html.ActionLink("حذف", "delete", new {  id = Model.Id  }) |*@
+    <a asp-action="Index">Back to List</a>
+</div>

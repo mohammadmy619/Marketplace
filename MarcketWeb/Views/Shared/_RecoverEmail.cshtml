@@ -1,0 +1,13 @@
+﻿@using MarketPlace.DataLayer.Entities.Accuont.User
+@using MarcketAppliction.Utils
+@model MarcketDataLayer.DTOs.Account.RecoverUserPasswordForEmailDTO
+
+<div style="direction: rtl; padding: 20px">
+    <h2>@Model.USerName عزیز !</h2>
+    <p>رمز عبور شما </p>
+    <p>@Model.Password</p>
+    <p style="color:#0094ff">لطفا پس از ورود به حساب کاربری ، کلمه ی عبور خود را تغییر دهید</p>
+    <p>
+        <a href="@PathExtension.DomainAddress/Login"> حساب کاربری</a>
+    </p>
+</div>

@@ -1,0 +1,489 @@
+﻿@using MarcketAppliction.EntitiesExtensions
+@using MarcketDataLayer.Entities.Site
+@using MarcketDataLayer.Entities.Products
+@using MarcketAppliction.Utils
+@using MarcketDataLayer.Entities.Articles
+@{
+    ViewData["Title"] = "صفحه ی اصلی";
+    var banners = ViewBag.banners as List<SiteBanner>;
+    var offProducts = ViewData["OffProducts"] as List<ProductDiscount>;
+    var GetAllbestSells = ViewBag.GetAllbestSells as List<Product>;
+    var GetallPopularproducts = ViewBag.GetallPopularproducts as List<Product>;
+
+    var GetArticlesGroups = ViewBag.GetArticlesGroups as List<ArticlesGroups>;
+}
+<h1>@ViewBag.test</h1>
+
+@await Component.InvokeAsync("HomeSlider")
+<!--shipping area start-->
+<section class="shipping_area mb-70">
+    <div class="container">
+        <div class=" row">
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="/img/about/shipping1.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h2>ارسال رایگان</h2>
+                        <p>ارسال رایگان به تمام نقاط کشور</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="/img/about/shipping2.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h2>پشتیبانی 24 ساعته</h2>
+                        <p>هر ساعت از شبانه روز تماس بگیرید</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="/img/about/shipping3.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h2>100% بازگشت وجه</h2>
+                        <p>30 روز مهلت بازگشت وجه</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="single_shipping">
+                    <div class="shipping_icone">
+                        <img src="/img/about/shipping4.png" alt="">
+                    </div>
+                    <div class="shipping_content">
+                        <h2>پرداخت ایمن</h2>
+                        <p>امنیت پرداخت تضمین شده</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--shipping area end-->
+@if (banners != null && banners.Any(s => s.BannerPlacement == BannerPlacement.Home_1))
+{
+    <!--banner area start-->
+    <div class="banner_area mb-40">
+        <div class="container">
+            <div class="row">
+
+                @foreach (var banner in banners.Where(s => s.BannerPlacement == BannerPlacement.Home_1).Take(4))
+                {
+                    <div class="col-lg-3 col-md-3">
+                        <div class="single_banner mb-30">
+                            <div class="banner_thumb">
+                                <a href="@banner.Url">
+                                    <img src="@banner.GetBannerMainImageAddress()" style="width: 100%">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!--banner area end-->
+}
+<!--product area start-->
+
+@if (offProducts != null && offProducts.Any())
+{
+    <!--product area start-->
+    <section class="product_area mb-46">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title">
+                        <h2>پیشنهاد های ویژه</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="product_carousel product_column5 owl-carousel">
+                @foreach (var discount in offProducts)
+                {
+                    <article class="single_product">
+                        <figure>
+                            <div class="product_thumb">
+                                <a class="primary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@discount.ProductId" asp-route-title="@discount.Product.Title">
+                                    <img src="@(PathExtension.ProductThumbnailImage + discount.Product.ImageName)" alt="">
+                                </a>
+                                @if (discount.Product.ProductGalleries.Any(s => s.ProductId == discount.Product.Id))
+                                {
+                                    <a class="secondary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@discount.ProductId" asp-route-title="@discount.Product.Title" ><img src="@(PathExtension.ProductGalleryImage + discount.Product.ProductGalleries.Where(x=>x.DisplayPriority==1&&x.ProductId==discount.Product.Id).Select(x=>x.ImageName).FirstOrDefault())" alt="@discount.Product.Title"></a>
+
+                                }
+                                <div class="label_product" style="background-color:gold;">
+                                    <span style="background-color:gold" ; class="label_sale">حراج</span>
+                                </div>
+
+                                <div class="action_links">
+
+
+                                </div>
+
+                                <div class="product_timing">
+                                    <div data-countdown="@discount.ExpireDate.ToString("yyyy/MM/dd")"></div>
+                                </div>
+                            </div>
+                            <figcaption class="product_content">
+                                <div class="price_box">
+                                    <span class="old_price">@discount.Product.Price.ToString("#,0") تومان</span>
+                                    <span class="current_price">@((discount.Product.Price * (100 - discount.Percentage) / 100).ToString("#,0")) تومان</span>
+                                </div>
+                                <h3 class="product_name"><a  asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@discount.ProductId" asp-route-title="@discount.Product.Title" >@discount.Product.Title</a></h3>
+                            </figcaption>
+                        </figure>
+                    </article>
+                }
+            </div>
+        </div>
+    </section>
+    <!--product area end-->
+}
+
+
+
+
+@*<section class="product_area mb-46">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2>پیشنهاد های ویژه</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_carousel product_column5 owl-carousel">
+            <article class="single_product">
+                <figure>
+                    <div class="product_thumb">
+                        <a class="primary_img" href="product-countdown.html"><img src="/img/product/product1.jpg" alt=""></a>
+                        <a class="secondary_img" href="product-countdown.html"><img src="/img/product/product2.jpg" alt=""></a>
+                        <div class="label_product">
+                            <span class="label_sale">فروش</span>
+                        </div>
+                        <div class="action_links">
+                            <ul>
+                                <li class="wishlist"><a href="wishlist.html" title="افزودن به علاقه‌مندی‌ها"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                <li class="compare"><a href="#" title="مقایسه"><span class="ion-levels"></span></a></li>
+                                <li class="quick_button">
+                                    <a href="#" data-toggle="modal" data-target="#modal_box" title="مشاهده سریع"> <span class="ion-ios-search-strong"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="add_to_cart">
+                            <a href="cart.html" title="افزودن به سبد">افزودن به سبد</a>
+                        </div>
+                        <div class="product_timing">
+                            <div data-countdown="2043/12/15"></div>
+                        </div>
+                    </div>
+                    <figcaption class="product_content">
+                        <div class="price_box">
+                            <span class="old_price">86,000 تومان</span>
+                            <span class="current_price">79,000 تومان</span>
+                        </div>
+                        <h3 class="product_name"><a href="product-countdown.html">گوشی موبایل شیائومی مدل MI 9 Lite</a></h3>
+                    </figcaption>
+                </figure>
+            </article>
+
+
+        </div>
+    </div>*@
+<!--</section>-->
+<!--product area end-->
+<!--banner area start-->
+<div class="banner_area mb-40">
+    <div class="container">
+        <div class="row">
+            @foreach (var banner in banners.Where(s => s.BannerPlacement == BannerPlacement.Home_2).Take(2))
+            {
+                <div class="col-lg-6 col-md-6">
+                    <div class="single_banner mb-30">
+                        <div class="banner_thumb">
+                            <a href="@banner.Url">
+                                <img src="@banner.GetBannerMainImageAddress()" style="width: 100%">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--banner area end-->
+<!--top- category area start-->
+@*<section class="top_category_product mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-md-3">
+                    <div class="top_category_header">
+                        <h3>محبوب ترین دسته های این هفته</h3>
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+                        <a href="shop.html">نمایش همه دسته ها</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-md-9">
+                    <div class="top_category_container category_column5 owl-carousel">
+                        @foreach (var Visit in GetallPopularproducts)
+                        {
+                            <div class="col-lg-2">
+                                <article class="single_category">
+                                    <figure>
+                                        <div class="category_thumb">
+                                            <a href="shop.html"><img src="@(PathExtension.ProductImage + Visit.ImageName)" alt="@Visit.Title"></a>
+                                        </div>
+                                        <figcaption class="category_name">
+                                            <h3><a href="shop.html">@Visit.Title </a></h3>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            </div>
+                        }
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>*@
+<!--top- category area end-->
+<!--featured product area start-->
+<section class="featured_product_area mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2>محصولات ویژه</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row featured_container featured_column3">
+            @if (GetallPopularproducts != null && GetallPopularproducts.Any())
+            {
+                @foreach (var visit in GetallPopularproducts.Take(12).OrderByDescending(c=>c.Visit))
+                {
+
+                    <div class="col-lg-4">
+                        <article class="single_product">
+                            <figure>
+                                <div class="product_thumb">
+                                    <a class="primary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@visit.Id" asp-route-title="@visit.Title"><img src="@(PathExtension.ProductThumbnailImage + visit.ImageName)" alt="@visit.Title"></a>
+                                    @if (visit.ProductGalleries.Any(s => s.ProductId == visit.Id))
+                                    {
+                                        <a class="secondary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@visit.Id" asp-route-title="@visit.Title"><img src="@(PathExtension.ProductGalleryImage + visit.ProductGalleries.Where(x=>x.DisplayPriority==1&&x.ProductId==visit.Id).Select(x=>x.ImageName).FirstOrDefault())" alt="@visit.Title"></a>
+
+                                    }
+                                    @if (visit.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                    {
+
+                                        <div class="label_product" style="background-color:gold;">
+                                            <span style="background-color:gold" ; class="label_sale">حراج</span>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="label_product">
+                                            <span class="label_sale">فروش</span>
+                                        </div>
+                                    }
+
+
+                                </div>
+                                <figcaption class="product_content">
+                                    <div class="price_box">
+
+                                        @if (visit.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                        {
+                                            <span class="current_price">@((visit.Price * (100 - visit.ProductDiscounts.Where(c=>c.ProductId== visit.Id).Select(v=>v.Percentage).FirstOrDefault()) / 100).ToString("#,0"))  تومان  </span>
+                                            <span class="old_price">@visit.Price.ToString("#,0") تومان</span>
+                                        }
+                                        else
+                                        {
+
+                                            <span class="current_price">@visit.Price.ToString("#,0")  تومان  </span>
+                                        }
+                                    </div>
+                                    <h3 class="product_name"><a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@visit.Id" asp-route-title="@visit.Title">@visit.Title</a></h3>
+                                    <div class="add_to_cart">
+                                        <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@visit.Id" asp-route-title="@visit.Title" title="افزودن به سبد">مشاهده</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                    </div>
+
+                }
+
+
+            }
+
+
+
+        </div>
+    </div>
+</section>
+<!--featured product area end-->
+@await Component.InvokeAsync("ProductSlider")
+<!--product area start-->
+
+<section class="product_area mb-46">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2>محصولات پرفروش</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_carousel product_column5 owl-carousel">
+
+            @foreach (var item in GetAllbestSells.Take(12).OrderByDescending(c => c.Salescount))
+            {
+
+                <article class="single_product">
+                    <figure>
+                        <div class="product_thumb">
+                            <a class="primary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Id" asp-route-title="@item.Title" >
+                                <img src="@(PathExtension.ProductThumbnailImage + item.ImageName)" alt="">
+                            </a>
+                            @if (item.ProductGalleries.Any(s => s.ProductId == item.Id))
+                            {
+                                <a class="secondary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Id" asp-route-title="@item.Title"><img src="@(PathExtension.ProductGalleryImage + item.ProductGalleries.Where(x=>x.DisplayPriority==1&&x.ProductId==item.Id).Select(x=>x.ImageName).FirstOrDefault())" alt="@item.Title"></a>
+
+                            }
+
+                            @if (item.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                            {
+
+                                <div class="label_product" style="background-color:gold;">
+                                    <span style="background-color:gold" ; class="label_sale">حراج</span>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="label_product">
+                                    <span class="label_sale">فروش</span>
+                                </div>
+                            }
+                            <div class="add_to_cart">
+                                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Id" asp-route-title="@item.Title" title="" data-original-title="مشاهده">مشاهده</a>
+                            </div>
+
+                        </div>
+                        <figcaption class="product_content">
+                            <div class="price_box">
+
+
+
+
+
+                                @if (item.ProductDiscounts.Where(z => z.IsDelete == false && z.ExpireDate > DateTime.Now && z.DiscountNumber > 0).Any())
+                                {
+                                    <span class="current_price">@((item.Price * (100 - item.ProductDiscounts.Where(c=>c.ProductId==item.Id).Select(v=>v.Percentage).FirstOrDefault()) / 100).ToString("#,0"))  تومان  </span>
+                                    <span class="old_price">@item.Price.ToString("#,0") تومان</span>
+                                }
+                                else
+                                {
+
+                                    <span class="current_price">@item.Price.ToString("#,0")  تومان  </span>
+                                }
+
+
+                            </div>
+                            <h3 class="product_name"><a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Id" asp-route-title="@item.Title">@item.Title</a></h3>
+                        </figcaption>
+                    </figure>
+                </article>
+
+            }
+
+
+
+
+
+        </div>
+    </div>
+</section>
+<!--product area end-->
+<!--banner area start-->
+<div class="banner_area mb-40">
+    <div class="container">
+        <div class="row">
+            @foreach (var banner in banners.Where(s => s.BannerPlacement == BannerPlacement.Home_3).Take(3))
+            {
+                <div class="col-lg-4 col-md-4">
+                    <div class="single_banner mb-30">
+                        <div class="banner_thumb">
+                            <a href="@banner.Url">
+                                <img src="@banner.GetBannerMainImageAddress()" style="width: 100%">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@if (GetArticlesGroups.Any() && GetArticlesGroups != null)
+{
+
+<section class="product_area mb-46">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2> مقالات /وآرشیو ها</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product_carousel product_column5 owl-carousel">
+
+            @foreach (var item in GetArticlesGroups)
+            {
+
+                <article class="single_product">
+                    <figure>
+                        <div class="product_thumb">
+                            <a class="primary_img" asp-controller="Articles" asp-action="ArticlesPage" asp-route-GroupName="@item.GroupTitle" >
+                                <img src="@(PathExtension.ArticlesGroupsOrigin + item.ImageName)" alt="">
+                            </a>
+                    
+
+                          
+                            
+
+                        </div>
+                        <figcaption class="product_content">
+                            <div class="price_box">
+                                <span class="current_price">@item.CreateDate.ToStringShamsiDate()</span>
+                            </div>
+                            <h3 class="product_name"><a asp-controller="Articles" asp-action="ArticlesPage" asp-route-GroupName="@item.GroupTitle" >@item.GroupTitle</a></h3>
+                        </figcaption>
+                    </figure>
+                </article>
+
+            }
+
+
+
+
+
+        </div>
+    </div>
+</section>
+}
+
+
+

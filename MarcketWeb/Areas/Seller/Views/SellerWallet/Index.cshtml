@@ -1,0 +1,81 @@
+﻿@using MarcketAppliction.Utils
+@using MarcketAppliction.Extensions
+@model MarcketDataLayer.DTOs.SellerWallet.FilterSellerWalletDTO
+@{
+    ViewData["Title"] = "کیف پول فروشنده";
+}
+
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <form method="get" asp-area="Seller" asp-controller="SellerWallet" asp-action="Index" id="filter-form">
+                                <input type="hidden" asp-for="PageId" />
+                                <div class="table-responsive">
+                                    @if (Model.SellerWallets != null && Model.SellerWallets.Any())
+                                    {
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>شناسه</th>
+                                                    <th>مبلغ</th>
+                                                    <th>واریز/برداشت</th>
+                                                    <th>تاریخ</th>
+                                                    <th>توضیحات</th>
+                                                    <th>تعهدات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var wallet in Model.SellerWallets)
+                                                {
+                                                    <tr>
+                                                        <td>@wallet.Id</td>
+                                                        <td>@wallet.Price.ToString("#,0")</td>
+                                                        <td>@wallet.TransactionType.GetEnumName()</td>
+                                                        <td>@wallet.CreateDate.ToShamsiDate()</td>
+                                                        <td>@wallet.Description</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                                    }
+                                    else
+                                    {
+                                        <partial name="_NoItemFound" />
+                                    }
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

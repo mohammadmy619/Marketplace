@@ -1,0 +1,68 @@
+﻿@model MarcketDataLayer.DTOs.Account.LoginUserDTO
+
+@{
+    ViewData["Title"] = "ورود به حساب کاربری";
+}
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+    <partial name="_CaptchaScripts" />
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li>ورود به حساب کاربری</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="customer_login mt-60">
+    <div class="container">
+        <div class="row">
+            <!--register area start-->
+            <div class="col-lg-6 col-md-6 offset-lg-3 offset-md-3">
+                <div class="account_form register">
+                    <h2>لاگین</h2>
+                    <form asp-controller="Account" asp-action="Login" method="post">
+                        <partial name="_CaptchaInput" />
+                        <p>
+                            <label> ایمیل<span>*</span></label>
+                            <input type="text" asp-for="Email">
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </p>
+                        <p>
+                            <label>رمز عبور <span>*</span></label>
+                            <input type="password" asp-for="Password">
+                            <span class="text-danger" asp-validation-for="Password"></span>
+                        </p>
+                        @*<p>
+                            <label> مرابخاطر بسپار</label>
+                            <input type="checkbox" asp-for="RememberMe" />
+                        </p>*@
+                    <h3>
+                        <a class="btn btn-sky fa fa-google-plus " style="color:#0094ff;background-color:rgb(250 185 68 / 0.61)"  href="provider/Google" > ورود با گوگل </a>
+
+                    </h3>
+                        <p>
+                            <a asp-area="" asp-controller="Account" asp-action="ForgotPassword">کلمه ی عبور خود را فراموش کرده ام</a>
+                        </p>
+                        <div class="login_submit">
+                            <button type="submit">ورود</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--register area end-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+﻿
+@using MarcketAppliction.Utils
+
+@using MarcketAppliction.Extensions
+
+
+@model MarcketDataLayer.DTOs.UserManege.FilterUserManege
+@{
+    ViewData["Title"] = "FilterUser";
+}
+
+<h2>مدریت کاربران</h2>
+<form asp-area="Admin" asp-controller="UserManege" asp-action="FilterUser" method="get" id="filter-form">
+    <input type="hidden" asp-for="PageId" />
+
+</form>
+<div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+        <div class="header bg-darkorange">
+            Bordered Table
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th>تصویر کاربر</th>
+                    <th>نام کاربر</th>
+
+                    <th>ایمیل</th>
+                    <th>شماره تماس</th>
+                    <th >فعال /غیر فعال</th>
+                    <th>دستورات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.User != null && Model.User.Any())
+                {
+                    @foreach (var user in Model.User)
+                    {
+                <tr>
+
+                    <td>
+                        <img src="@(PathExtension.UserAvatarOrigin + user.Avatar)" width="100" />
+                    </td>
+                    <td>
+                        @user.FirstName
+                    </td>
+                    <td>
+                        <span class="gold">
+                            @user.Email
+                        </span>
+                    </td>
+                    <td>
+                        @user.Mobile
+                    </td>
+                    @if (user.IsEmailActive)
+                    {
+                        <td style="color:green;">فعال</td>
+                    }
+                    else
+                    {
+                        <td style="color:red;">غیر فعال</td>
+
+                    }
+                    @*asp-area="Admin" asp-controller="UserManege" asp-action="GetEditUserAdmin" asp-route-userId="@user.Id"*@
+                    <td>
+                        <a href="/Admin/UserManege/GetEditUserAdmin?userId=@user.Id" class="btn-warning btn btn-block">ویرایش</a>
+                    </td>
+                </tr>
+
+                    }
+
+                }
+                else
+                {
+                    <partial name="_NoItemFound" />
+                }
+
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetCurrentPaging()" />
+        </div>
+
+    </div>
+
+</div>

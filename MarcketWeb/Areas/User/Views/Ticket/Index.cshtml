@@ -1,0 +1,78 @@
+﻿@using MarcketAppliction.Extensions
+@model MarcketDataLayer.DTOs.Contacts.FilterTicketDTO
+@{
+    ViewData["Title"] = "تیکت ها";
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="table-responsive">
+                                @if (Model.Tickets != null && Model.Tickets.Any())
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>کد تیکت</th>
+                                                <th>عنوان تیکت</th>
+                                                <th>وضعیت</th>
+                                                <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var ticket in Model.Tickets)
+                                            {
+                                                <tr>
+                                                    <td>@ticket.Id</td>
+                                                    <td>@ticket.Title</td>
+                                                    <td>
+                                                        <span class="danger">
+                                                            @ticket.TicketState.GetEnumName()
+                                                        </span>
+                                                    </td>
+                                                    <td><a asp-action="TicketDetail" asp-controller="Ticket" asp-route-ticketId="@ticket.Id" class="view">نمایش جزییات</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+                                    </table>
+                                    <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+
+                                }
+                                else
+                                {
+                                    <partial name="_NoItemFound" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

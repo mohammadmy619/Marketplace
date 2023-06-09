@@ -1,0 +1,41 @@
+﻿@using MarcketAppliction.EntitiesExtensions
+@using MarketPlace.DataLayer.Entities.Accuont.User
+
+@{
+    ViewData["Title"] = "داشبورد";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    var user = ViewBag.user as User;
+
+}
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <h1 style="color:dodgerblue"> @user.GetUserShowName()، خوش آمدید </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

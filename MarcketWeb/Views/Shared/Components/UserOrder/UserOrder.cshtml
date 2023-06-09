@@ -1,0 +1,100 @@
+﻿@using MarcketAppliction.Utils
+
+@model MarcketDataLayer.DTOs.Orders.UserOpenOrderDTO
+
+@{
+    int Count = 0;
+
+    var totalPrice = Model.GetTotalPrice();
+
+}
+
+
+
+<div class="middel_right_info">
+    <div class="header_wishlist">
+        <a href="/user/Favorite"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+        <span class="wishlist_quantity">
+            @if (ViewBag.FavoritCount != null)
+            {
+                @ViewBag.FavoritCount
+
+            }
+            @if (ViewBag.FavoritCount == null)
+            {
+
+                @Count;
+            }
+
+        </span>
+    </div>
+    <div class="mini_cart_wrapper">
+        <a href="javascript:void(0)"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <i class="fa fa-angle-down"></i></a>
+        <span class="cart_quantity" id="cart_quantity">@(Model.Getcounts()) </span>
+
+        <!--mini cart-->
+        <div class="mini_cart">
+            <div class="cart_items_container">
+                @if (Model.Details != null && Model.Details.Any())
+                {
+                    foreach (var detail in Model.Details)
+                    {
+                        <div class="cart_item">
+                            <div class="cart_img">
+                                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle"><img src="@(PathExtension.ProductThumbnailImage + detail.ProductImageName)" alt=""></a>
+                            </div>
+                            <div class="cart_info">
+                                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle">
+                                    @detail.ProductTitle - @detail.ColorName
+                                </a>
+                                @if (detail.DiscountPercentage != null)
+                                {
+                                    <p>تعداد: @detail.Count <span> @detail.GetTotalAmountByDiscount().ToString("#,0") تومان </span></p>
+
+                                    @*<p>@detail.DiscountPercentage</p>*@
+                                }
+                                @if (detail.DiscountPercentage == null)
+                                {
+
+                                    <p>تعداد: @detail.Count <span> @detail.ProductPrice.ToString("#,0") تومان </span></p>
+
+                                }
+
+
+                                @*@if (detail.DiscountPercentage == null)
+        {
+            <p>تعداد: @detail.Count <span> @((detail.ProductPrice + detail.ProductColorPrice).ToString("#,0")) تومان </span></p>
+        }*@
+                                @*<a onclick="removeProductFromOrder(@detail.DetailId)" class="btn glyphicon-trash"></a>*@
+                            </div>
+                            <div class="cart_remove">
+                                <a onclick="removeProductFromOrder(@detail.DetailId)"><i class="ion-android-close"></i></a>
+                            </div>
+                        </div>
+                        @*<p>@(Count += detail.Count)</p>*@
+
+                    }
+                }
+            </div>
+            <div class="mini_cart_table">
+                <div class="cart_total mt-10">
+                    <span>جمع کل:</span>
+                    <span class="price">@((Model.GetTotalPrice() - Model.GetTotalDiscounts()).ToString("#,0")) تومان </span>
+                </div>
+            </div>
+
+            <div class="mini_cart_footer">
+                <div class="cart_button">
+                    <a asp-area="user" asp-controller="Order" asp-action="UserOpenOrder">مشاهده سبد</a>
+                </div>
+                @*<div class="cart_button">
+                        <a href="checkout.html">پرداخت</a>
+                    </div>*@
+
+            </div>
+
+        </div>
+        <!--mini cart end-->
+    </div>
+</div>
+

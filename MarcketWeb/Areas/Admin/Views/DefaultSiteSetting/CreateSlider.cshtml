@@ -1,0 +1,70 @@
+﻿@model MarcketDataLayer.DTOs.Slider.CraeteSliderDto
+
+@{
+    ViewData["Title"] = "CreateSlider";
+}
+
+<h2>ایجاد اسلایدر</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateSlider" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">تصویر</label>
+                <input name="Img" type="file" class="form-control"  required/>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="MainHeader" class="control-label"></label>
+                <input asp-for="MainHeader" class="form-control" />
+                <span asp-validation-for="MainHeader" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondHeader" class="control-label"></label>
+                <input asp-for="SecondHeader" class="form-control" />
+                <span asp-validation-for="SecondHeader" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="colored-success" asp-for="IsActive" checked="checked">
+                                <span class="text">@Html.DisplayNameFor(model => model.IsActive)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn  btn-sky" />
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

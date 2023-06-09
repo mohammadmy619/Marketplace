@@ -1,0 +1,71 @@
+﻿@model MarcketDataLayer.DTOs.Products.CreateOrEditProductGalleryDTO
+@{
+    ViewData["Title"] = "ثبت گالری جدید برای " + ViewBag.product.Title;
+}
+
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li>
+                            <a href="/">خانه</a>
+                        </li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="login">
+                                <div class="login_form_container">
+                                    <div class="account_login_form">
+                                        <form asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" enctype="multipart/form-data" id="create_product_form">
+
+                                            <label>اولویت نمایش</label>
+                                            <input asp-for="DisplayPriority">
+                                            <span class="text-danger" asp-validation-for="DisplayPriority"></span>
+
+                                            <br />
+                                            <div class="col-md-6">
+                                                <input type="file" asp-for="Image" accept=".png,.jpeg" />
+                                                <span class="text-danger" asp-validation-for="Image"></span>
+                                            </div>
+
+                                            <div class="save_button primary_btn default_button">
+                                                <button type="submit">افزودن</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@section scripts {
+    <partial name="_JqueryValidators" />
+}
