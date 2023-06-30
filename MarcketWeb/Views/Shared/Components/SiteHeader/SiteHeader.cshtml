@@ -93,9 +93,23 @@
                             <li>
                                 <a asp-area="" asp-controller="Product" asp-action="FilterProducts">فروشگاه</a>
                             </li>
-                            <li>
+                            @if (categories != null && categories.Any())
+                            {
+
+                                @foreach (var category in categories.Where(s => s.ParentId == null))
+                                {
+                                    if (categories.Any(s => s.ParentId == category.Id))
+                                    {
+                                        <li>
+                                            <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.UrlName">@category.Title</a>
+                                        </li>
+                                    }
+                                }
+                           
+                            }
+                          @*  <li>
                                 <a asp-area="" asp-controller="Articles" asp-action="ArticlesPage">مقالات/آرشیوها</a>
-                            </li>
+                            </li>*@
 
                             <li class="menu-item-has-children">
                                 <a href="/user">حساب کاربری</a>
@@ -274,11 +288,23 @@
                                         <a asp-area="" asp-controller="Product" asp-action="FilterProducts">محصولات</a>
 
                                     </li>
-            
-                                    <li>
+                                    @if (categories != null && categories.Any())
+                                    {
+                                      
+                                        @foreach (var category in categories.Where(s => s.ParentId == null))
+                                        {
+                                            if (categories.Any(s => s.ParentId == category.Id))
+                                            {
+                                                <li>
+                                                    <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.UrlName">@category.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    }
+                                  @*  <li>
                                         <a asp-area="" asp-controller="Articles" asp-action="ArticlesPage">مقالات/آرشیوها</a>
                                     </li>
-                                    <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
+                                    <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>*@
                                     <li><a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a></li>
 
                                 </ul>
@@ -312,6 +338,20 @@ sticky header area start*@
                                 <li class="mega_items">
                                     <a asp-area="" asp-controller="Product" asp-action="FilterProducts">فروشگاه</a>
                                 </li>
+                                @if (categories != null && categories.Any())
+                                {
+
+                                    @foreach (var category in categories.Where(s => s.ParentId == null))
+                                    {
+                                        if (categories.Any(s => s.ParentId == category.Id))
+                                        {
+                                            <li>
+                                                <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.UrlName">@category.Title</a>
+                                            </li>
+                                        }
+                                    }
+                                }
+
                                 @*<li>
             <a href="blog.html">بلاگ<i class="fa fa-angle-down"></i></a>
             <ul class="sub_menu pages">
@@ -321,10 +361,10 @@ sticky header area start*@
                 <li><a href="blog-no-sidebar.html">بلاگ بدون نوار کناری</a></li>
             </ul>
                                     <
-        </li>*@
+        </li>*@@*
                             <li>
                                 <a asp-area="" asp-controller="Articles" asp-action="ArticlesPage">مقالات/آرشیوها</a>
-                            </li>
+                            </li>*@
                                 @*<li>
                                     <a href="#">صفحات <i class="fa fa-angle-down"></i></a>
                                     <ul class="sub_menu pages">
@@ -336,7 +376,7 @@ sticky header area start*@
                                     </ul>
                                 </li>*@
 
-                                <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
+                            @*    <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>*@
                                 <li><a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a></li>
                             </ul>
                         </nav>

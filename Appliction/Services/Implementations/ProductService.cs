@@ -254,7 +254,32 @@ namespace MarcketAppliction.Services.Implementations
                 .Include(s => s.ProductSelectedCategories)
                 .ThenInclude(s => s.ProductCategory)
                 .Include(s => s.ProductGalleries)
-                .Include(s => s.ProductDiscounts.Where(c => c.ExpireDate > DateTime.Now && c.DiscountNumber > 0).OrderBy(c => c.CreateDate))
+                .Include(s => s.ProductDiscounts.Where(c => c.ExpireDate > DateTime.Now && c.DiscountNumber > 0).OrderBy(c => c.CreateDate)).Select(s=> new Product()
+                {
+                    Id=s.Id,
+                    Salescount=s.Salescount,
+                    ImageName=s.ImageName,
+                    Price=s.Price,  
+                    IsActive=s.IsActive,
+                    IsDelete=s.IsDelete,
+                   ProductDiscounts=s.ProductDiscounts,
+                   ProductGalleries=s.ProductGalleries,
+                   ProductSelectedCategories=s.ProductSelectedCategories,
+                   ShortDescription=s.ShortDescription,
+                   ProductAcceptanceState=s.ProductAcceptanceState,
+                   Seller=s.Seller,
+                   SellerId=s.SellerId,
+                   Visit=s.Visit,
+                   CreateDate=s.CreateDate,
+                   SiteProfit=s.SiteProfit,
+                   Title=s.Title,
+                   ProductAcceptOrRejectDescription=s.ProductAcceptOrRejectDescription,
+                   LastUpdateDate=
+                   s.LastUpdateDate,
+
+                }
+                
+                )
                 .AsNoTracking()
                 .AsQueryable();
 

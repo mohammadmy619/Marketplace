@@ -1,5 +1,5 @@
 ﻿@using MarcketDataLayer.Entities.Site
-
+@using MarcketAppliction.Utils
 @{
     var siteSetting = ViewBag.siteSetting as SiteSetting;
 }
@@ -11,7 +11,8 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="widgets_container contact_us">
                         <div class="footer_logo">
-                            <a href="#"><img src="/img/logo/logo.png" alt=""></a>
+                            <a href="/"><img src="@(PathExtension.Logo+siteSetting.Sitelogo)" alt="@siteSetting.Sitelogo"></a>
+                         
                         </div>
                         <div class="footer_contact">
                             <p>@siteSetting.FooterText</p>
