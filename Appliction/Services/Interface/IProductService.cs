@@ -36,7 +36,7 @@ namespace MarcketAppliction.Services.Interface
         List<Product> GetAllbestSells(int take);
 
         List<Product> GetallPopularproducts(int take);
-        List<Product> GetallproductsforIndex();
+        Task<List<Product>> GetallproductsforIndex();
 
 
         Task<CraeteComment> CraeteCommentProduct(CreateProductComment createProduct);

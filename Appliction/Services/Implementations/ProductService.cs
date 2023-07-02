@@ -371,7 +371,7 @@ namespace MarcketAppliction.Services.Implementations
 
 
             var product = await _productRepository.GetQuery()
-                .AsQueryable()
+                .AsQueryable().Where(s=>s.Id==productId)
                 .Include(s => s.Seller)
                 .ThenInclude(s => s.User)
                 .Include(s => s.ProductSelectedCategories)
@@ -382,7 +382,7 @@ namespace MarcketAppliction.Services.Implementations
                 .Include(C => C.ProductDiscounts)
                 .Include(c => c.ProductCommet)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(s => s.Id == productId);
+                .FirstOrDefaultAsync();
 
             if (product == null) return null;
 
@@ -528,9 +528,9 @@ namespace MarcketAppliction.Services.Implementations
         }
 
 
-        public  List<Product> GetallproductsforIndex()
+        public  async Task<List<Product>> GetallproductsforIndex()
         {
-            return _productRepository.GetQuery().AsQueryable()
+            return await _productRepository.GetQuery().AsQueryable()
                     .Where(x => x.ProductAcceptanceState == ProductAcceptanceState.Accepted && x.IsActive == true && x.IsDelete == false)
                         .Distinct().Include(x => x.ProductDiscounts).Include(x => x.ProductGalleries).Select(x => new Product()
                         {
@@ -543,8 +543,9 @@ namespace MarcketAppliction.Services.Implementations
                             Salescount = x.Salescount,
                             ShortDescription = x.ShortDescription,
                             ProductDiscounts = x.ProductDiscounts,
-                           ProductGalleries = x.ProductGalleries,
-                        }).AsNoTracking().ToList();
+                            ProductGalleries = x.ProductGalleries,
+                            
+                        }).AsNoTracking().ToListAsync();
         }
 
         public async Task<ProductCategory> GetProductCategoryByid(long id)

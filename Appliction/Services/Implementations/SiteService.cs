@@ -4,7 +4,6 @@ using MarcketAppliction.Utils;
 using MarcketDataLayer.DTOs.Slider;
 using MarcketDataLayer.Entities.Site;
 using MarcketDataLayer.Entities.Slider;
-using MarcketDataLayer.Migrations;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

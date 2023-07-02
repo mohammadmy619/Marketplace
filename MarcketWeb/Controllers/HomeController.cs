@@ -47,7 +47,7 @@ namespace MarketPlaceWeb.Controllers
         {
             //await Task.Delay(3000);
 
-            var Product = _productService.GetallproductsforIndex();
+            var Product =await _productService.GetallproductsforIndex();
 
             ViewBag.banners = await _siteService
                 .GetSiteBannersByPlacement(new List<BannerPlacement>
@@ -59,8 +59,7 @@ namespace MarketPlaceWeb.Controllers
             ViewData["OffProducts"] = await _productService.GetAllOffProducts(12);
             ViewBag.GetAllbestSells = Product;
 
-            //SendEmail.Send("mohammadmy619@gmail.com", "فعالسازی", "<h1>mohammad</h1>");
-
+         
             ViewBag.GetallPopularproducts = Product;
 
             ViewBag.GetArticlesGroups =  _ArticlesService.GetArticlesGroups();
