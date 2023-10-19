@@ -1932,7 +1932,7 @@ textarea:-ms-input-placeholder {
 	position: relative;
 }
 .categories_title {
-	background: #1953b4;
+	background: #F70D1A;
 	padding: 0 30px;
 	position: relative;
 	cursor: pointer;
@@ -3237,9 +3237,9 @@ textarea:-ms-input-placeholder {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-.add_to_cart a:hover {
-	background: #1953b4;
-}
+	.add_to_cart a:hover {
+		background: #F70D1A;
+	}
 @media only screen and (max-width: 767px) {
 	.add_to_cart a {
 		font-size: 12px;

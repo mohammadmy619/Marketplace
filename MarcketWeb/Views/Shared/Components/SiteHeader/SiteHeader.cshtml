@@ -53,6 +53,7 @@
                         @*<li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>*@
 
                     </div>
+
                     <div class="search_container">
                         <form asp-area="" asp-controller="Product" asp-action="FilterProducts" method="get">
                             <div class="hover_category">
@@ -71,7 +72,8 @@
                             </div>
                             <div class="search_box">
                                 <input name="Serach" placeholder="جستجوی محصول ..." type="text">
-                                <button type="submit">جستجو</button>
+                                <button class="redhomayon" type="submit" >جستجو</button>
+                        
                             </div>
                         </form>
                     </div>
@@ -215,7 +217,7 @@
                                     </div>
                                     <div class="search_box">
                                         <input name="Serach" placeholder="جستجوی محصول ..." type="text">
-                                        <button type="submit">جستجو</button>
+                                        <button style="background: #F70D1A;" type="submit">جستجو</button>
                                     </div>
                                 </form>
                             </div>
@@ -227,12 +229,12 @@
         </div>
         @*header middel end
         header bottom satrt*@
-        <div class="main_menu_area">
+        <div class="main_menu_area" style="background: #F70D1A;">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-12">
                         <div class="categories_menu">
-                            <div class="categories_title">
+                            <div class="categories_title" style="background: #F70D1A;">
                                 <h2 class="categori_toggle">دسته ‌بندی ها</h2>
                             </div>
                             <div class="categories_menu_toggle">

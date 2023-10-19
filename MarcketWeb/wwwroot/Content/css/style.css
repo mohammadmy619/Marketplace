@@ -1655,7 +1655,7 @@ textarea:-ms-input-placeholder {
 /* 2.4 main menu css here */
 
 .main_menu_area {
-	background: #0063d1;
+	background: #F70D1A;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
 	.main_menu_area {
@@ -1932,7 +1932,7 @@ textarea:-ms-input-placeholder {
 	position: relative;
 }
 .categories_title {
-	background: #1953b4;
+	background:#f10a0a;
 	padding: 0 30px;
 	position: relative;
 	cursor: pointer;

@@ -109,7 +109,7 @@ namespace MarcketAppliction.Services.Implementations
             {
                 foreach (var item in Delete)
                 {
-                    _ProductCategoryRepository.DeleteEntity(item);
+                    _ProductCategoryRepository.DeletePermanent(item);
 
                   await  _ProductCategoryRepository.SaveChanges();
                 }

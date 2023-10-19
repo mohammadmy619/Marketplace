@@ -14,7 +14,7 @@
 <div class="middel_right_info">
     <div class="header_wishlist">
         <a href="/user/Favorite"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-        <span class="wishlist_quantity">
+        <span class="wishlist_quantity" style="background: #F70D1A;">
             @if (ViewBag.FavoritCount != null)
             {
                 @ViewBag.FavoritCount
@@ -30,7 +30,7 @@
     </div>
     <div class="mini_cart_wrapper">
         <a href="javascript:void(0)"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <i class="fa fa-angle-down"></i></a>
-        <span class="cart_quantity" id="cart_quantity">@(Model.Getcounts()) </span>
+        <span class="cart_quantity" style="background: #F70D1A;" id="cart_quantity">@(Model.Getcounts()) </span>
 
         <!--mini cart-->
         <div class="mini_cart">

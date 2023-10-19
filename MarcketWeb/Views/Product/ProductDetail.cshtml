@@ -275,8 +275,8 @@
                                 foreach (var gallery in Model.ProductGalleries)
                                 {
                                     <li>
-                                        <a href="#" class="elevatezoom-gallery" data-update="" data-image="@(PathExtension.ProductThumbnailImage + gallery.ImageName)" data-zoom-image="@(PathExtension.ProductThumbnailImage + gallery.ImageName)">
-                                            <img src="@(PathExtension.ProductThumbnailImage + gallery.ImageName)" alt="zo-th-1">
+                                        <a href="#" class="elevatezoom-gallery" data-update="" data-image="@(PathExtension.ProductGalleryImage + gallery.ImageName)" data-zoom-image="@(PathExtension.ProductGalleryImage + gallery.ImageName)">
+                                            <img src="@(PathExtension.ProductGalleryThumbnailImage + gallery.ImageName)" alt="zo-th-1">
                                         </a>
                                     </li>
                                 }

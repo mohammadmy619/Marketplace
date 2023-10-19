@@ -190,14 +190,14 @@ namespace MarcketAppliction.Services.Implementations
 
         public async Task RemoveAllProductSelectedCategories(long productId)
         {
-            _productSelectedCategoryRepository.ISDeletePermanentEntities(await _productSelectedCategoryRepository.GetQuery().AsQueryable().Where(s => s.ProductId == productId).ToListAsync());
+            _productSelectedCategoryRepository.DeletePermanentEntities(await _productSelectedCategoryRepository.GetQuery().AsQueryable().Where(s => s.ProductId == productId).ToListAsync());
             await _productSelectedCategoryRepository.SaveChanges();
         }
 
         public async Task RemoveAllProductSelectedColors(long productId)
         {
 
-            _productColorRepository.ISDeletePermanentEntities(await _productColorRepository.GetQuery().AsQueryable().Where(s => s.ProductId == productId).ToListAsync());
+            _productColorRepository.DeletePermanentEntities(await _productColorRepository.GetQuery().AsQueryable().Where(s => s.ProductId == productId).ToListAsync());
             await _productColorRepository.SaveChanges();
         }
 
@@ -460,7 +460,7 @@ namespace MarcketAppliction.Services.Implementations
                 .Where(s => s.ProductId == productId)
                 .ToListAsync();
 
-            _productFeatureRepository.ISDeletePermanentEntities(productFeatures);
+            _productFeatureRepository.DeletePermanentEntities(productFeatures);
             await _productFeatureRepository.SaveChanges();
         }
 

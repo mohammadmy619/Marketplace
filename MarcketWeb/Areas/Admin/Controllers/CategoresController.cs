@@ -33,6 +33,7 @@ namespace MarketPlaceWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProductCategoryDTO create)
         {
 
