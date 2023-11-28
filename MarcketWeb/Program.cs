@@ -60,7 +60,7 @@ builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<IArticlesService, ArticlesService>();
 builder.Services.AddScoped<DapperUtility>();
 
-builder.Services.AddTransient<IViewRenderService, RenderViewToString>();
+builder.Services.AddSingleton<IViewRenderService, RenderViewToString>();
 
 
 
