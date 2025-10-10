@@ -43,20 +43,20 @@ builder.Services.AddDbContext<MarketDBContext>(options =>
 #endregion
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericReopsitory<>));
-builder.Services.AddScoped<IUserServicecs, UserService>();
+builder.Services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericReopsitory<>));
+builder.Services.AddSingleton<IUserServicecs, UserService>();
 
 builder.Services.AddScoped<IPasswordHelper, PasswordHelper>();
 builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
-builder.Services.AddScoped<ISiteService, SiteService>();
+builder.Services.AddSingleton<ISiteService, SiteService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<ISellerService, SellerService>();
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddSingleton<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ISellerWalletService, SellerWalletService>();
 builder.Services.AddScoped<IProductDiscountService, ProductDiscountService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddSingleton<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<IArticlesService, ArticlesService>();
 builder.Services.AddScoped<DapperUtility>();
 
